@@ -11,11 +11,13 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-        <link href="styles2.css" rel="stylesheet">       
+        <link href="styles2.css" rel="stylesheet">
     </head>
+    <%
+        Integer registrado = (Integer)request.getAttribute("registrado");
+    %>
     <body>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-
         <!-- BARRA DE NAVEGACION -->
         <header>
             <nav class="navbar navbar-expand-lg navbar-light bg-light" >
@@ -53,8 +55,15 @@ and open the template in the editor.
         <br>
         <br>
         <br>
-        <br>
-
+        <br>        
+        <%
+            if (registrado == null){
+            } else if(registrado.equals(1)){
+        %>
+                <div class="alert alert-success">Usuario registrado con éxito!</div>
+        <%
+            }
+        %>
         <!--<button onclick="location.href='InicioSesion.html'">Iniciar sesión</button> -->
         <h1 class="display-4">Miles de tickets al instante</h1>
 

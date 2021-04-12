@@ -14,17 +14,6 @@
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
         <link href="styles.css" rel="stylesheet">
-        
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                var boton = document.querySelector('.btn-check');
-
-                boton.addEventListener('select', function(){
-                    prompt(boton.value);
-                });
-            }
-            
-        </script>
     </head>
     <body>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

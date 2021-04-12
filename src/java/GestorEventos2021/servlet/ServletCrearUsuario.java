@@ -56,7 +56,7 @@ public class ServletCrearUsuario extends HttpServlet {
         nombre = request.getParameter("nombre_usuario");
         apellidos = request.getParameter("apellidos_usuario");
         nif = request.getParameter("nif_usuario");
-        sexo = request.getParameter("sexo_usuario");
+        sexo = request.getParameter("radio_sexo");
         domicilio = request.getParameter("domicilio_usuario");
         ciudad = request.getParameter("ciudad_usuario");
         correo = request.getParameter("correo_usuario");
@@ -83,7 +83,7 @@ public class ServletCrearUsuario extends HttpServlet {
         this.usuarioeventosFacade.create(uEventos);
         
         System.out.println(usuario.getId());
-        
+        request.setAttribute("registrado", 1);
         RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
         rd.forward(request, response);
     }
