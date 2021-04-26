@@ -4,14 +4,22 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
     <head>
-        <title>Crear un nuevo evento</title>
+        <title>Evento</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
         <link href="styles.css" rel="stylesheet">
     </head>
+    <% 
+        Boolean crear = true;
+        String crearOEditar = "Crear evento";
+        if(!crear){
+            crearOEditar = "Editar evento";
+        }
+    %>
     <body>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <!-- BARRA DE NAVEGACION -->
@@ -52,14 +60,14 @@ and open the template in the editor.
 
         <!-- FORMULARIO PARA CREAR UN NUEVO EVENTO -->
         <div class="global_nuevo_evento">
-            <form>
+            <form name="CrearEditarEventoForm">
                 <div class="mb-3">
                     <label for="exampleDropdownFormEmail2" class="form-label">Nombre del evento</label>
-                    <input type="text" name="nombre_evento" class="form-control" id="nombre_evento" placeholder="Escribe el nombre aquí" required>
+                    <input type="text" name="nombre_evento" class="form-control" id="nombre_evento" required>
                 </div>
                 <div class="mb-3">
                     <label for="exampleDropdownFormEmail2" class="form-label">Descripción del evento</label>
-                    <input type="text" name="descripcion_evento" class="form-control" id="descripcion_evento" placeholder="Escribe una descripción aquí" required>
+                    <input type="text" name="descripcion_evento" class="form-control" id="descripcion_evento" required>
                 </div>
 
                 <div class="mb-3">
@@ -74,17 +82,17 @@ and open the template in the editor.
 
                 <div class="mb-3">
                     <label for="exampleDropdownFormEmail2" class="form-label">Coste de la entrada</label>
-                    <input type="text" name="coste_entrada_evento" class="form-control" id="coste_entrada_evento" placeholder="Escribe aquí el precio de las entradas" required>
+                    <input type="text" name="coste_entrada_evento" class="form-control" id="coste_entrada_evento" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="exampleDropdownFormEmail2" class="form-label">Número máximo de entradas por persona</label>
-                    <input type="text" name="aforo_evento" class="form-control" id="aforo_evento" placeholder="Escribe aquí el número máximo de entradas por persona" required>
+                    <input type="text" name="aforo_evento" class="form-control" id="aforo_evento" required >
                 </div>
 
                 <div class="mb-3">
                     <label for="exampleDropdownFormEmail2" class="form-label">Aforo máximo del evento</label>
-                    <input type="text" name="aforo_evento" class="form-control" id="aforo_evento" placeholder="Escribe aquí el aforo del evento" required>
+                    <input type="text" name="aforo_evento" class="form-control" id="aforo_evento" required >
                 </div>
 
                 <label>Selecciona las etiquetas del evento</label> <br>
@@ -105,29 +113,26 @@ and open the template in the editor.
                 <br>
                 <div class="mb-3">
                     <label for="exampleDropdownFormEmail2" class="form-label">Asientos</label> <br/>
-                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                        <input type="radio" class="btn-check" name="radio_asientos" id="si" value="S" autocomplete="off"/>
-                        <label class="btn btn-outline-primary" for="si">Sí</label>
-
-                        <input type="radio" class="btn-check" name="radio_asientos" id="no" value="N" autocomplete="off"/>
-                        <label class="btn btn-outline-primary" for="no">No</label>
-                    </div> 
+                    <input class="form-check-input" type="radio" name="seleccion_asientos" value="" />Sí<br>
+                    <input class="form-check-input" type="radio" name="seleccion_asientos" value="" />No<br>
                 </div>
 
                 <div class="mb-3">
                     <label for="exampleDropdownFormEmail2" class="form-label">Número de filas de asientos</label>
-                    <input type="text" name="filas_evento" class="form-control" id="filas_evento" placeholder="Escribe el número de filas aquí" required>
+                    <input type="text" name="filas_evento" class="form-control" id="filas_evento">
                 </div> 
 
                 <div class="mb-3">
                     <label for="exampleDropdownFormEmail2" class="form-label">Número de asientos por fila del evento</label>
-                    <input type="text" name="asientos_fila_evento" class="form-control" id="asientos_fila_evento" placeholder="Escribe el número de asientos por fila aquí"  required>
+                    <input type="text" name="asientos_fila_evento" class="form-control" id="asientos_fila_evento">
                 </div> 
 
                 <div class="d-grid gap-2 col-6 mx-auto">
-                    <button type="submit" class="btn btn-primary btn-lg">Crear evento</button>
+                    <button type="submit" class="btn btn-primary btn-lg"><%= crearOEditar %></button>
                 </div>
             </form>
         </div>
     </body>
+
+    
 </html>
