@@ -87,7 +87,7 @@ and open the template in the editor.
                             <tr>
                                 <th scope="row">1</th>
                                 <td>Conversación 1</td>
-                                <td><button class="btn btn-outline-primary copia" type="submit">  Hacer copia</button></td>
+                                <td><button class="btn btn-outline-primary copia" type="submit">Hacer copias</button></td>
                                 <td><button class="btn btn-outline-primary modificar" type="submit">  Modifica</button></td>
                                 <td><button class="btn btn-outline-primary info" type="submit">Info</button></td>
                                 <td><button class="btn btn-outline-danger eliminar" type="submit">Eliminar</button></td>
