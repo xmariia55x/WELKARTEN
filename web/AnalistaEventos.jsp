@@ -15,7 +15,7 @@ and open the template in the editor.
         <link href="styles.css" rel="stylesheet">
         <title>Analista Eventos</title>
     </head>
-    <body>
+    <body>     
 
         <!-- Optional JavaScript; choose one of the two! -->
 
