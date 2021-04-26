@@ -84,7 +84,9 @@
                 
                 <!-- BOTONACO DE PETICIONES -->
                 <div class="d-grid gap-2 col-6 mx-auto">
-                    <button type="submit" class="btn btn-primary btn-lg">Peticiones</button>
+                   
+                <input type="button" class="btn btn-primary btn-lg" id="peticiones_teleoperador" value="Peticiones" name="peticiones_teleoperador"
+                                       onclick="location.href = 'PeticionesTeleoperador.jsp'" />
                 </div>
     </body>
 </html>
