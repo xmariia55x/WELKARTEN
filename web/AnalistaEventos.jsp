@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
+To change this template file, choose Tools | Templates eee
 and open the template in the editor.
 -->
 <html>
@@ -88,7 +88,7 @@ and open the template in the editor.
                                 <th scope="row">1</th>
                                 <td>Conversación 1</td>
                                 <td><button class="btn btn-outline-primary copia" type="submit">  Hacer copia</button></td>
-                                <td><button class="btn btn-outline-primary modificar" type="submit">  Modificar</button></td>
+                                <td><button class="btn btn-outline-primary modificar" type="submit">  Modifica</button></td>
                                 <td><button class="btn btn-outline-primary info" type="submit">Info</button></td>
                                 <td><button class="btn btn-outline-danger eliminar" type="submit">Eliminar</button></td>
                             </tr>
