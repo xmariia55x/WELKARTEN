@@ -6,9 +6,11 @@
 package GestorEventos2021.dao;
 
 import GestorEventos2021.entity.Usuario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +29,22 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
 
     public UsuarioFacade() {
         super(Usuario.class);
+    }
+    
+    public Usuario findByEmailAndPassword(String email, String password) {
+        Query q;
+        List<Usuario> lista;
+        
+        q = this.em.createQuery("SELECT u FROM Usuario u WHERE u.correo = :email AND u.password = :password");
+        q.setParameter("email", email);
+        q.setParameter("password", password);
+        lista = q.getResultList();
+        if(lista == null || lista.isEmpty()) {
+            return null;
+        } else {
+            return lista.get(0);
+        }
+        
     }
     
 }
