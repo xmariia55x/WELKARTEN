@@ -46,7 +46,7 @@ public class ServletIniciarSesion extends HttpServlet {
             String strClave = request.getParameter("password");
             Usuario usuario;
             String strError;
-            String strTo = "index.jsp";
+            String strTo = "";
             HttpSession session = request.getSession();
             
             if(strUsuario == null || strClave == null || strUsuario.isEmpty() || strClave.isEmpty()) {
@@ -61,6 +61,18 @@ public class ServletIniciarSesion extends HttpServlet {
                     request.setAttribute("error", strError);
                     strTo = "InicioSesion.jsp";
                 } else {
+                    if(usuario.getRol() == 1) {
+                        strTo = "Administrador.jsp";
+                    } else if(usuario.getRol() == 2) {
+                        strTo = "CreadorEventos.jsp";
+                    } else if(usuario.getRol() == 3) {
+                        strTo = "AnalistaEventos.jsp";
+                    } else if(usuario.getRol() == 4) {
+                        //Aquí debe ir el usuario de eventos
+                        strTo = "index.jsp";
+                    } else{ 
+                        strTo = "Teleoperador.jsp";
+                    }
                     session.setAttribute("usuario",usuario);
                 }
             }
