@@ -15,6 +15,7 @@ and open the template in the editor.
         <link href="styles.css" rel="stylesheet">
         <title>Iniciar sesión</title>
     </head>
+        
     <body>
 
         <!-- Optional JavaScript; choose one of the two! -->
@@ -29,6 +30,27 @@ and open the template in the editor.
         -->
         <div class="global_inicio_sesion">
             
+            <%
+            String strError = (String)request.getAttribute("error");
+            
+            if(strError != null) {
+                if(strError.equals("v")) {
+                    %>
+                    <div class="alert alert-danger" role="alert">
+                    ERROR: Campos vacíos
+                    </div>
+                    <%    
+                    } else if(strError.equals("n")) {
+                    %>
+                    <div class="alert alert-danger" role="alert">
+                    ERROR: Usuario o contraseña incorrectos
+                    </div>
+                    <%
+                    }
+            }
+            %>
+            
+            
             <img src="images/ticket.png" width="200" height="200">
 
             <form method = "POST" action="ServletIniciarSesion">
@@ -41,7 +63,7 @@ and open the template in the editor.
                     <input type="password" name="password" class="form-control" id="contrasenia_usuario" placeholder="Contraseña">
                 </div>
                 <div class="d-grid gap-2 col-6 mx-auto">
-                    <button type="submit" class="btn btn-primary btn-lg">Iniciar sesión</button>
+                    <button type="submit" id="btnInicioSesion" class="btn btn-primary btn-lg">Iniciar sesión</button>
 
                     <div class="registro">
                         <a href="Registro.jsp">¿Aún no tienes cuenta? Regístrate</a>
@@ -50,5 +72,8 @@ and open the template in the editor.
             </form>
 
         </div>
+        
     </body>
+    
+    
 </html>

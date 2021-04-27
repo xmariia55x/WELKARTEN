@@ -50,14 +50,14 @@ public class ServletIniciarSesion extends HttpServlet {
             HttpSession session = request.getSession();
             
             if(strUsuario == null || strClave == null || strUsuario.isEmpty() || strClave.isEmpty()) {
-                strError = "ERROR: Campo vacío";
-                request.setAttribute("error", strError);
                 strTo = "InicioSesion.jsp";
+                strError = "v";
+                request.setAttribute("error", strError);
             } else {
                 usuario = this.usuarioFacade.findByEmailAndPassword(strUsuario, strClave);
                 
                 if(usuario == null) {
-                    strError = "ERROR: Usuario o contraseña incorrectos";
+                    strError = "n";
                     request.setAttribute("error", strError);
                     strTo = "InicioSesion.jsp";
                 } else {
