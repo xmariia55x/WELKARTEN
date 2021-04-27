@@ -46,7 +46,7 @@ and open the template in the editor.
                         </form>
                         <br/>
                         <input type="button" class="btn btn-primary btn-lg" id="inicio_sesion_principal_button" value="Iniciar sesión" name="inicio_sesion_principal_button"
-                               onclick="location.href = 'InicioSesion.html'" /> 
+                               onclick="location.href = 'InicioSesion.jsp'" /> 
                     </div>
                 </div>
             </nav>

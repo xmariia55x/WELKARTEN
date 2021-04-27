@@ -13,7 +13,7 @@ and open the template in the editor.
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
         <link href="styles.css" rel="stylesheet">
-        <title>Iniciar sesiÃ³n</title>
+        <title>Iniciar sesión</title>
     </head>
     <body>
 
@@ -31,20 +31,20 @@ and open the template in the editor.
             
             <img src="images/ticket.png" width="200" height="200">
 
-            <form action="">
+            <form method = "POST" action="ServletIniciarSesion">
                 <div class="mb-3">
-                    <label for="exampleDropdownFormEmail2" class="form-label">Correo electrÃ³nico</label>
-                    <input type="email" class="form-control" id="email_usuario" placeholder="email@example.com">
+                    <label for="exampleDropdownFormEmail2" class="form-label">Correo electrónico</label>
+                    <input type="email" name="email" class="form-control" id="email_usuario" placeholder="email@example.com">
                 </div>
                 <div class="mb-3">
-                    <label for="exampleDropdownFormPassword2" class="form-label">ContraseÃ±a</label>
-                    <input type="password" class="form-control" id="contrasenia_usuario" placeholder="ContraseÃ±a">
+                    <label for="exampleDropdownFormPassword2" class="form-label">Contraseña</label>
+                    <input type="password" name="password" class="form-control" id="contrasenia_usuario" placeholder="Contraseña">
                 </div>
                 <div class="d-grid gap-2 col-6 mx-auto">
-                    <button type="submit" class="btn btn-primary btn-lg">Iniciar sesiÃ³n</button>
+                    <button type="submit" class="btn btn-primary btn-lg">Iniciar sesión</button>
 
                     <div class="registro">
-                        <a href="Registro.jsp">Â¿AÃºn no tienes cuenta? RegÃ­strate</a>
+                        <a href="Registro.jsp">¿Aún no tienes cuenta? Regístrate</a>
                     </div>
                 </div>
             </form>
@@ -52,4 +52,3 @@ and open the template in the editor.
         </div>
     </body>
 </html>
-
