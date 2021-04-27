@@ -15,22 +15,24 @@ and open the template in the editor.
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
         <link href="styles2.css" rel="stylesheet">      
         <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/pricing/">
-        <link href="/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-
+        
         <style>
 
             .row {
                 display: flex;
                 margin-left:-5px;
                 margin-right:-5px;
+                z-index: 2000;
                 justify-content: center
 
             }
 
             .column {
                 flex: 50%;
-                padding: 5px;
-
+                margin: auto;
+                width: 60%;
+                z-index: 2000;
+                padding: 0px;
             }
 
             #divfix {
@@ -70,13 +72,13 @@ and open the template in the editor.
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link active" href="#">Home</a>
+                                <a class="nav-link active" href="index.jsp">Home</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" href="#">Conócenos</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="#">Contáctanos</a>
+                                <a class="nav-link active" href="contactanos.jsp">Contáctanos</a>
                             </li>
                         </ul>
                         <form class="d-flex" style="margin-right: 2em">
@@ -103,7 +105,9 @@ and open the template in the editor.
 
 
 
-
+        <div id="divfix">
+            <button type="button" class="w-100 btn btn-lg btn-primary">Crear nuevo Evento</button>
+        </div>
 
 
 
@@ -111,8 +115,10 @@ and open the template in the editor.
         <div class="column">
             <div class="row">
                 <h1 class="display-4">Eventos próximos</h1>
-                <br>
+
                 <div class="proximos">
+                    <br/>
+                    <br>
                     <div class="carta">
                         <div class="card" style="width: 18rem;">
                             <img src="images/chatbot.png" class="card-img-top" alt="Evento">
@@ -152,7 +158,9 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
-
+            <br/>
+            <br/>
+            <br/>
 
 
 
@@ -160,8 +168,10 @@ and open the template in the editor.
 
                 <h1 class="display-4">Eventos finalizados</h1>
 
-                <div class="finalizados">
 
+                <div class="finalizados">
+                    <br/>
+                    <br/>
                     <div class="carta">
                         <div class="card" style="width: 18rem;">
                             <img src="images/chatbot.png" class="card-img-top" alt="Evento"/> 
@@ -203,9 +213,6 @@ and open the template in the editor.
 
 
 
-        <div id="divfix">
-            <!--<button  id="myBtn">Crear nuevo Evento</button> -->
-            <button type="button" class="w-100 btn btn-lg btn-primary">Crear nuevo Evento</button>
-        </div>
+
     </body>
 </html>
