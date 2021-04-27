@@ -14,8 +14,8 @@
     
     <body>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-
-            <!-- BARRA DE NAVEGACION -->
+            <jsp:include page="navbarSesionIniciada.jsp" />
+            <!-- BARRA DE NAVEGACION
             <header>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light" >
                     <div class="container-fluid">
@@ -48,7 +48,7 @@
                         </div>
                     </nav>
                 </header>
-                <!-- FIN BARRA DE NAVEGACION -->
+              FIN BARRA DE NAVEGACION -->
                 
                 <!-- TABLA DE CONVERSACIONES -->
                     <table class="table">

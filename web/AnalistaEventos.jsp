@@ -28,8 +28,8 @@ and open the template in the editor.fcxddxdnjnjjnjnj
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
         -->
         
-        
-            <!-- BARRA DE NAVEGACION -->
+        <jsp:include page="navbarSesionIniciada.jsp" />
+            <!-- BARRA DE NAVEGACION
             <header>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light" >
                     <div class="container-fluid">
@@ -62,7 +62,7 @@ and open the template in the editor.fcxddxdnjnjjnjnj
                         </div>
                     </nav>
                 </header>
-                <!-- FIN BARRA DE NAVEGACION -->
+                FIN BARRA DE NAVEGACION -->
                 <br>
                 <br>
                 <br>
