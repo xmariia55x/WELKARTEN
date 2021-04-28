@@ -8,6 +8,7 @@ package GestorEventos2021.servlet;
 import GestorEventos2021.*;
 import GestorEventos2021.dao.EstudioFacade;
 import GestorEventos2021.entity.Estudio;
+import GestorEventos2021.entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -18,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -40,11 +42,18 @@ public class ServletListarEstudios extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            List<Estudio> estudios = this.estudioFacade.findAll();
+        
+            String strTo = "AnalistaEventos.jsp";
+            HttpSession session = request.getSession();
+            Usuario usuario = (Usuario)session.getAttribute("usuario");
+            
+            if(usuario != null) {
+               List<Estudio> estudios = this.estudioFacade.findAll();
                request.setAttribute("listaEstudios", estudios);
+            }
                
-              RequestDispatcher rd = request.getRequestDispatcher("AnalistaEventos.jsp");
-              rd.forward(request, response);
+             RequestDispatcher rd = request.getRequestDispatcher(strTo);
+             rd.forward(request, response);
                     
     }
 

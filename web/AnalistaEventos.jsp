@@ -1,3 +1,4 @@
+<%@page import="GestorEventos2021.entity.Usuario"%>
 <%@page import="GestorEventos2021.entity.Estudio"%>
 <%@page import="java.util.List"%>
 <!DOCTYPE html>
@@ -18,11 +19,15 @@ and open the template in the editor.fcxddxdnjnjjnjnj
         <title>Analista Eventos</title>
     </head>
     
-    <body>     
         <%
+            Usuario user = (Usuario) session.getAttribute("usuario");
             List <Estudio> estudios = (List) request.getAttribute("listaEstudios");
             
-            %>
+        %>
+    
+    <body>  
+        
+       
         <!-- Optional JavaScript; choose one of the two! -->
 
         <!-- Option 1: Bootstrap Bundle with Popper -->

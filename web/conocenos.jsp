@@ -104,8 +104,11 @@
                     <div class="column-text mt-1"><h4 class="h5 mb-1">Adrián Corrales Moreno</h4>
                         <p>Estudiante de ingeniería de software en la UMA </p>
 
-                        Comenzó a dar por culo en el 2000
-
+                        Aficionado a la fotografía <br/>
+                        Apasionado de la música, viajar y el deporte <br/>
+                        
+                        <br/>
+                        <h5> Email: adricorrales1234@gmail.com </h5>
                     </div>
                 </div>
             </div>
