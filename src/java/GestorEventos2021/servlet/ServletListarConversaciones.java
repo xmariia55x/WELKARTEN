@@ -5,20 +5,31 @@
  */
 package GestorEventos2021.servlet;
 
+import GestorEventos2021.entity.Conversacion;
+import GestorEventos2021.entity.Usuario;
+import GestorEventos2021.dao.ConversacionFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import javax.servlet.http.HttpSession;
+import javax.servlet.RequestDispatcher;
+
 
 /**
  *
- * @author yeray
+ * @author adric
  */
-@WebServlet(name = "NewServlet", urlPatterns = {"/NewServlet"})
-public class NewServlet extends HttpServlet {
+@WebServlet(name = "ServletListarConversaciones", urlPatterns = {"/ServletListarConversaciones"})
+public class ServletListarConversaciones extends HttpServlet {
+
+    @EJB
+    private ConversacionFacade conversacionFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,19 +42,19 @@ public class NewServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet NewServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet NewServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        
+        String strTo = "Teleoperador.jsp";
+        HttpSession session = request.getSession();
+        Usuario usuario = (Usuario)session.getAttribute("usuario");
+            
+        if(usuario != null) {
+           List<Conversacion> conversaciones = this.conversacionFacade.findAll();
+           request.setAttribute("listaConversaciones", conversaciones);
         }
+               
+        RequestDispatcher rd = request.getRequestDispatcher(strTo);
+        rd.forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

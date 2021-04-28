@@ -4,6 +4,9 @@
     Author     : adric
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="GestorEventos2021.entity.Conversacion"%>
+<%@page import="GestorEventos2021.entity.Usuario"%>
 <html>
     <head>
         <title>TELEOPERADOR</title>
@@ -12,6 +15,10 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     </head>
     
+    <%
+        Usuario user = (Usuario)session.getAttribute("usuario");
+        List <Conversacion> conversaciones = (List) request.getAttribute("listaConversaciones");
+    %>
     <body>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
             <jsp:include page="navbarSesionIniciada.jsp" />
@@ -67,24 +74,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Conversación 1</td>
-                                <td><button class="btn btn-outline-primary" type="submit">Info</button></td>
-                                <td><button class="btn btn-outline-danger" type="submit">Eliminar</button></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Conversación 2</td>
-                                <td><button class="btn btn-outline-primary" type="submit">Info</button></td>
-                                <td><button class="btn btn-outline-danger" type="submit">Eliminar</button></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Conversación 3</td>
-                                <td><button class="btn btn-outline-primary" type="submit">Info</button></td>
-                                <td><button class="btn btn-outline-danger" type="submit">Eliminar</button></td>
-                            </tr>
+                            <%
+                                int i = 1;
+                                for(Conversacion c : conversaciones) {
+                            %>
+                                <tr>
+                                    <th scope="row"><%= i %></th>
+                                    <td><%= c.getId() %></td>
+                                    <td><button class="btn btn-outline-primary" type="submit">Info</button></td>
+                                    <td><button class="btn btn-outline-danger" type="submit">Eliminar</button></td>
+                                </tr>
+                            <%
+                                i++;
+                                }
+                            %>
+                            
+                            
                         </tbody>
                     </table>
                 

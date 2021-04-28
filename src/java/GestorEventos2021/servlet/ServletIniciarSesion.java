@@ -71,7 +71,7 @@ public class ServletIniciarSesion extends HttpServlet {
                         //Aquí debe ir el usuario de eventos
                         strTo = "index.jsp";
                     } else{ 
-                        strTo = "Teleoperador.jsp";
+                        strTo = "ServletListarConversaciones";
                     }
                     session.setAttribute("usuario",usuario);
                 }
