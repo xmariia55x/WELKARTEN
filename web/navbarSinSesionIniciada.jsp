@@ -30,13 +30,13 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link active" href="#">Home</a>
+                                <a class="nav-link active" href="index.jsp">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="#">Conócenos</a>
+                                <a class="nav-link active" href="conocenos.jsp">Conócenos</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="#">Contáctanos</a>
+                                <a class="nav-link active" href="contactanos.jsp">Contáctanos</a>
                             </li>
                         </ul>
                         <form class="d-flex" style="margin-right: 2em">
@@ -46,6 +46,7 @@
                         <br/>
                         <input type="button" class="btn btn-primary btn-lg" id="inicio_sesion_principal_button" value="Iniciar sesión" name="inicio_sesion_principal_button"
                                onclick="location.href = 'InicioSesion.jsp'" /> 
+                        
                     </div>
                 </div>
             </nav>
