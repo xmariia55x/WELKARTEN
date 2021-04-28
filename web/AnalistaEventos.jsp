@@ -1,3 +1,5 @@
+<%@page import="GestorEventos2021.entity.Estudio"%>
+<%@page import="java.util.List"%>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -15,8 +17,12 @@ and open the template in the editor.fcxddxdnjnjjnjnj
         <link href="styles.css" rel="stylesheet">
         <title>Analista Eventos</title>
     </head>
+    
     <body>     
-
+        <%
+            List <Estudio> estudios = (List) request.getAttribute("listaEstudios");
+            
+            %>
         <!-- Optional JavaScript; choose one of the two! -->
 
         <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -76,7 +82,7 @@ and open the template in the editor.fcxddxdnjnjjnjnj
                         <thead class = "table-primary">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Nombre estudio</th>
+                                <th scope="col">Descripcion estudio</th>
                                 <th scope="col">Hacer copia</th>
                                 <th scope="col">Modificar estudio</th> 
                                 <th scope="col">Info estudio</th>
@@ -84,6 +90,7 @@ and open the template in the editor.fcxddxdnjnjjnjnj
                             </tr>
                         </thead>
                         <tbody>
+                            <!---
                             <tr>
                                 <th scope="row">1</th>
                                 <td>Conversación 1</td>
@@ -108,6 +115,19 @@ and open the template in the editor.fcxddxdnjnjjnjnj
                                 <td><button class="btn btn-outline-primary info" type="submit">Info</button></td>
                                 <td><button class="btn btn-outline-danger eliminar" type="submit">Eliminar</button></td>>
                             </tr>
+                            --->
+                            <%
+                                for(Estudio e: estudios) {
+                                %>
+                                <tr>
+                                    <td> <%= e.getDescripcion()%> </td>
+                                    <td><button class="btn btn-outline-primary copia" type="submit">  Hacer copia</button></td>
+                                    <td><button class="btn btn-outline-primary modificar" type="submit">  Modificar</button></td>
+                                    <td><button class="btn btn-outline-primary info" type="submit">Info</button></td>
+                                    <td><button class="btn btn-outline-danger eliminar" type="submit">Eliminar</button></td>>
+                                </tr>
+                                <%}
+                                    %>
                         </tbody>
                     </table>
 
