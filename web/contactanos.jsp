@@ -156,7 +156,15 @@
 
     <body>  
 
-        <!-- formulario de contacto en html y css -->  
+         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <jsp:include page="navbarSinSesionIniciada.jsp" />
+
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
 
         <div class="contact_form">
 
