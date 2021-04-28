@@ -45,7 +45,7 @@
                         </form>
                         <br/>
                         <input type="button" class="btn btn-primary btn-lg" id="mi_perfil_button" value="Mi perfil" name="mi_perfil_button"
-                               onclick="location.href = ''" /> <!-- POR INCLUIR EL SERVLET ADECUADO --> 
+                               onclick="location.href = ''" /> <!-- POR INCLUIR EL SERVLET ADECUADO -->
                     </div>
                 </div>
             </nav>
