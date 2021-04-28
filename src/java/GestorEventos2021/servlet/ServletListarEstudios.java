@@ -41,7 +41,7 @@ public class ServletListarEstudios extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             List<Estudio> estudios = this.estudioFacade.findAll();
-               request.setAttribute("listaEstudios", estudios);
+            request.setAttribute("listaEstudios", estudios);
                
               RequestDispatcher rd = request.getRequestDispatcher("AnalistaEventos.jsp");
               rd.forward(request, response);

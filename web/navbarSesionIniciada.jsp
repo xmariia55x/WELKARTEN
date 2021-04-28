@@ -45,6 +45,7 @@
                         </form>
 <<<<<<< Updated upstream
                         <br/>
+<<<<<<< Updated upstream
                         <input type="button" class="btn btn-primary btn-lg" id="mi_perfil_button" value="Mi perfil" name="mi_perfil_button"
                                onclick="location.href = ''" /> <!-- POR INCLUIR EL SERVLET ADECUADO -->
 =======
@@ -56,6 +57,12 @@
                             </svg>
                             Mi perfil
                         </button>
+>>>>>>> Stashed changes
+=======
+                        <input type="button" class="btn btn-primary btn-lg" id="mi_perfil_button" value= "Mi perfil" name="mi_perfil_button"
+                               onclick="location.href = ''" /> <!-- POR INCLUIR EL SERVLET ADECUADO --> 
+                        
+                        
 >>>>>>> Stashed changes
                     </div>
                 </div>
