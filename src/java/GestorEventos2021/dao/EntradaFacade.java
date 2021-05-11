@@ -6,9 +6,12 @@
 package GestorEventos2021.dao;
 
 import GestorEventos2021.entity.Entrada;
+import GestorEventos2021.entity.Evento;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,5 +31,12 @@ public class EntradaFacade extends AbstractFacade<Entrada> {
     public EntradaFacade() {
         super(Entrada.class);
     }
+    
+    public List<Integer> findByEntradasCompradaDeUnEvento (Evento evento){
+        Query q;
+        q = em.createQuery("SELECT e.numero FROM Entrada e WHERE e.evento.id = :eventoId");
+        q.setParameter("eventoId", evento.getId());
+        return q.getResultList();
+    } 
     
 }

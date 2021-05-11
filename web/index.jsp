@@ -14,7 +14,7 @@ and open the template in the editor.
         <link href="styles2.css" rel="stylesheet">
     </head>
     <%
-        Integer registrado = (Integer)request.getAttribute("registrado");
+        Integer registrado = (Integer) request.getAttribute("registrado");
     %>
     <body>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
@@ -57,10 +57,10 @@ and open the template in the editor.
         <br>
         <br>        
         <%
-            if (registrado == null){
-            } else if(registrado.equals(1)){
+            if (registrado == null) {
+            } else if (registrado.equals(1)) {
         %>
-                <div class="alert alert-success">Usuario registrado con éxito!</div>
+        <div class="alert alert-success">Usuario registrado con éxito!</div>
         <%
             }
         %>
@@ -110,7 +110,7 @@ and open the template in the editor.
         </div>
         <!--FIN CARRUSEL-->
 
-        
+
         <ul class="nav nav-tabs filtro">
             <li class="nav-item">
                 <a class="nav-link" name="mostrar_todos_los_eventos">Todos</a>
@@ -168,7 +168,8 @@ and open the template in the editor.
                     <div class="card-body">
                         <h5 class="card-title">Titulo de la tarjeta</h5>
                         <p class="card-text">Facebook organiza un evento de chatbots.</p>
-                        <a href="#" class="btn btn-primary">Ver evento</a>
+                        <!-- Cambiar id 1 por //evento.getEventoId()// -->
+                        <a href="ServletEventoInfo?id=2" class="btn btn-primary">Ver evento</a>
                     </div>
                 </div>
             </div>
@@ -179,7 +180,7 @@ and open the template in the editor.
                     <div class="card-body">
                         <h5 class="card-title">Titulo de la tarjeta</h5>
                         <p class="card-text">Facebook organiza un evento de chatbots.</p>
-                        <a href="#" class="btn btn-primary">Ver evento</a>
+                        <a href="ServletEventoInfo?id=6" class="btn btn-primary">Ver evento</a>
                     </div>
                 </div>
             </div>
