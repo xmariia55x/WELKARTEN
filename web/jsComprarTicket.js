@@ -92,12 +92,12 @@ function fixStepIndicator(n) {
 /* Seleccionar las entradas */
 
 function checkear (n) {
-    if (asientos[n].checked){   // Si pasa de rojo a verde
+    if (asientos[n-1].checked){   // Si pasa de rojo a verde
         if (contador === nEntradas){
             contador = 0;
         }
         if (seleccionadas === nEntradas) {
-            asientos[myHistory[contador]].checked = 0;
+            asientos[myHistory[contador] - 1].checked = 0;
             seleccionadas--;
         }
         myHistory[contador] = n;

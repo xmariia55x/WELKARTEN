@@ -31,9 +31,6 @@ public class ServletReservarTicketEvento extends HttpServlet {
     @EJB
     private EventoFacade eventoFacade;
     
-    
-
-    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.

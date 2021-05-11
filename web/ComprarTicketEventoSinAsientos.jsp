@@ -68,7 +68,7 @@
                                     <input type="text" class="form-control" placeholder="YY" maxlength="2" />
                                 </div>
                                 <div class="col-md-2 col-sm-2 col-xs-2">
-                                    <span class="help-block text-muted small-font" >  CCV</span>
+                                    <span class="help-block text-muted small-font" >  CVV</span>
                                     <input type="text" class="form-control" placeholder="CCV" maxlength="4" />
                                 </div>
                                 <div class="col-md-3 col-sm-3 col-xs-3" style="margin-top: -10px;">

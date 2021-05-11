@@ -38,7 +38,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="jsComprarTicket.js" defer></script>
 
-        <div class="cabecera">
+        <div class="cabecera2">
             <div class="welkarten">
                 <img src="images/ticket.png" width="150" height="150" >
             </div>
@@ -87,16 +87,16 @@
                                                 
                                                 if (hayEntradasCompradas && listaEntradas.contains(id)){
                                                     desactivado = "disabled";
-                                                }
-                                                
+                                                }  
                                         %>
                                         <li class="seat" style="<%=estilo%>">
-                                            <input type="checkbox" id="<%=id%>" name="asientosSeleccionados" class="seleccion" onclick="checkear(<%=id%>)" <%=desactivado%>/>
+                                            <input type="checkbox" <%=desactivado%> id="<%=id%>" name="asientosSeleccionados" class="seleccion" onclick="checkear(<%=id%>)"/>
                                             <label for="<%=id%>"><%=id%></label>
                                         </li>
                                         <%    estilo = "";
                                               desactivado = "";
-                                            } %>
+                                            } 
+                                        %>
 
                                     </ol>
                                 </li>
@@ -133,8 +133,8 @@
                                             <input type="text" class="form-control" placeholder="YY" maxlength="2" />
                                         </div>
                                         <div class="col-md-2 col-sm-2 col-xs-2">
-                                            <span class="help-block text-muted small-font" >  CCV</span>
-                                            <input type="text" class="form-control" placeholder="CCV" maxlength="4" />
+                                            <span class="help-block text-muted small-font" >  CVV</span>
+                                            <input type="text" class="form-control" placeholder="CCV" maxlength="3" />
                                         </div>
                                         <div class="col-md-3 col-sm-3 col-xs-3" style="margin-top: -10px;">
                                             <img src="images/cvv.png" width="80" height="80"/>
