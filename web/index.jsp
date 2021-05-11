@@ -18,7 +18,8 @@ and open the template in the editor.
     %>
     <body>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <!-- BARRA DE NAVEGACION -->
+        <jsp:include page="navbarSinSesionIniciada.jsp" />
+        <!-- BARRA DE NAVEGACION
         <header>
             <nav class="navbar navbar-expand-lg navbar-light bg-light" >
                 <div class="container-fluid">
@@ -46,12 +47,12 @@ and open the template in the editor.
                         </form>
                         <br/>
                         <input type="button" class="btn btn-primary btn-lg" id="inicio_sesion_principal_button" value="Iniciar sesión" name="inicio_sesion_principal_button"
-                               onclick="location.href = 'InicioSesion.html'" /> 
+                               onclick="location.href = 'InicioSesion.jsp'" /> 
                     </div>
                 </div>
             </nav>
         </header>
-        <!-- FIN BARRA DE NAVEGACION -->
+         FIN BARRA DE NAVEGACION -->
         <br>
         <br>
         <br>

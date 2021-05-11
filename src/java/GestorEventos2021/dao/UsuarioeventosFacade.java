@@ -6,9 +6,11 @@
 package GestorEventos2021.dao;
 
 import GestorEventos2021.entity.Usuarioeventos;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
