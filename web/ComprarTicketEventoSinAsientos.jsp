@@ -39,8 +39,9 @@
             </div>
         </div>
 
-        <form class="contenido2" action="ServletGuardar">
+        <form class="contenido2" action="ServletGuardarTicket">
             <input type="hidden" name="idEvento" value="<%=evento.getId()%>" />
+            <input type="hidden" name="nEntradas" value="<%=nEntradas%>" />
             <div class="credit-card-div2">
                 <div class="panel panel-default" >
                     <div class="panel-heading">
@@ -92,8 +93,8 @@
                 </div>
             </div>
             <div style="float: right; margin-right: 10%">
-                <input type="button" class="btn btn-light btn-lg" value="Cancelar" />
-                <input type="submit" class="btn btn-primary btn-lg" value="Confirmar" onclick=""/>
+                <input type="button" class="btn btn-light btn-lg" value="Cancelar" onclick="location.href='ServletEventoInfo?id=<%=evento.getId()%>'" />
+                <input type="submit" class="btn btn-primary btn-lg" value="Confirmar"/>
             </div>
         </form>
     </body>

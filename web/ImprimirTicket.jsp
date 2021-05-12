@@ -15,6 +15,8 @@
         <link href="styles2.css" rel="stylesheet">
         <link href="stylesImprimirTicket.css" rel="stylesheet">
     </head>
+    <%
+    %>
     <body>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="jsComprarTicket.js" defer></script>
@@ -26,7 +28,7 @@
         <br>
         <br>
         <br>
-
+            
         <!-- TICKETS -->
         <div class="cardWrap">
             <div class="card cardLeft">
@@ -37,23 +39,37 @@
                 </div>
                 <div class="name">
                     <h2>Vladimir Kudinov</h2>
+                    <span>nombre</span>
+                </div>
+                <div class="name">
+                    <h2>Lugar</h2>
                     <span>lugar</span>
                 </div>
-                <div class="seat">
-                    <h2>156</h2>
-                    <span>seat</span>
-                </div>
-                <div class="time">
-                    <h2>12:00</h2>
-                    <span>time</span>
+                <div class="informacion_mini">
+                    <div class="time">
+                        <h2>00/00/0000</h2>
+                        <span>fecha</span>
+                    </div>
+                    <div class="time">
+                        <h2>12:00</h2>
+                        <span>hora</span>
+                    </div>
+                    <div class="time">
+                        <h2>5</h2>
+                        <span>fila</span>
+                    </div>
+                    <div class="time">
+                        <h2>156</h2>
+                        <span>asiento</span>
+                    </div>
                 </div>
 
             </div>
             <div class="card cardRight">
-                <div class="eye"></div>
                 <div class="number">
-                    <img src="images/ticket.png" width="120" height="120">
+                    <img src="images/ticket.png" width="80" height="80">
                 </div>
+                <div class="precio">3€</div>
                 <div class="barcode"></div>
             </div>
 

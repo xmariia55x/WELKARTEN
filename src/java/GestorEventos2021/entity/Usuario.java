@@ -48,19 +48,28 @@ public class Usuario implements Serializable {
     @Column(name = "ID")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "NOMBRE", length = 50, nullable = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "NOMBRE")
     private String nombre;
     @Basic(optional = false)
-    @Column(name = "NIF", length = 50, nullable = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "NIF")
     private String nif;
     @Basic(optional = false)
-    @Column(name = "CORREO", length = 50, nullable = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "CORREO")
     private String correo;
     @Basic(optional = false)
-    @Column(name = "PASSWORD", length = 50, nullable = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "PASSWORD")
     private String password;
     @Basic(optional = false)
-    @Column(name = "ROL", nullable = false)
+    @NotNull
+    @Column(name = "ROL")
     private int rol;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "teleoperador")
     private List<Conversacion> conversacionList;

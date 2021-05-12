@@ -46,7 +46,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Evento.findByAforo", query = "SELECT e FROM Evento e WHERE e.aforo = :aforo")
     , @NamedQuery(name = "Evento.findByEntradasMax", query = "SELECT e FROM Evento e WHERE e.entradasMax = :entradasMax")
     , @NamedQuery(name = "Evento.findByFilas", query = "SELECT e FROM Evento e WHERE e.filas = :filas")
-    , @NamedQuery(name = "Evento.findByAsientosFila", query = "SELECT e FROM Evento e WHERE e.asientosFila = :asientosFila")})
+    , @NamedQuery(name = "Evento.findByAsientosFila", query = "SELECT e FROM Evento e WHERE e.asientosFila = :asientosFila")
+    , @NamedQuery(name = "Evento.findByHora", query = "SELECT e FROM Evento e WHERE e.hora = :hora")
+    , @NamedQuery(name = "Evento.findByLugar", query = "SELECT e FROM Evento e WHERE e.lugar = :lugar")})
 public class Evento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,32 +58,47 @@ public class Evento implements Serializable {
     @Column(name = "ID")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "TITULO", length = 200, nullable = false)
+    @NotNull
+    @Size(min = 1, max = 200)
+    @Column(name = "TITULO")
     private String titulo;
     @Basic(optional = false)
-    @Column(name = "DESCRIPCION", length = 2000, nullable = false)
+    @NotNull
+    @Size(min = 1, max = 2000)
+    @Column(name = "DESCRIPCION")
     private String descripcion;
     @Basic(optional = false)
-    @Column(name = "FECHA_INICIO", nullable = false)
+    @NotNull
+    @Column(name = "FECHA_INICIO")
     @Temporal(TemporalType.DATE)
     private Date fechaInicio;
     @Basic(optional = false)
-    @Column(name = "FECHA_RESERVA", nullable = false)
+    @NotNull
+    @Column(name = "FECHA_RESERVA")
     @Temporal(TemporalType.DATE)
     private Date fechaReserva;
     @Basic(optional = false)
-    @Column(name = "COSTE_ENTRADA", nullable = false)
+    @NotNull
+    @Column(name = "COSTE_ENTRADA")
     private double costeEntrada;
     @Basic(optional = false)
-    @Column(name = "AFORO", nullable = false)
+    @NotNull
+    @Column(name = "AFORO")
     private int aforo;
     @Basic(optional = false)
-    @Column(name = "ENTRADAS_MAX", nullable = false)
+    @NotNull
+    @Column(name = "ENTRADAS_MAX")
     private int entradasMax;
     @Column(name = "FILAS")
     private Integer filas;
     @Column(name = "ASIENTOS_FILA")
     private Integer asientosFila;
+    @Column(name = "HORA")
+    @Temporal(TemporalType.TIME)
+    private Date hora;
+    @Size(max = 200)
+    @Column(name = "LUGAR")
+    private String lugar;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento")
     private List<Etiquetasevento> etiquetaseventoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento")
@@ -186,6 +203,22 @@ public class Evento implements Serializable {
 
     public void setAsientosFila(Integer asientosFila) {
         this.asientosFila = asientosFila;
+    }
+
+    public Date getHora() {
+        return hora;
+    }
+
+    public void setHora(Date hora) {
+        this.hora = hora;
+    }
+
+    public String getLugar() {
+        return lugar;
+    }
+
+    public void setLugar(String lugar) {
+        this.lugar = lugar;
     }
 
     @XmlTransient

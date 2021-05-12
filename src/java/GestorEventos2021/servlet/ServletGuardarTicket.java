@@ -7,6 +7,8 @@ package GestorEventos2021.servlet;
 
 import GestorEventos2021.dao.EntradaFacade;
 import GestorEventos2021.dao.EventoFacade;
+import GestorEventos2021.dao.UsuarioeventosFacade;
+import GestorEventos2021.entity.Entrada;
 import GestorEventos2021.entity.Evento;
 import GestorEventos2021.entity.Usuario;
 import java.io.IOException;
@@ -24,14 +26,18 @@ import javax.servlet.http.HttpSession;
  *
  * @author yeray
  */
-@WebServlet(name = "ServletReservarTicketEvento", urlPatterns = {"/ServletReservarTicketEvento"})
-public class ServletReservarTicketEvento extends HttpServlet {
+@WebServlet(name = "ServletGuardarTicket", urlPatterns = {"/ServletGuardarTicket"})
+public class ServletGuardarTicket extends HttpServlet {
+
+    @EJB
+    private UsuarioeventosFacade usuarioeventosFacade;
 
     @EJB
     private EntradaFacade entradaFacade;
 
     @EJB
     private EventoFacade eventoFacade;
+
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,31 +50,40 @@ public class ServletReservarTicketEvento extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String eventoId = request.getParameter("idEvento");
-        String nEntradas = request.getParameter("nEntradas");
-        Evento evento;
-        String strTo = "";
         HttpSession session = request.getSession();
         Usuario u = (Usuario) session.getAttribute("usuario");
+        String idEvento = request.getParameter("idEvento");
+        Integer nEntradas = new Integer(request.getParameter("nEntradas"));
+        String[] seleccionadas = request.getParameterValues("asientosSeleccionados");
+        Evento evento;
+        Entrada e;
+        Integer numero;
         
-        if (u == null || u.getUsuarioeventos() == null) { //No se ha iniciado sesión como usuario de eventos
-            strTo = "InicioSesion.jsp";
-        } else {                                          //Ha iniciado sesión correctamente
-            evento = this.eventoFacade.find(new Integer(eventoId));
-
-            if (evento.getFilas() == null){         //No se seleccionan asientos
-                strTo = "ComprarTicketEventoSinAsientos.jsp";
-            } else {                                //Selecciona asientos
-                strTo = "ComprarTicketEvento.jsp";
+        evento = this.eventoFacade.find(new Integer(idEvento));
+        
+        if (seleccionadas == null) {        //Evento sin asientos
+            Integer maxIndice = evento.getEntradaList().size() + 1;
+            e = new Entrada();
+            e.setEvento(evento);
+            e.setUsuario(u);
+            for (int i=0; i < seleccionadas.length; i++){
+                numero = new Integer(seleccionadas[i]);
+                e.setNumero(numero);
+                
+                this.entradaFacade.create(e);
+                evento.getEntradaList().add(e);
+                u.getEntradaList().add(e);                
             }
             
-            request.setAttribute("listaEntradas", this.entradaFacade.findByEntradasCompradaDeUnEvento(evento));
-            request.setAttribute("evento", evento);
-            request.setAttribute("nEntradas", nEntradas);
+            this.eventoFacade.edit(evento);
+            //DEBERIA SER USUARIO DE EVENTOS!!!
+            
+        } else {                            //Evento con asientos
+            
         }
         
-        RequestDispatcher rd = request.getRequestDispatcher(strTo);
-        rd.forward(request, response); 
+        RequestDispatcher rd = request.getRequestDispatcher("ImprimirTicket.jsp");
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
