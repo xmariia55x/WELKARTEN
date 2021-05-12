@@ -6,10 +6,13 @@
 package GestorEventos2021.servlet;
 
 import GestorEventos2021.dao.ConversacionFacade;
+import GestorEventos2021.dao.MensajeFacade;
 import GestorEventos2021.entity.Conversacion;
+import GestorEventos2021.entity.Mensaje;
 import GestorEventos2021.entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,6 +30,8 @@ public class ServletInfoConversacion extends HttpServlet {
 
     @EJB
     private ConversacionFacade conversacionFacade;
+    
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,7 +48,10 @@ public class ServletInfoConversacion extends HttpServlet {
         
         //Buscamos la conversacion en la BD
         Conversacion c = this.conversacionFacade.find(new Integer(id));
+        List<Mensaje> listaMensajes = c.getMensajeList();
         request.setAttribute("conversacion", c);
+        request.setAttribute("listaMensajes", listaMensajes);
+        
         
         RequestDispatcher rd = request.getRequestDispatcher("InfoConversacion.jsp");
         rd.forward(request, response);
