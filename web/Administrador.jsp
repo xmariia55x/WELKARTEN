@@ -45,9 +45,11 @@
                     </div>
                 </form> 
                 <!-- BOTONACO DE CREAR USUARIOS -->
-                <div class="d-grid gap-2 col-6 mx-auto">
-                    <button type="submit" class="btn btn-primary btn-lg" onclick="location.href = 'CrearUsuarioAdministrador.jsp'">Crear nuevo usuario</button>
-                </div>
+                
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                    <input type="submit" class="btn btn-primary btn-lg" value="Crear usuario" onclick="location.href = 'CrearUsuarioAdministrador.jsp'"/>
+                    </div>
+                
                 <!-- TABLA DE USUARIOS -->
                 <%
                     if (usuarios != null && !usuarios.isEmpty()) {
@@ -72,8 +74,8 @@
                             <td><%=user.getNif()%></td>
                             <td><%=user.getCorreo()%></td>
                             <td><%=user.getRol()%></td>
-                            <td><button class="btn btn-outline-primary" type="submit">Editar</button></td>
-                            <td><button class="btn btn-outline-danger" type="submit">Eliminar</button></td>
+                            <td><input type="submit" class="btn btn-outline-primary" value="Editar" onclick="location.href = 'ServletCargarUsuarioEditarAdministrador?id=<%= user.getId()%>'"/></td>
+                            <td><input type="submit" class="btn btn-outline-danger" value="Eliminar" onclick="location.href = 'ServletEliminarUsuarioAdministrador?id=<%= user.getId()%>'"/></td>
                         </tr>
                         <%
                             }
