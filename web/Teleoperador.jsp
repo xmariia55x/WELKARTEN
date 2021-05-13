@@ -13,7 +13,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-        <link href="stylesTeleoperador.css" rel="stylesheet">  
+        <link href="stylesTeleoperador.css" rel="stylesheet">
+        
     </head>
     
     <%
@@ -27,14 +28,32 @@
             <br/>
             <br/>
             <br/>
-         
+            
+            <form action="ServletListarConversaciones"> 
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="filtroTeleoperador" name="filtroTeleoperador" placeholder="Password">
+                    <label for="text">Filtrar teleoperador</label>
+                </div>
                 
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="filtroUsuario" name ="filtroUsuario" placeholder="Password">
+                    <label for="text">Filtrar usuario</label>
+                </div>
+                
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <input type="submit" class="btn btn-primary btn-lg" id="filtrarTele" value="Filtrar" name="filtrarTele"/>
+                </div>                    
+            </form>
+            
+            
                 <!-- TABLA DE CONVERSACIONES -->
                     <table class="table">
                         <thead class = "table-primary">
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Conversación</th>
+                                <th scope="col">Teleoperador</th>
+                                <th scope="col">Usuario</th>
                                 <th scope="col">Info</th>
                                 <th scope="col">Eliminar</th>
                             </tr>
@@ -47,8 +66,10 @@
                                 <tr>
                                     <th scope="row"><%= i %></th>
                                     <td><%= c.getId() %></td>
-                                    <td><button class="btn btn-outline-primary" type="submit">Info</button></td>
-                                    <td><button class="btn btn-outline-danger" type="submit">Eliminar</button></td>
+                                    <td><%= c.getTeleoperador().getNombre() %></td>
+                                    <td><%= c.getUsuario().getNombre() %></td>
+                                    <td><button class="btn btn-outline-primary" type="submit" onclick="location.href = 'ServletInfoConversacion?id=<%= c.getId() %>'">Info</button></td>
+                                    <td><button class="btn btn-outline-danger" type="submit" onclick="location.href = 'ServletEliminarConversacion?id=<%= c.getId() %>'">Eliminar</button></td>
                                 </tr>
                             <%
                                 i++;

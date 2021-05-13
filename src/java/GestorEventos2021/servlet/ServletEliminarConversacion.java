@@ -5,33 +5,29 @@
  */
 package GestorEventos2021.servlet;
 
-import GestorEventos2021.entity.Conversacion;
-import GestorEventos2021.entity.Usuario;
 import GestorEventos2021.dao.ConversacionFacade;
+import GestorEventos2021.entity.Conversacion;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
-import javax.servlet.http.HttpSession;
-import javax.servlet.RequestDispatcher;
-
 
 /**
  *
  * @author adric
  */
-@WebServlet(name = "ServletListarConversaciones", urlPatterns = {"/ServletListarConversaciones"})
-public class ServletListarConversaciones extends HttpServlet {
+@WebServlet(name = "ServletEliminarConversacion", urlPatterns = {"/ServletEliminarConversacion"})
+public class ServletEliminarConversacion extends HttpServlet {
 
     @EJB
     private ConversacionFacade conversacionFacade;
 
+    
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,29 +39,15 @@ public class ServletListarConversaciones extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String id = request.getParameter("id");
         
-        String strTo = "Teleoperador.jsp";
-        HttpSession session = request.getSession();
-        Usuario usuario = (Usuario)session.getAttribute("usuario");
-        String filtroTeleoperador = request.getParameter("filtroTeleoperador");
-        String filtroUsuario = request.getParameter("filtroUsuario");
-        List<Conversacion> conversaciones = new ArrayList();
+        //Buscamos la conversacion en la BD
+        Conversacion c = this.conversacionFacade.find(new Integer(id));
         
-        if(usuario != null) {
-           
-           if((filtroTeleoperador != null && filtroTeleoperador.length() > 0) || (filtroUsuario != null && filtroUsuario.length() > 0)) {
-               conversaciones = this.conversacionFacade.findByFiltro(filtroTeleoperador, filtroUsuario);
-           } else {
-               //No estamos aplicando filtro
-               conversaciones = this.conversacionFacade.findAll();
-           }
-            
-           request.setAttribute("listaConversaciones", conversaciones);
-        }
-               
-        RequestDispatcher rd = request.getRequestDispatcher(strTo);
-        rd.forward(request, response);
+        //Eliminamos la conversacion
+        this.conversacionFacade.remove(c);
         
+        response.sendRedirect("ServletListarConversaciones");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
