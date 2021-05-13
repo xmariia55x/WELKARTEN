@@ -6,9 +6,11 @@
 package GestorEventos2021.servlet;
 
 import GestorEventos2021.dao.UsuarioFacade;
+import GestorEventos2021.entity.Evento;
 import GestorEventos2021.entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,16 +22,13 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author adric
+ * @author Javi
  */
-@WebServlet(name = "ServletIniciarSesion", urlPatterns = {"/ServletIniciarSesion"})
-
-
-public class ServletIniciarSesion extends HttpServlet {
+@WebServlet(name = "ServletCargarCreadorEventos", urlPatterns = {"/ServletCargarCreadorEventos"})
+public class ServletCargarCreadorEventos extends HttpServlet {
 
     @EJB
     private UsuarioFacade usuarioFacade;
-
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,43 +41,30 @@ public class ServletIniciarSesion extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            String strUsuario = request.getParameter("email");
-            String strClave = request.getParameter("password");
-            Usuario usuario;
-            String strError;
-            String strTo = "";
-            HttpSession session = request.getSession();
-            
-            if(strUsuario == null || strClave == null || strUsuario.isEmpty() || strClave.isEmpty()) {
-                strTo = "InicioSesion.jsp";
-                strError = "v";
-                request.setAttribute("error", strError);
-            } else {
-                usuario = this.usuarioFacade.findByEmailAndPassword(strUsuario, strClave);
-                
-                if(usuario == null) {
-                    strError = "n";
-                    request.setAttribute("error", strError);
-                    strTo = "InicioSesion.jsp";
-                } else {
-                    if(usuario.getRol() == 1) {
-                        strTo = "ServletListarEventosUsuariosAdministrador";
-                    } else if(usuario.getRol() == 2) {
-                        strTo = "ServletCargarCreadorEventos";
-                    } else if(usuario.getRol() == 3) {
-                        strTo = "ServletListarEstudios";
-                    } else if(usuario.getRol() == 4) {
-                        //Aquí debe ir el usuario de eventos
-                        strTo = "ServletInicio";
-                    } else{ 
-                        strTo = "ServletListarConversaciones";
-                    }
-                    session.setAttribute("usuario",usuario);
-                }
-            }
-            
-            RequestDispatcher rd = request.getRequestDispatcher(strTo);
-            rd.forward(request, response);
+      
+        
+        HttpSession session = request.getSession();  
+        Usuario usuario = (Usuario)session.getAttribute("usuario");
+        
+        List<Evento> eventosFiltrados = (List)request.getAttribute("eventosFiltrados");
+        
+        if(eventosFiltrados != null && !eventosFiltrados.isEmpty()){
+            request.setAttribute("eventosFiltrados", eventosFiltrados);
+        }
+  
+        String error = request.getParameter("error");
+        if(error != null && !error.isEmpty()) request.setAttribute("error", error);
+        
+        List<Usuario> creadores = this.usuarioFacade.findByRol(2);
+        
+        
+        
+        request.setAttribute("usuario", usuario);
+        request.setAttribute("creadores", creadores);
+               
+        RequestDispatcher rd = request.getRequestDispatcher("CreadorEventos.jsp");
+        rd.forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

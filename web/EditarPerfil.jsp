@@ -33,7 +33,7 @@
                     if (strError.equals("contraseniaNoCoincide")) { %>
 
             <div class="alert alert-danger" role="alert">
-                ERROR: Las contraseñas no coinciden
+                ERROR: Las contraseñas no coinciden.
             </div>
             <%        }
                 }
