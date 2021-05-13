@@ -1,3 +1,6 @@
+<%@page import="GestorEventos2021.entity.Evento"%>
+<%@page import="java.util.List"%>
+<%@page import="GestorEventos2021.entity.Usuario"%>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -12,17 +15,18 @@ and open the template in the editor.
         <title>WELKARTEN</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-        <link href="styles2.css" rel="stylesheet">      
-        <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/pricing/">
-        
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"> 
+        <link href="styles2.css" rel="stylesheet">    
+        <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/pricing/"> 
+
+
         <style>
 
             .row {
                 display: flex;
                 margin-left:-5px;
                 margin-right:-5px;
-                z-index: 2000;
                 justify-content: center
 
             }
@@ -31,8 +35,13 @@ and open the template in the editor.
                 flex: 50%;
                 margin: auto;
                 width: 60%;
-                z-index: 2000;
                 padding: 0px;
+                justify-content: center
+            }
+
+            .proximos {
+
+                justify-content: center
             }
 
             #divfix {
@@ -44,14 +53,51 @@ and open the template in the editor.
                 margin-bottom: 2%;
             }
 
+            .panel {
+                padding: 0 18px;
+                background-color: white;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.2s ease-out;
+            }
+            .accordion:after {
+                content: '\002B';
+                color: #777;
+                font-weight: bold;
+                float: right;
+                margin-left: 5px;
+            }
+
+            .intro {
+                height: 100%;
+            }
+
+            .card-header {
+                border-bottom: 3px solid #39c0ed;
+            }
+
+            .form-control {
+                border-color: transparent;
+            }
+
+            .input-group>.form-control:focus {
+                border-color: transparent;
+                box-shadow: inset 0 0 0 1px transparent;
+            }
 
 
 
         </style>
 
-
-
     </head>
+
+    <%
+
+        Usuario usuario = (Usuario) request.getAttribute("usuario");
+        List<Usuario> creadores = (List) request.getAttribute("creadores");
+        List<Evento> eventosFiltrados = (List) request.getAttribute("eventosFiltrados");
+
+    %>
     <body>
 
 
@@ -59,160 +105,226 @@ and open the template in the editor.
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <jsp:include page="navbarSesionIniciada.jsp" />
-        <!-- BARRA DE NAVEGACION 
-        <header>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light" >
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="#">
-                        <img src="images/logo_pequeno.png" alt="" width="200" height="50">
-                    </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="index.jsp">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">Conócenos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="contactanos.jsp">Contáctanos</a>
-                            </li>
-                        </ul>
-                        <form class="d-flex" style="margin-right: 2em">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-primary" type="submit">Buscar</button>
-                        </form>
-                        <br/>
-                        <input type="button" class="btn btn-primary btn-lg" id="inicio_sesion_principal_button" value="Iniciar sesión" name="inicio_sesion_principal_button"
-                               onclick="location.href = 'InicioSesion.html'" /> 
-                    </div>
-                </div>
-            </nav>
-        </header>
-         FIN BARRA DE NAVEGACION -->
         <br>
         <br>
         <br>
         <br>
-
-        <!--<button onclick="location.href='InicioSesion.html'">Iniciar sesión</button> -->
 
 
         <!-- CONTENIDO -->
 
+ <form action="ServletBusquedaAvanzadaEventos"> 
+        <section class="intro">
+            <div class="bg-image h-100">
+                <div class="mask d-flex align-items-center h-100">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="input-group input-group-lg">
+                                           
+                                            <input type="text" name="nombre" class="form-control form-control-lg rounded" placeholder="Buscar" value=""    
+                                                   aria-label="nombre" aria-describedby="basic-addon2" />
+                                            
+                                                <button type="submit" class="btn btn-primary" onclick="ServletBusquedaAvanzadaEventos" >
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                                    </svg>
+                                                </button>
+
+                                        </div>
+                                    </div>
+
+                                    <label class="accordion">Búsqueda avanzada</label>
+                                    <div class="panel">
+                                        <div class="card-body p-4">
+                                            <h6 class="text-muted text-uppercase mt-3 mb-4"></h6>
+                                            <div class="row">
+                                                <div class="col-md-4 mb-3">                                     
+                                                    Precio Máximo : <input type="text" name="precio" class="form-control form-control-lg rounded"  value=""                                                       
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+
+                                                Aforo Máximo : <input type="text" name="aforo" class="form-control form-control-lg rounded" value=""                          
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+
+                                            Creador del Evento : <select name="creador">
+                                                <option value=""></option>
+                                                <%                                                    for (Usuario u : creadores) {
+                                                %>
+                                                <option value="<%= u.getId()%>"> <%= u.getNombre()%> </option>
+                                                <%
+                                                    }
+                                                %>
+
+                                            </select>
 
 
-        <div id="divfix">
-            <button type="button" class="w-100 btn btn-lg btn-primary">Crear nuevo Evento</button>
-        </div>
 
+                                        </div>
+                                    </div>
 
-
-
-        <div class="column">
-            <div class="row">
-                <h1 class="display-4">Eventos próximos</h1>
-
-                <div class="proximos">
-                    <br/>
-                    <br>
-                    <div class="carta">
-                        <div class="card" style="width: 18rem;">
-                            <img src="images/chatbot.png" class="card-img-top" alt="Evento">
-                            <div class="card-body">
-                                <h5 class="card-title">Titulo de la tarjeta</h5>
-                                <p class="card-text">Facebook organiza un evento de chatbots.</p>
-                                <a href="#" class="btn btn-primary">Ver evento</a>
-                                <a href="#" class="btn btn-primary">Borrar</a>
-                                <a href="#" class="btn btn-primary">Editar</a>
+                                    <button type="submit" class="btn btn-primary" onclick="ServletBusquedaAvanzadaEventos">Buscar</button>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
-                    </div> 
-                    <div class="carta">
-                        <div class="card" style="width: 18rem;">
-                            <img src="images/chatbot.png" class="card-img-top" alt="Evento"/> 
-                            <div class="card-body">
-                                <h5 class="card-title">Titulo de la tarjeta</h5>
-                                <p class="card-text">Facebook organiza un evento de chatbots.</p>
-                                <a href="#" class="btn btn-primary">Ver evento</a>
-                                <a href="#" class="btn btn-primary">Borrar</a>
-                                <a href="#" class="btn btn-primary">Editar</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="carta">
-                        <div class="card" style="width: 18rem;">
-                            <img src="images/chatbot.png" class="card-img-top" alt="Evento"/> 
-                            <div class="card-body">
-                                <h5 class="card-title">Titulo de la tarjeta</h5>
-                                <p class="card-text">Facebook organiza un evento de chatbots.</p>
-                                <a href="#" class="btn btn-primary">Ver evento</a>
-                                <a href="#" class="btn btn-primary">Borrar</a>
-                                <a href="#" class="btn btn-primary">Editar</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br/>
-            <br/>
-            <br/>
 
 
 
-            <div class="row">
-
-                <h1 class="display-4">Eventos finalizados</h1>
-
-
-                <div class="finalizados">
-                    <br/>
-                    <br/>
-                    <div class="carta">
-                        <div class="card" style="width: 18rem;">
-                            <img src="images/chatbot.png" class="card-img-top" alt="Evento"/> 
-                            <div class="card-body">
-                                <h5 class="card-title">Titulo de la tarjeta</h5>
-                                <p class="card-text">Facebook organiza un evento de chatbots.</p>
-                                <a href="#" class="btn btn-primary">Ver evento</a>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="carta">
-                        <div class="card" style="width: 18rem;">
-                            <img src="images/chatbot.png" class="card-img-top" alt="Evento"/> 
-                            <div class="card-body">
-                                <h5 class="card-title">Titulo de la tarjeta</h5>
-                                <p class="card-text">Facebook organiza un evento de chatbots.</p>
-                                <a href="#" class="btn btn-primary">Ver evento</a>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="carta">
-                        <div class="card" style="width: 18rem;">
-                            <img src="images/chatbot.png" class="card-img-top" alt="Evento"/> 
-                            <div class="card-body">
-                                <h5 class="card-title">Titulo de la tarjeta</h5>
-                                <p class="card-text">Facebook organiza un evento de chatbots.</p>
-                                <a href="#" class="btn btn-primary">Ver evento</a>
-
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+</div>
+</section>
+
+
+</form>
 
 
 
 
-    </body>
+<div id="divfix">
+    <button type="button" class="w-100 btn btn-lg btn-primary">Crear nuevo Evento</button>
+</div>
+
+<div class="column">
+    <div class="row">
+        <h1 class="display-4">Eventos próximos</h1>
+
+
+        <%
+            if (eventosFiltrados != null && !eventosFiltrados.isEmpty()) {
+                for (Evento e : eventosFiltrados) {
+        %>
+        <%= e.getTitulo()%><br/>
+        <%
+                }
+            }
+        %>
+
+
+        <div class="proximos">
+            <br/>
+            <br>
+            <div class="carta">
+                <div class="card" style="width: 18rem;">
+                    <img src="images/chatbot.png" class="card-img-top" alt="Evento">
+                    <div class="card-body">
+                        <h5 class="card-title">Titulo de la tarjeta</h5>
+                        <p class="card-text">Facebook organiza un evento de chatbots.</p>
+                        <a href="#" class="btn btn-primary">Ver evento</a>
+                        <a href="#" class="btn btn-primary">Borrar</a>
+                        <a href="#" class="btn btn-primary">Editar</a>
+                    </div>
+                </div>
+            </div> 
+            <div class="carta">
+                <div class="card" style="width: 18rem;">
+                    <img src="images/chatbot.png" class="card-img-top" alt="Evento"/> 
+                    <div class="card-body">
+                        <h5 class="card-title">Titulo de la tarjeta</h5>
+                        <p class="card-text">Facebook organiza un evento de chatbots.</p>
+                        <a href="#" class="btn btn-primary">Ver evento</a>
+                        <a href="#" class="btn btn-primary">Borrar</a>
+                        <a href="#" class="btn btn-primary">Editar</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carta">
+                <div class="card" style="width: 18rem;">
+                    <img src="images/chatbot.png" class="card-img-top" alt="Evento"/> 
+                    <div class="card-body">
+                        <h5 class="card-title">Titulo de la tarjeta</h5>
+                        <p class="card-text">Facebook organiza un evento de chatbots.</p>
+                        <a href="#" class="btn btn-primary">Ver evento</a>
+                        <a href="#" class="btn btn-primary">Borrar</a>
+                        <a href="#" class="btn btn-primary">Editar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+
+
+
+    <div class="row">
+
+        <h1 class="display-4">Eventos finalizados</h1>
+
+
+        <div class="finalizados">
+            <br/>
+            <br/>
+            <div class="carta">
+                <div class="card" style="width: 18rem;">
+                    <img src="images/chatbot.png" class="card-img-top" alt="Evento"/> 
+                    <div class="card-body">
+                        <h5 class="card-title">Titulo de la tarjeta</h5>
+                        <p class="card-text">Facebook organiza un evento de chatbots.</p>
+                        <a href="#" class="btn btn-primary">Ver evento</a>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="carta">
+                <div class="card" style="width: 18rem;">
+                    <img src="images/chatbot.png" class="card-img-top" alt="Evento"/> 
+                    <div class="card-body">
+                        <h5 class="card-title">Titulo de la tarjeta</h5>
+                        <p class="card-text">Facebook organiza un evento de chatbots.</p>
+                        <a href="#" class="btn btn-primary">Ver evento</a>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="carta">
+                <div class="card" style="width: 18rem;">
+                    <img src="images/chatbot.png" class="card-img-top" alt="Evento"/> 
+                    <div class="card-body">
+                        <h5 class="card-title">Titulo de la tarjeta</h5>
+                        <p class="card-text">Facebook organiza un evento de chatbots.</p>
+                        <a href="#" class="btn btn-primary">Ver evento</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+        });
+    }
+</script>
+
+
+
+</body>
 </html>

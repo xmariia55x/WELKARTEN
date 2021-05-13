@@ -48,6 +48,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Evento.findByFilas", query = "SELECT e FROM Evento e WHERE e.filas = :filas")
     , @NamedQuery(name = "Evento.findByAsientosFila", query = "SELECT e FROM Evento e WHERE e.asientosFila = :asientosFila")
     , @NamedQuery(name = "Evento.findByHora", query = "SELECT e FROM Evento e WHERE e.hora = :hora")
+    , @NamedQuery(name = "Evento.findByCreador", query = "SELECT e FROM Evento e WHERE e.creador = :creador")
     , @NamedQuery(name = "Evento.findByLugar", query = "SELECT e FROM Evento e WHERE e.lugar = :lugar")})
 public class Evento implements Serializable {
 

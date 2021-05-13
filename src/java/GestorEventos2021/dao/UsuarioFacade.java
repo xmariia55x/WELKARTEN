@@ -47,4 +47,14 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         
     }
     
+    public List<Usuario> findByRol (Integer rol){
+        
+        Query q;
+        
+        q = this.em.createNamedQuery("Usuario.findByRol");
+        q.setParameter("rol", rol);
+        
+        return q.getResultList();
+    }
+    
 }

@@ -6,6 +6,7 @@
 package GestorEventos2021.dao;
 
 import GestorEventos2021.entity.Evento;
+import GestorEventos2021.entity.Usuario;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -45,5 +46,55 @@ public class EventoFacade extends AbstractFacade<Evento> {
         
         return lista;
     }
+    
+    public List<Evento> filtrarByNombrePrecioAforoCreador(String nombre, Integer precio, Integer aforo, Usuario creador){
+        Query q;
+        
+        String query = "SELECT e FROM Evento e WHERE ";
+        Boolean primeroPuesto= false;
+        Boolean nombreFiltrado = false;
+        Boolean precioFiltrado = false;
+        Boolean aforoFiltrado = false;
+        Boolean creadorFiltrado = false;
+        
+        if((nombre == null || nombre.equals(""))  && precio == null  && aforo == null  && creador == null){
+            return this.findAll();
+        }else{
+            if(nombre != null && !nombre.equals("")){             
+                query += " e.titulo LIKE :titulo ";
+                primeroPuesto = true;   
+                nombreFiltrado = true;
+            }
+            if(precio != null && precio >= 0){
+                if(primeroPuesto) query += " AND ";
+                query += " e.costeEntrada <= :costeEntrada ";
+                primeroPuesto = true;
+                precioFiltrado = true;
+            }
+            if(aforo != null && aforo > 0){
+                if(primeroPuesto) query += " AND ";
+                query += " e.aforo <= :aforo ";
+                primeroPuesto = true; 
+                aforoFiltrado = true;
+            }
+            if(creador != null){
+                if(primeroPuesto) query += " AND ";
+                query += " e.creador = :creador ";
+                primeroPuesto = true; 
+                creadorFiltrado = true;
+            }                               
+        }
+        
+        q = this.em.createQuery(query);
+        
+        if(nombreFiltrado) q.setParameter("titulo", "%" + nombre + "%");
+        if(precioFiltrado) q.setParameter("costeEntrada", precio);
+        if(aforoFiltrado) q.setParameter("aforo", aforo);
+        if(creadorFiltrado) q.setParameter("creador", creador);
+        
+        
+        return q.getResultList();
+    }
+    
     
 }
