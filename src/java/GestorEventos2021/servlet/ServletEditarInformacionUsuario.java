@@ -14,8 +14,6 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,13 +21,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author yeray
+ * @author maria
  */
-@WebServlet(name = "ServletCrearUsuario", urlPatterns = {"/ServletCrearUsuario"})
-public class ServletCrearUsuario extends HttpServlet {
+@WebServlet(name = "ServletEditarInformacionUsuario", urlPatterns = {"/ServletEditarInformacionUsuario"})
+public class ServletEditarInformacionUsuario extends HttpServlet {
 
     @EJB
     private UsuarioeventosFacade usuarioeventosFacade;
@@ -47,59 +46,64 @@ public class ServletCrearUsuario extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ParseException {
+            throws ServletException, IOException {
+        String nombre, apellidos, nif, sexo, domicilio, ciudad, correo, contrasena,
+                contrasenaConfirmada, strTo, strError, idUsuario;
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+        Date fecha_nacimiento = null;
 
-        String nombre, apellidos, nif, sexo, domicilio, ciudad, correo, contrasena, contrasenaConfirmada, strTo, strError;
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-mm-dd");
-        Date fecha_nacimiento;
-
+        HttpSession session = request.getSession();
+        
         nombre = request.getParameter("nombre_usuario");
-        apellidos = request.getParameter("apellidos_usuario");
         nif = request.getParameter("nif_usuario");
-        sexo = request.getParameter("radio_sexo");
-        domicilio = request.getParameter("domicilio_usuario");
-        ciudad = request.getParameter("ciudad_usuario");
         correo = request.getParameter("correo_usuario");
         contrasena = request.getParameter("contrasena1_usuario");
         contrasenaConfirmada = request.getParameter("contrasena2_usuario");
-        fecha_nacimiento = formatoFecha.parse(request.getParameter("fecha_nacimiento_usuario"));
-
-        //NO SE COMPRUEBA SI LOS PARAMS SON VACIOS O NULOS PORQUE EL PROPIO FORM 
-        //NO TE PERMITE MANDAR UN FORM CON CAMPOS VACIOS
-
+        idUsuario = request.getParameter("idUsuario");
+        
+        Usuario usuario = (Usuario)session.getAttribute("usuario");
+        usuario.setNombre(nombre);
+        usuario.setNif(nif);
+        usuario.setCorreo(correo);
         if (contrasena.equals(contrasenaConfirmada)) {
-            //Las contrasenias son iguales, podemos registrar al usuario
-            Usuario usuario = new Usuario();
-            usuario.setNombre(nombre);
-            usuario.setCorreo(correo);
-            usuario.setNif(nif);
             usuario.setPassword(contrasena);
-            usuario.setRol(4);
 
-            this.usuarioFacade.create(usuario);
+            //ACTUALIZAR AL USUARIO EN LA BD
+            this.usuarioFacade.edit(usuario);
+            if (usuario.getUsuarioeventos() != null) {
+                //estamos editando a un usuario de eventos
+                //todos los campos estan rellenos por el REQUIRED
+                apellidos = request.getParameter("apellidos_usuario");
+                sexo = request.getParameter("radio_sexo");
+                domicilio = request.getParameter("domicilio_usuario");
+                ciudad = request.getParameter("ciudad_usuario");
+                try {
+                    fecha_nacimiento = formatoFecha.parse(request.getParameter("fecha_nacimiento_usuario"));
+                    Usuarioeventos usuarioEventos = usuario.getUsuarioeventos();
 
-            Usuarioeventos uEventos = new Usuarioeventos();
-            uEventos.setId(usuario.getId());
-            uEventos.setApellidos(apellidos);
-            uEventos.setDomicilio(domicilio);
-            uEventos.setCiudad(ciudad);
-            uEventos.setFechaNacimiento(fecha_nacimiento);
-            uEventos.setSexo(sexo);
+                    usuarioEventos.setApellidos(apellidos);
+                    usuarioEventos.setSexo(sexo);
+                    usuarioEventos.setDomicilio(domicilio);
+                    usuarioEventos.setCiudad(ciudad);
+                    usuarioEventos.setFechaNacimiento(fecha_nacimiento);
 
-            this.usuarioeventosFacade.create(uEventos);
+                    //ACTUALIZAR USUARIO DE EVENTOS
+                    this.usuarioeventosFacade.edit(usuarioEventos);
+                } catch (ParseException e) {
 
-            strTo = "UsuarioEventos.jsp";
+                }
+            }
+            session.setAttribute("usuario", usuario);
+            RequestDispatcher rd = request.getRequestDispatcher("VerPerfil.jsp");
+            rd.forward(request, response);
         } else {
-            //No ha puesto contrasenias iguales
-            strTo = "Registro.jsp";
+            //strTo = "EditarPerfil.jsp";
             strError = "contraseniaNoCoincide";
             request.setAttribute("error", strError);
+            request.setAttribute("idUsuario", idUsuario);
+            response.sendRedirect("ServletCargarPerfil");
         }
 
-        //System.out.println(usuario.getId());
-        //request.setAttribute("registrado", 1);
-        RequestDispatcher rd = request.getRequestDispatcher(strTo);
-        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -114,11 +118,7 @@ public class ServletCrearUsuario extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ParseException ex) {
-            Logger.getLogger(ServletCrearUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -132,11 +132,7 @@ public class ServletCrearUsuario extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ParseException ex) {
-            Logger.getLogger(ServletCrearUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

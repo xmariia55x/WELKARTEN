@@ -60,7 +60,7 @@ and open the template in the editor.
                 </div>
                 <div class="mb-3">
                     <label for="exampleDropdownFormPassword2" class="form-label">Contraseña</label>
-                    <input type="password" name="password" class="form-control" id="contrasenia_usuario" placeholder="Contraseña">
+                    <input type="password" name="password" class="form-control" id="contrasenia_usuario">
                 </div>
                 <div class="d-grid gap-2 col-6 mx-auto">
                     <button type="submit" id="btnInicioSesion" class="btn btn-primary btn-lg">Iniciar sesión</button>
