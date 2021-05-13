@@ -39,9 +39,10 @@ public class ServletInicio extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Evento> listaEventos;
+        List<Evento> listaEventos, listaEventosHoy, listaEventosEstaSemana;
                 
         listaEventos = this.eventoFacade.findAll();
+        
         
         request.setAttribute("listaEventos", listaEventos);
         RequestDispatcher rd = request.getRequestDispatcher("index.jsp");

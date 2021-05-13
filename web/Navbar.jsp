@@ -32,7 +32,7 @@
                 </form>
                 <br/>
                 <input type="button" class="btn btn-primary btn-lg" id="inicio_sesion_principal_button" value="Iniciar sesión" name="inicio_sesion_principal_button"
-                       onclick="location.href = 'InicioSesion.html'" /> 
+                       onclick="location.href = 'ServletIniciarSesion'" /> 
             </div>
         </div>
     </nav>

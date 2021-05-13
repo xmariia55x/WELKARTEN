@@ -49,7 +49,7 @@ public class Conversacion implements Serializable {
     private Usuario usuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "conversacion")
     private List<Mensaje> mensajeList;
-
+    
     public Conversacion() {
     }
 
