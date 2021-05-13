@@ -62,16 +62,18 @@
                             <%
                                 int i = 1;
                                 for(Conversacion c : conversaciones) {
+                                    if(!c.getMensajeList().isEmpty()) {
                             %>
-                                <tr>
-                                    <th scope="row"><%= i %></th>
-                                    <td><%= c.getId() %></td>
-                                    <td><%= c.getTeleoperador().getNombre() %></td>
-                                    <td><%= c.getUsuario().getNombre() %></td>
-                                    <td><button class="btn btn-outline-primary" type="submit" onclick="location.href = 'ServletInfoConversacion?id=<%= c.getId() %>'">Info</button></td>
-                                    <td><button class="btn btn-outline-danger" type="submit" onclick="location.href = 'ServletEliminarConversacion?id=<%= c.getId() %>'">Eliminar</button></td>
-                                </tr>
+                                        <tr>
+                                        <th scope="row"><%= i %></th>
+                                        <td><%= c.getId() %></td>
+                                        <td><%= c.getTeleoperador().getNombre() %></td>
+                                        <td><%= c.getUsuario().getNombre() %></td>
+                                        <td><button class="btn btn-outline-primary" type="submit" onclick="location.href = 'ServletInfoConversacion?id=<%= c.getId() %>'">Info</button></td>
+                                        <td><button class="btn btn-outline-danger" type="submit" onclick="location.href = 'ServletEliminarConversacion?id=<%= c.getId() %>'">Eliminar</button></td>
+                                        </tr>
                             <%
+                                    }
                                 i++;
                                 }
                             %>
@@ -84,7 +86,14 @@
                 <div class="d-grid gap-2 col-6 mx-auto">
                    
                 <input type="button" class="btn btn-primary btn-lg" id="peticiones_teleoperador" value="Peticiones" name="peticiones_teleoperador"
-                                       onclick="location.href = 'PeticionesTeleoperador.jsp'" />
+                                       onclick="location.href = 'ServletCargarPeticiones'" />
                 </div>
+                
+                <div class="d-grid gap-2 col-6 mx-auto">
+                   
+                <input type="button" class="btn btn-primary btn-lg" id="chats_teleoperador" value="Ver mis chats" name="chats_teleoperador"
+                                       onclick="location.href = 'ServletListarMisChats'" />
+                </div>
+                
     </body>
 </html>
