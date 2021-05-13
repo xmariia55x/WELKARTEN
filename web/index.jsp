@@ -22,6 +22,8 @@ and open the template in the editor.
     <%
         Integer registrado = (Integer) request.getAttribute("registrado");
         List<Evento> listaEventos = (List<Evento>) request.getAttribute("listaEventos");
+        List<Evento> listaEventosHoy = (List<Evento>) request.getAttribute("listaEventosHoy");
+        List<Evento> listaEventosEstaSemana = (List<Evento>) request.getAttribute("listaEventosEstaSemana");
 
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");
@@ -100,37 +102,102 @@ and open the template in the editor.
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-todos" role="tabpanel" aria-labelledby="nav-todos-tab">
                     <div class="contenido">
-                        <% for (Evento e : listaEventos) {
-                                List<Etiquetasevento> listaEtiquetas = e.getEtiquetaseventoList();
-                                String etiquetas = "";
-                                for (int i = 0; i < listaEtiquetas.size(); i++) {
-                                    etiquetas += listaEtiquetas.get(i).getEtiqueta().getNombre();
-                                    if (i < listaEtiquetas.size() - 1) {
-                                        etiquetas += ", ";
+                        <% if (listaEventos == null || listaEventos.isEmpty()) { %>
+                                <h2>No hay resultados</h2>
+                        <% } else {
+                                for (Evento e : listaEventos) {
+                                    List<Etiquetasevento> listaEtiquetas = e.getEtiquetaseventoList();
+                                    String etiquetas = "";
+                                    for (int i = 0; i < listaEtiquetas.size(); i++) {
+                                        etiquetas += listaEtiquetas.get(i).getEtiqueta().getNombre();
+                                        if (i < listaEtiquetas.size() - 1) {
+                                            etiquetas += ", ";
+                                        }
                                     }
-                                }
-                        %>
-                        <div class="carta">
-                            <div class="card" style="width: 18rem;">
-                                <img src="images/ticket.png" class="card-img-top" alt="Evento"/> 
-                                <div class="card-body">
-                                    <h5 class="card-title"><%=e.getTitulo()%></h5>
-                                    <p class="card-text"><%=e.getLugar()%></p>
-                                    <p class="card-text"><%=formatoFecha.format(e.getFechaInicio()) + " " + formatoHora.format(e.getHora())%></p>
-                                    <p class="card-text"><%=etiquetas%></p>
-                                    <!-- Cambiar id 1 por //evento.getEventoId()// -->
-                                    <a href="ServletEventoInfo?id=<%=e.getId()%>" class="btn btn-primary">Ver evento</a>
+                            %>
+                            <div class="carta">
+                                <div class="card" style="width: 18rem;">
+                                    <img src="images/ticket.png" class="card-img-top" alt="Evento"/> 
+                                    <div class="card-body">
+                                        <h5 class="card-title"><%=e.getTitulo()%></h5>
+                                        <p class="card-text"><%=e.getLugar()%></p>
+                                        <p class="card-text"><%=formatoFecha.format(e.getFechaInicio()) + " " + formatoHora.format(e.getHora())%></p>
+                                        <p class="card-text"><%=etiquetas%></p>
+                                        <!-- Cambiar id 1 por //evento.getEventoId()// -->
+                                        <a href="ServletEventoInfo?id=<%=e.getId()%>" class="btn btn-primary">Ver evento</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <% }%>
+                        <%      }
+                            }       
+                        %>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="nav-hoy" role="tabpanel" aria-labelledby="nav-hoy-tab">
-
+                    <div class="contenido">
+                        <% if (listaEventosHoy == null || listaEventosHoy.isEmpty()) { %>
+                                <h2>No hay resultados</h2>
+                        <% } else {
+                                for (Evento e : listaEventosHoy) {
+                                    List<Etiquetasevento> listaEtiquetas = e.getEtiquetaseventoList();
+                                    String etiquetas = "";
+                                    for (int i = 0; i < listaEtiquetas.size(); i++) {
+                                        etiquetas += listaEtiquetas.get(i).getEtiqueta().getNombre();
+                                        if (i < listaEtiquetas.size() - 1) {
+                                            etiquetas += ", ";
+                                        }
+                                    }
+                            %>
+                            <div class="carta">
+                                <div class="card" style="width: 18rem;">
+                                    <img src="images/ticket.png" class="card-img-top" alt="Evento"/> 
+                                    <div class="card-body">
+                                        <h5 class="card-title"><%=e.getTitulo()%></h5>
+                                        <p class="card-text"><%=e.getLugar()%></p>
+                                        <p class="card-text"><%=formatoFecha.format(e.getFechaInicio()) + " " + formatoHora.format(e.getHora())%></p>
+                                        <p class="card-text"><%=etiquetas%></p>
+                                        <!-- Cambiar id 1 por //evento.getEventoId()// -->
+                                        <a href="ServletEventoInfo?id=<%=e.getId()%>" class="btn btn-primary">Ver evento</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <%      }
+                            }       
+                        %>
+                    </div>               
                 </div>
                 <div class="tab-pane fade" id="nav-estasemana" role="tabpanel" aria-labelledby="nav-estasemana-tab">
-
+                    <div class="contenido">
+                        <% if (listaEventosEstaSemana == null || listaEventosEstaSemana.isEmpty()) { %>
+                                <h2>No hay resultados</h2>
+                        <% } else {
+                                for (Evento e : listaEventosEstaSemana) {
+                                    List<Etiquetasevento> listaEtiquetas = e.getEtiquetaseventoList();
+                                    String etiquetas = "";
+                                    for (int i = 0; i < listaEtiquetas.size(); i++) {
+                                        etiquetas += listaEtiquetas.get(i).getEtiqueta().getNombre();
+                                        if (i < listaEtiquetas.size() - 1) {
+                                            etiquetas += ", ";
+                                        }
+                                    }
+                            %>
+                            <div class="carta">
+                                <div class="card" style="width: 18rem;">
+                                    <img src="images/ticket.png" class="card-img-top" alt="Evento"/> 
+                                    <div class="card-body">
+                                        <h5 class="card-title"><%=e.getTitulo()%></h5>
+                                        <p class="card-text"><%=e.getLugar()%></p>
+                                        <p class="card-text"><%=formatoFecha.format(e.getFechaInicio()) + " " + formatoHora.format(e.getHora())%></p>
+                                        <p class="card-text"><%=etiquetas%></p>
+                                        <!-- Cambiar id 1 por //evento.getEventoId()// -->
+                                        <a href="ServletEventoInfo?id=<%=e.getId()%>" class="btn btn-primary">Ver evento</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <%      }
+                            }       
+                        %>
+                    </div>
                 </div>
             </div>
         </div>

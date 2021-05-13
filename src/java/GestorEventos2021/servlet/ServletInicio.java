@@ -41,10 +41,13 @@ public class ServletInicio extends HttpServlet {
             throws ServletException, IOException {
         List<Evento> listaEventos, listaEventosHoy, listaEventosEstaSemana;
                 
-        listaEventos = this.eventoFacade.findAll();
-        
+        listaEventos = this.eventoFacade.filtrarByEventosNoCaducados();
+        listaEventosHoy = this.eventoFacade.filtrarByFechaDeHoy();
+        listaEventosEstaSemana = this.eventoFacade.filtrarByFechaDeEstaSemana();
         
         request.setAttribute("listaEventos", listaEventos);
+        request.setAttribute("listaEventosHoy", listaEventosHoy);
+        request.setAttribute("listaEventosEstaSemana", listaEventosEstaSemana);
         RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
         rd.forward(request, response);
     }
