@@ -5,28 +5,34 @@
  */
 package GestorEventos2021.servlet;
 
-import GestorEventos2021.dao.EtiquetaFacade;
-import GestorEventos2021.entity.Etiqueta;
+import GestorEventos2021.dao.ConversacionFacade;
+import GestorEventos2021.dao.MensajeFacade;
+import GestorEventos2021.entity.Conversacion;
+import GestorEventos2021.entity.Mensaje;
+import GestorEventos2021.entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+import java.util.Date;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author maria
+ * @author adric
  */
-@WebServlet(name = "ServletCargarEtiquetasEventos", urlPatterns = {"/ServletCargarEtiquetasEventos"})
-public class ServletCargarEtiquetasEventos extends HttpServlet {
+@WebServlet(name = "ServletAddMensaje", urlPatterns = {"/ServletAddMensaje"})
+public class ServletAddMensaje extends HttpServlet {
 
     @EJB
-    private EtiquetaFacade etiquetaFacade;
+    private MensajeFacade mensajeFacade;
+
+    @EJB
+    private ConversacionFacade conversacionFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,13 +45,22 @@ public class ServletCargarEtiquetasEventos extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String error = request.getParameter("error");
-        if(error != null && !error.isEmpty()) request.setAttribute("error", error);
-        List<Etiqueta> etiquetas = this.etiquetaFacade.findAll();
-        request.setAttribute("listaEtiquetas", etiquetas);
+        String id = request.getParameter("id");
+        HttpSession session = request.getSession();
+        Usuario user = (Usuario)session.getAttribute("usuario");
+        Conversacion c = this.conversacionFacade.find(new Integer(id));
+        Mensaje m = new Mensaje();
+        m.setConversacion(c);
+        m.setCuerpo("Buenas, le atiene un teleoperador de Welkarten");
+        m.setEmisor(user);
+        m.setFecha(new Date());
+        m.setHora(new Date());
+        this.mensajeFacade.create(m);
         
-        RequestDispatcher rd = request.getRequestDispatcher("CrearEditarEvento.jsp");
-        rd.forward(request, response);
+        c.getMensajeList().add(m);
+        this.conversacionFacade.edit(c);
+        
+        response.sendRedirect("ServletListarConversaciones");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

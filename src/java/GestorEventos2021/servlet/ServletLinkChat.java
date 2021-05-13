@@ -5,11 +5,10 @@
  */
 package GestorEventos2021.servlet;
 
-import GestorEventos2021.dao.EtiquetaFacade;
-import GestorEventos2021.entity.Etiqueta;
+import GestorEventos2021.dao.ConversacionFacade;
+import GestorEventos2021.entity.Conversacion;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,14 +19,15 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author maria
+ * @author adric
  */
-@WebServlet(name = "ServletCargarEtiquetasEventos", urlPatterns = {"/ServletCargarEtiquetasEventos"})
-public class ServletCargarEtiquetasEventos extends HttpServlet {
+@WebServlet(name = "ServletLinkChat", urlPatterns = {"/ServletLinkChat"})
+public class ServletLinkChat extends HttpServlet {
 
     @EJB
-    private EtiquetaFacade etiquetaFacade;
+    private ConversacionFacade conversacionFacade;
 
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,12 +39,10 @@ public class ServletCargarEtiquetasEventos extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String error = request.getParameter("error");
-        if(error != null && !error.isEmpty()) request.setAttribute("error", error);
-        List<Etiqueta> etiquetas = this.etiquetaFacade.findAll();
-        request.setAttribute("listaEtiquetas", etiquetas);
-        
-        RequestDispatcher rd = request.getRequestDispatcher("CrearEditarEvento.jsp");
+        String id = request.getParameter("id");
+        Conversacion c = this.conversacionFacade.find(new Integer(id));
+        request.setAttribute("conversacion", c);
+        RequestDispatcher rd = request.getRequestDispatcher("chat.jsp");
         rd.forward(request, response);
     }
 

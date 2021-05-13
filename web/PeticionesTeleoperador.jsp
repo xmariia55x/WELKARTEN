@@ -4,6 +4,8 @@
     Author     : adric
 --%>
 
+<%@page import="GestorEventos2021.entity.Conversacion"%>
+<%@page import="java.util.List"%>
 <html>
     <head>
         <title>PETICIONES</title>
@@ -11,6 +13,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     </head>
+    <%
+        List<Conversacion> peticiones = (List<Conversacion>)request.getAttribute("listaPeticiones");
+    %>
     <body>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
@@ -54,36 +59,30 @@
                         <thead class = "table-primary">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Usuario 1</th>
-                                <th scope="col">Usuario 2</th>
+                                <th scope="col">Teleoperador</th>
+                                <th scope="col">Usuario</th>
                                 <th scope="col">Conectar</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Adrián Corrales</td>
-                                <td>Javier Blanco</td>
-                                <td><input class="form-check-input" type="checkbox" id="checkboxNoLabel1" value="" aria-label="..."></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Javier Blanco</td>
-                                <td>María Gálvez</td>
-                                <td><input class="form-check-input" type="checkbox" id="checkboxNoLabel2" value="" aria-label="..."></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Yeray Ruiz</td>
-                                <td>David Gerena</td>
-                                <td><input class="form-check-input" type="checkbox" id="checkboxNoLabel3" value="" aria-label="..."></td>
-                            </tr>
+                            <%
+                                for(Conversacion c : peticiones) {
+                                    if(c.getMensajeList().isEmpty()) {
+                            %>            
+                                        <tr>
+                                        <th scope="row">1</th>
+                                        <td><%= c.getTeleoperador().getNombre() %></td>
+                                        <td><%= c.getUsuario().getNombre() %></td>
+                                        <td><button class="btn btn-outline-primary" type="submit" onclick="location.href = 'ServletAddMensaje?id=<%= c.getId() %>'">Aceptar Peticion</button></td>
+                                        </tr> 
+                            <%        
+                                    }
+                                }
+                            %>    
+                            
                         </tbody>
                     </table>
                 
-                <!-- BOTONACO DE PETICIONES -->
-                <div class="d-grid gap-2 col-6 mx-auto">
-                    <button type="submit" class="btn btn-primary btn-lg">Crear chat</button>
-                </div>
+                
     </body>
 </html>

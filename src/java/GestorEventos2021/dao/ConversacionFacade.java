@@ -6,6 +6,8 @@
 package GestorEventos2021.dao;
 
 import GestorEventos2021.entity.Conversacion;
+import GestorEventos2021.entity.Usuario;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -48,6 +50,15 @@ public class ConversacionFacade extends AbstractFacade<Conversacion> {
         
         res = q.getResultList();
         
+        return res;
+    }
+
+    public List<Conversacion> findPeticiones(Usuario usuario) {
+        Query q;
+        List<Conversacion> res;
+        q = this.em.createQuery("select c from Conversacion c where c.teleoperador.nombre = :nombre");
+        q.setParameter("nombre", usuario.getNombre());
+        res = q.getResultList();
         return res;
     }
     

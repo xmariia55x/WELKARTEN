@@ -5,8 +5,9 @@
  */
 package GestorEventos2021.servlet;
 
-import GestorEventos2021.dao.EtiquetaFacade;
-import GestorEventos2021.entity.Etiqueta;
+import GestorEventos2021.dao.ConversacionFacade;
+import GestorEventos2021.entity.Conversacion;
+import GestorEventos2021.entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -17,17 +18,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author maria
+ * @author adric
  */
-@WebServlet(name = "ServletCargarEtiquetasEventos", urlPatterns = {"/ServletCargarEtiquetasEventos"})
-public class ServletCargarEtiquetasEventos extends HttpServlet {
+@WebServlet(name = "ServletCargarPeticiones", urlPatterns = {"/ServletCargarPeticiones"})
+public class ServletCargarPeticiones extends HttpServlet {
 
     @EJB
-    private EtiquetaFacade etiquetaFacade;
+    private ConversacionFacade conversacionFacade;
 
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,12 +42,11 @@ public class ServletCargarEtiquetasEventos extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String error = request.getParameter("error");
-        if(error != null && !error.isEmpty()) request.setAttribute("error", error);
-        List<Etiqueta> etiquetas = this.etiquetaFacade.findAll();
-        request.setAttribute("listaEtiquetas", etiquetas);
-        
-        RequestDispatcher rd = request.getRequestDispatcher("CrearEditarEvento.jsp");
+        HttpSession session = request.getSession();
+        Usuario usuario = (Usuario)session.getAttribute("usuario");
+        List<Conversacion> peticiones = this.conversacionFacade.findPeticiones(usuario);
+        request.setAttribute("listaPeticiones", peticiones);
+        RequestDispatcher rd = request.getRequestDispatcher("PeticionesTeleoperador.jsp");
         rd.forward(request, response);
     }
 
