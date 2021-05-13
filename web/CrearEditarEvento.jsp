@@ -1,3 +1,6 @@
+<%@page import="GestorEventos2021.entity.Usuario"%>
+<%@page import="GestorEventos2021.entity.Etiqueta"%>
+<%@page import="java.util.List"%>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -13,126 +16,119 @@ and open the template in the editor.
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
         <link href="styles.css" rel="stylesheet">
     </head>
-    <% 
-        Boolean crear = true;
-        String crearOEditar = "Crear evento";
-        if(!crear){
-            crearOEditar = "Editar evento";
-        }
+    <%
+        List<Etiqueta> listaEtiquetas = (List<Etiqueta>) request.getAttribute("listaEtiquetas");
+        String error = (String) request.getAttribute("error");
+        //Usuario usuario = (Usuario)session.getAttribute("usuario");
     %>
     <body>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <!-- BARRA DE NAVEGACION -->
-        <header>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light" >
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="#">
-                        <img src="images/logo_pequeno.png" alt="" width="200" height="50">
-                    </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">Conócenos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">Contáctanos</a>
-                            </li>
-                        </ul>
-                        <form class="d-flex" style="margin-right: 2em">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-primary" type="submit">Buscar</button>
-                        </form>
-                        <br/>
-                        <input type="button" class="btn btn-primary btn-lg" id="inicio_sesion_principal_button" value="Iniciar sesión" name="inicio_sesion_principal_button"
-                               onclick="location.href = 'InicioSesion.html'" /> 
-                    </div>
-                </div>
-            </nav>
-        </header>
+        <jsp:include page="navbarSesionIniciada.jsp" />
         <br>
         <br>
-
+        <br>
         <!-- FORMULARIO PARA CREAR UN NUEVO EVENTO -->
         <div class="global_nuevo_evento">
-            <form name="CrearEditarEventoForm">
-                <div class="mb-3">
+
+            <form action="ServletCrearEditarEvento">
+                
+                <%
+                    if (error != null && error.equals("etiquetasIncorrectas")) {
+                %>
+
+                <div class="alert alert-danger" role="alert">
+                    Seleccione como mínimo 1 etiqueta y como máximo 2 etiquetas.
+                </div>
+                <%
+                    } else if (error != null && error.equals("fechasIncorrectas")) {
+                %>
+                <div class="alert alert-danger" role="alert">
+                    ERROR: La fecha límite para comprar entradas debe ser anterior a la fecha del evento.
+                </div>
+                <% 
+                    }
+                %>
+                <div class="mb-3" style="text-align: left">
                     <label for="exampleDropdownFormEmail2" class="form-label">Nombre del evento</label>
                     <input type="text" name="nombre_evento" class="form-control" id="nombre_evento" required>
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" style="text-align: left">
                     <label for="exampleDropdownFormEmail2" class="form-label">Descripción del evento</label>
                     <input type="text" name="descripcion_evento" class="form-control" id="descripcion_evento" required>
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-3" style="text-align: left">
                     <label for="birthday" class="form-label">Fecha del evento</label>
                     <input type="date" class="form-control" id="fecha_evento" name="fecha_evento" required>
                 </div> 
 
-                <div class="mb-3">
+                <div class="mb-3" style="text-align: left">
+                    <label for="inputMDEx1" class="form-label">Hora del evento</label>
+                    <input type="time" name="hora_evento" id="inputMDEx1" class="form-control" required>
+
+                </div>
+
+                <div class="mb-3" style="text-align: left">
+                    <label for="exampleDropdownFormEmail2" class="form-label">Lugar del evento</label>
+                    <input type="text" name="lugar_evento" class="form-control" required>
+                </div>
+
+                <div class="mb-3" style="text-align: left">
                     <label for="birthday" class="form-label">Fecha límite para comprar entradas</label>
                     <input type="date" class="form-control" id="fecha_limite_entradas" name="fecha_limite_entradas" required>
                 </div> 
 
-                <div class="mb-3">
+                <div class="mb-3" style="text-align: left">
                     <label for="exampleDropdownFormEmail2" class="form-label">Coste de la entrada</label>
                     <input type="text" name="coste_entrada_evento" class="form-control" id="coste_entrada_evento" required>
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-3" style="text-align: left">
                     <label for="exampleDropdownFormEmail2" class="form-label">Número máximo de entradas por persona</label>
-                    <input type="text" name="aforo_evento" class="form-control" id="aforo_evento" required >
+                    <input type="text" name="maximo_entradas" class="form-control" required >
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-3" style="text-align: left">
                     <label for="exampleDropdownFormEmail2" class="form-label">Aforo máximo del evento</label>
                     <input type="text" name="aforo_evento" class="form-control" id="aforo_evento" required >
                 </div>
 
-                <label>Selecciona las etiquetas del evento</label> <br>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                    <label class="form-check-label" for="defaultCheck1">
-                        Etiqueta de parques
-                    </label>
+                <div style="text-align: left">
+                    <label>Selecciona las etiquetas del evento</label> <br>
                 </div>
 
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
-                    <label class="form-check-label" for="defaultCheck2">
-                        Etiqueta 1
-                    </label>
-                </div>
+                <%
+                    for (Etiqueta etiqueta : listaEtiquetas) {
+                %>
+                <div class="form-check" style="text-align: left">
+                    <input class="form-check-input"  type="checkbox" name="etiquetas_evento" value="<%=etiqueta.getId()%>" id="defaultCheck1">
+                    <label class="form-check-label"  for="defaultCheck1"><%=etiqueta.getNombre()%></label>
+                </div> 
+                <%
+                    }
+                %>
 
                 <br>
-                <div class="mb-3">
+                <div class="mb-3" style="text-align: left">
                     <label for="exampleDropdownFormEmail2" class="form-label">Asientos</label> <br/>
-                    <input class="form-check-input" type="radio" name="seleccion_asientos" value="" />Sí<br>
-                    <input class="form-check-input" type="radio" name="seleccion_asientos" value="" />No<br>
+                    <input class="form-check-input" type="radio" name="seleccion_asientos" value="S" />Sí<br>
+                    <input class="form-check-input" type="radio" name="seleccion_asientos" value="N" />No<br>
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-3" style="text-align: left">
                     <label for="exampleDropdownFormEmail2" class="form-label">Número de filas de asientos</label>
                     <input type="text" name="filas_evento" class="form-control" id="filas_evento">
                 </div> 
 
-                <div class="mb-3">
+                <div class="mb-3" style="text-align: left">
                     <label for="exampleDropdownFormEmail2" class="form-label">Número de asientos por fila del evento</label>
                     <input type="text" name="asientos_fila_evento" class="form-control" id="asientos_fila_evento">
                 </div> 
 
                 <div class="d-grid gap-2 col-6 mx-auto">
-                    <button type="submit" class="btn btn-primary btn-lg"><%= crearOEditar %></button>
+                    <button type="submit" class="btn btn-primary btn-lg">Crear evento</button>
                 </div>
             </form>
         </div>
     </body>
-
-    
 </html>

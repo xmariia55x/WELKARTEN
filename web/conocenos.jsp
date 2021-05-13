@@ -92,7 +92,11 @@
                     <div class="column-text mt-1"><h4 class="h5 mb-1">María Gálvez Manceras</h4>
                         <p>Estudiante de ingeniería de software en la UMA </p>
 
-                        Comenzó a dar por culo en el 2000
+                        Aficionada a la lectura <br/>
+                        Amante de los idiomas y de viajar <br/>
+                        Apasionada de la música y el deporte <br/>
+                        <br/>
+                        <h5> Email: mariagalvez12345@gmail.com </h5>
 
                     </div>
                 </div>

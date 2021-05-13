@@ -68,6 +68,7 @@
             Usuarioeventos usuarioEventos = usuario.getUsuarioeventos();
             String sexo = "Hombre";
             if(usuarioEventos.getSexo().equals("M")) sexo = "Mujer";
+            else if(usuarioEventos.getSexo().equals("O")) sexo = "Otro";
             DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             String fechaNacimiento = formatter.format(usuarioEventos.getFechaNacimiento());
         %>
@@ -109,7 +110,7 @@
 }
 }%>
 <div id="divfix">
-            <button type="button" class="w-100 btn btn-lg btn-primary">Editar perfil</button>
+            <button type="button" class="w-100 btn btn-lg btn-primary" onclick="location.href = 'ServletCargarPerfil'">Editar perfil</button>
         </div>
     </body>
 </html>
