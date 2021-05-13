@@ -46,7 +46,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Evento.findByAforo", query = "SELECT e FROM Evento e WHERE e.aforo = :aforo")
     , @NamedQuery(name = "Evento.findByEntradasMax", query = "SELECT e FROM Evento e WHERE e.entradasMax = :entradasMax")
     , @NamedQuery(name = "Evento.findByFilas", query = "SELECT e FROM Evento e WHERE e.filas = :filas")
-    , @NamedQuery(name = "Evento.findByAsientosFila", query = "SELECT e FROM Evento e WHERE e.asientosFila = :asientosFila")})
+    , @NamedQuery(name = "Evento.findByAsientosFila", query = "SELECT e FROM Evento e WHERE e.asientosFila = :asientosFila")
+    , @NamedQuery(name = "Evento.findByHora", query = "SELECT e FROM Evento e WHERE e.hora = :hora")
+    , @NamedQuery(name = "Evento.findByLugar", query = "SELECT e FROM Evento e WHERE e.lugar = :lugar")})
 public class Evento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,10 +58,10 @@ public class Evento implements Serializable {
     @Column(name = "ID")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "TITULO", length = 200, nullable = false)
+    @Column(name = "TITULO", nullable = false, length=200)
     private String titulo;
     @Basic(optional = false)
-    @Column(name = "DESCRIPCION", length = 2000, nullable = false)
+    @Column(name = "DESCRIPCION", nullable = false, length=2000)
     private String descripcion;
     @Basic(optional = false)
     @Column(name = "FECHA_INICIO", nullable = false)
@@ -82,6 +84,11 @@ public class Evento implements Serializable {
     private Integer filas;
     @Column(name = "ASIENTOS_FILA")
     private Integer asientosFila;
+    @Column(name = "HORA")
+    @Temporal(TemporalType.TIME)
+    private Date hora;
+    @Column(name = "LUGAR", length=200)
+    private String lugar;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento")
     private List<Etiquetasevento> etiquetaseventoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento")
@@ -186,6 +193,22 @@ public class Evento implements Serializable {
 
     public void setAsientosFila(Integer asientosFila) {
         this.asientosFila = asientosFila;
+    }
+
+    public Date getHora() {
+        return hora;
+    }
+
+    public void setHora(Date hora) {
+        this.hora = hora;
+    }
+
+    public String getLugar() {
+        return lugar;
+    }
+
+    public void setLugar(String lugar) {
+        this.lugar = lugar;
     }
 
     @XmlTransient

@@ -10,6 +10,7 @@ import GestorEventos2021.entity.Usuario;
 import GestorEventos2021.dao.ConversacionFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,9 +47,19 @@ public class ServletListarConversaciones extends HttpServlet {
         String strTo = "Teleoperador.jsp";
         HttpSession session = request.getSession();
         Usuario usuario = (Usuario)session.getAttribute("usuario");
-            
+        String filtroTeleoperador = request.getParameter("filtroTeleoperador");
+        String filtroUsuario = request.getParameter("filtroUsuario");
+        List<Conversacion> conversaciones = new ArrayList();
+        
         if(usuario != null) {
-           List<Conversacion> conversaciones = this.conversacionFacade.findAll();
+           
+           if((filtroTeleoperador != null && filtroTeleoperador.length() > 0) || (filtroUsuario != null && filtroUsuario.length() > 0)) {
+               conversaciones = this.conversacionFacade.findByFiltro(filtroTeleoperador, filtroUsuario);
+           } else {
+               //No estamos aplicando filtro
+               conversaciones = this.conversacionFacade.findAll();
+           }
+            
            request.setAttribute("listaConversaciones", conversaciones);
         }
                

@@ -69,8 +69,7 @@ public class ServletIniciarSesion extends HttpServlet {
                         strTo = "ServletListarEstudios";
                     } else if(usuario.getRol() == 4) {
                         //Aquí debe ir el usuario de eventos
-                        //RECORDAR CAMBIAR ESTO!!!! -> MARIA
-                        strTo = "UsuarioEventos.jsp";
+                        strTo = "ServletInicio";
                     } else{ 
                         strTo = "ServletListarConversaciones";
                     }
