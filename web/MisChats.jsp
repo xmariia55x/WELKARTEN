@@ -44,7 +44,7 @@
                                         <th scope="row">1</th>
                                         <td><%= c.getTeleoperador().getNombre() %></td>
                                         <td><%= c.getUsuario().getNombre() %></td>
-                                        <td><button class="btn btn-outline-primary" type="submit" onclick="">Abrir chat</button></td>
+                                        <td><button class="btn btn-outline-primary" type="submit" onclick="location.href = 'ServletLinkChat?id=<%= c.getId() %>'">Abrir chat</button></td>
                                         </tr> 
                             <%        
                                     }
