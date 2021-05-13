@@ -1,3 +1,9 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="GestorEventos2021.entity.Etiquetasevento"%>
+<%@page import="java.util.List"%>
+<%@page import="GestorEventos2021.entity.Evento"%>
+<%@page import="GestorEventos2021.entity.Evento"%>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -15,44 +21,14 @@ and open the template in the editor.
     </head>
     <%
         Integer registrado = (Integer) request.getAttribute("registrado");
+        List<Evento> listaEventos = (List<Evento>) request.getAttribute("listaEventos");
+        
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");    
     %>
     <body>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <jsp:include page="navbarSinSesionIniciada.jsp" />
-        <!-- BARRA DE NAVEGACION
-        <header>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light" >
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="#">
-                        <img src="images/logo_pequeno.png" alt="" width="200" height="50">
-                    </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">Conócenos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">Contáctanos</a>
-                            </li>
-                        </ul>
-                        <form class="d-flex" style="margin-right: 2em">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-primary" type="submit">Buscar</button>
-                        </form>
-                        <br/>
-                        <input type="button" class="btn btn-primary btn-lg" id="inicio_sesion_principal_button" value="Iniciar sesión" name="inicio_sesion_principal_button"
-                               onclick="location.href = 'InicioSesion.jsp'" /> 
-                    </div>
-                </div>
-            </nav>
-        </header>
-         FIN BARRA DE NAVEGACION -->
+        <jsp:include page="Navbar.jsp" />
         <br>
         <br>
         <br>
@@ -142,71 +118,28 @@ and open the template in the editor.
         <!-- CONTENIDO -->
 
         <div class="contenido">
+            <% for (Evento e : listaEventos) {
+                List<Etiquetasevento> listaEtiquetas = e.getEtiquetaseventoList();
+                String etiquetas = "";
+                for (int i = 0; i < listaEtiquetas.size(); i++) {
+                    etiquetas += listaEtiquetas.get(i).getEtiqueta().getNombre();
+                    if (i < listaEtiquetas.size() - 1) etiquetas += ", ";
+                }
+            %>
             <div class="carta">
                 <div class="card" style="width: 18rem;">
-                    <img src="images/chatbot.png" class="card-img-top" alt="Evento">
+                    <img src="images/ticket.png" class="card-img-top" alt="Evento"/> 
                     <div class="card-body">
-                        <h5 class="card-title">Titulo de la tarjeta</h5>
-                        <p class="card-text">Facebook organiza un evento de chatbots.</p>
-                        <a href="#" class="btn btn-primary">Ver evento</a>
-                    </div>
-                </div>
-            </div> 
-            <div class="carta">
-                <div class="card" style="width: 18rem;">
-                    <img src="images/chatbot.png" class="card-img-top" alt="Evento"/> 
-                    <div class="card-body">
-                        <h5 class="card-title">Titulo de la tarjeta</h5>
-                        <p class="card-text">Facebook organiza un evento de chatbots.</p>
-                        <a href="#" class="btn btn-primary">Ver evento</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="carta">
-                <div class="card" style="width: 18rem;">
-                    <img src="images/chatbot.png" class="card-img-top" alt="Evento"/> 
-                    <div class="card-body">
-                        <h5 class="card-title">Titulo de la tarjeta</h5>
-                        <p class="card-text">Facebook organiza un evento de chatbots.</p>
+                        <h5 class="card-title"><%=e.getTitulo()%></h5>
+                        <p class="card-text"><%=e.getLugar()%></p>
+                        <p class="card-text"><%=formatoFecha.format(e.getFechaInicio()) + " " + formatoHora.format(e.getHora())%></p>
+                        <p class="card-text"><%=etiquetas%></p>
                         <!-- Cambiar id 1 por //evento.getEventoId()// -->
-                        <a href="ServletEventoInfo?id=2" class="btn btn-primary">Ver evento</a>
+                        <a href="ServletEventoInfo?id=<%=e.getId()%>" class="btn btn-primary">Ver evento</a>
                     </div>
                 </div>
             </div>
-
-            <div class="carta">
-                <div class="card" style="width: 18rem;">
-                    <img src="images/chatbot.png" class="card-img-top" alt="Evento"/> 
-                    <div class="card-body">
-                        <h5 class="card-title">Titulo de la tarjeta</h5>
-                        <p class="card-text">Facebook organiza un evento de chatbots.</p>
-                        <a href="ServletEventoInfo?id=6" class="btn btn-primary">Ver evento</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="carta">
-                <div class="card" style="width: 18rem;">
-                    <img src="images/chatbot.png" class="card-img-top" alt="Evento"/> 
-                    <div class="card-body">
-                        <h5 class="card-title">Titulo de la tarjeta</h5>
-                        <p class="card-text">Facebook organiza un evento de chatbots.</p>
-                        <a href="#" class="btn btn-primary">Ver evento</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="carta">
-                <div class="card" style="width: 18rem;">
-                    <img src="images/chatbot.png" class="card-img-top" alt="Evento"/> 
-                    <div class="card-body">
-                        <h5 class="card-title">Titulo de la tarjeta</h5>
-                        <p class="card-text">Facebook organiza un evento de chatbots.</p>
-                        <a href="#" class="btn btn-primary">Ver evento</a>
-                    </div>
-                </div>
-            </div>
+            <% } %>
         </div>
 
         <!--<div class="row" >

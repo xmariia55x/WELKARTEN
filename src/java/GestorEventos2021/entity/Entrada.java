@@ -42,8 +42,7 @@ public class Entrada implements Serializable {
     @Column(name = "ID")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "NUMERO")
+    @Column(name = "NUMERO", nullable = false)
     private int numero;
     @Column(name = "FILA")
     private Integer fila;

@@ -22,6 +22,7 @@
     <%
         Evento evento = (Evento) request.getAttribute("evento");
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");
         String fecha = formato.format(evento.getFechaInicio());
 
         Integer nEntradas = Integer.parseInt((String) request.getAttribute("nEntradas"));
@@ -84,9 +85,9 @@
             <div class = "resumen">
                 <div class = "contenido_resumen">
                     <strong>EVENTO: </strong><label><%=evento.getTitulo()%></label></br>
-                    <strong>LUGAR: </strong><label></label></br>
+                    <strong>LUGAR: </strong><label><%=evento.getLugar()%></label></br>
                     <strong>FECHA: </strong><label><%=fecha%></label></br>
-                    <strong>HORA: </strong><label></label></br>
+                    <strong>HORA: </strong><label><%=formatoHora.format(evento.getHora())%></label></br>
                     <strong>NÚMERO DE ENTRADAS: </strong><label><%=nEntradas%></label></br></br>
 
                     <strong>PRECIO TOTAL (IVA INCLUIDO): </strong><label><%=precioTotal%>€</label>

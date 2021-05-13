@@ -42,33 +42,23 @@ public class Usuarioeventos implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "ID")
+    @Column(name = "ID", nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "APELLIDOS")
+    @Column(name = "APELLIDOS", nullable = false, length=50)
     private String apellidos;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "DOMICILIO")
+    @Column(name = "DOMICILIO", nullable = false, length=100)
     private String domicilio;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "CIUDAD")
+    @Column(name = "CIUDAD", nullable = false, length=50)
     private String ciudad;
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "FECHA_NACIMIENTO")
+    @Column(name = "FECHA_NACIMIENTO", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "SEXO")
+    @Column(name = "SEXO", nullable = false, length=50)
     private String sexo;
     @JoinColumn(name = "ID", referencedColumnName = "ID", insertable = false, updatable = false)
     @OneToOne(optional = false)

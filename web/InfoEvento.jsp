@@ -35,6 +35,7 @@
     <%
         Evento evento = (Evento) request.getAttribute("evento");
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");
         String fecha = formato.format(evento.getFechaInicio());
         DecimalFormat moneyFormat1 = new DecimalFormat("#.00");
         String precio = moneyFormat1.format(evento.getCosteEntrada());
@@ -70,23 +71,24 @@
                 desactivado = "disabled";
                 String alerta = "";
                 
-                if (cond1) {%>
-                    alerta = "La fecha máxima de reserva del evento era el <%=formato.format(evento.getFechaReserva())%>"
-                <% } else { %>
-                    alerta = "La fecha máxima de reserva del evento era el <%=formato.format(evento.getFechaReserva())%>"
-                <% } %>
+                if (cond1) {
+                    alerta = "La fecha máxima de reserva del evento era el "+formato.format(evento.getFechaReserva());
+                } else {
+                    alerta = "Entradas agotadas";
+                }
+        %>
                 
                 <div class="alert alert-danger d-flex align-items-center" role="alert">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#exclamation-triangle-fill"/></svg>
                     <div><%=alerta%></div>
                 </div>
         <% } else { %>
-        <div class="alert alert-primary d-flex align-items-center" role="alert">
-            <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#info-fill"/></svg>
-            <div>
-                La fecha máxima de reserva del evento es el <%=formato.format(evento.getFechaReserva())%>
+            <div class="alert alert-primary d-flex align-items-center" role="alert">
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#info-fill"/></svg>
+                <div>
+                    La fecha máxima de reserva del evento es el <%=formato.format(evento.getFechaReserva())%>
+                </div>
             </div>
-        </div>
         <% } %>
 
         <h1 class="display-4"><strong><%=evento.getTitulo()%></strong></h1>
@@ -105,8 +107,8 @@
                 <form action="ServletReservarTicketEvento">
                     <input type="hidden" name="idEvento" value="<%=evento.getId()%>" />
                     <strong>Fecha del evento:  </strong><label><%=fecha%></label></br></br>
-                    <strong>Hora:  </strong><label></label></br></br>
-                    <strong>Lugar:  </strong><label></label></br></br>
+                    <strong>Hora:  </strong><label><%=formatoHora.format(evento.getHora())%></label></br></br>
+                    <strong>Lugar:  </strong><label></label><%=evento.getLugar()%></br></br>
                     <strong>Precio:  </strong><label><%=precio%>&euro;</label></br></br>
                     <strong>Nº de entradas: </strong>
                     <input type="number" min="1" max="<%=evento.getEntradasMax()%>" id ="nEntradas" name="nEntradas" value="1"/></br></br>

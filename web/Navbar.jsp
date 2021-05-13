@@ -8,7 +8,7 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light" >
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.jsp">
+            <a class="navbar-brand" href="ServletInicio">
                 <img src="images/logo_pequeno.png" alt="" width="200" height="50">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,8 +26,8 @@
                         <a class="nav-link active" href="#">Contáctanos</a>
                     </li>
                 </ul>
-                <form class="d-flex" style="margin-right: 2em">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <form class="d-flex" style="margin-right: 2em" action="ServletFiltrarEvento">
+                    <input class="form-control me-2" type="search" name="busqueda" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-primary" type="submit">Buscar</button>
                 </form>
                 <br/>
