@@ -39,6 +39,8 @@ public class ServletCargarEtiquetasEventos extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String error = request.getParameter("error");
+        if(error != null && !error.isEmpty()) request.setAttribute("error", error);
         List<Etiqueta> etiquetas = this.etiquetaFacade.findAll();
         request.setAttribute("listaEtiquetas", etiquetas);
         

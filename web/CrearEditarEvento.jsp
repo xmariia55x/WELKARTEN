@@ -1,3 +1,4 @@
+<%@page import="GestorEventos2021.entity.Usuario"%>
 <%@page import="GestorEventos2021.entity.Etiqueta"%>
 <%@page import="java.util.List"%>
 <!DOCTYPE html>
@@ -15,18 +16,38 @@ and open the template in the editor.
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
         <link href="styles.css" rel="stylesheet">
     </head>
-    <% 
+    <%
         List<Etiqueta> listaEtiquetas = (List<Etiqueta>) request.getAttribute("listaEtiquetas");
+        String error = (String) request.getAttribute("error");
+        //Usuario usuario = (Usuario)session.getAttribute("usuario");
     %>
     <body>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-         <jsp:include page="navbarSesionIniciada.jsp" />
+        <jsp:include page="navbarSesionIniciada.jsp" />
         <br>
         <br>
         <br>
         <!-- FORMULARIO PARA CREAR UN NUEVO EVENTO -->
         <div class="global_nuevo_evento">
+
             <form action="ServletCrearEditarEvento">
+                
+                <%
+                    if (error != null && error.equals("etiquetasIncorrectas")) {
+                %>
+
+                <div class="alert alert-danger" role="alert">
+                    Seleccione como mínimo 1 etiqueta y como máximo 2 etiquetas.
+                </div>
+                <%
+                    } else if (error != null && error.equals("fechasIncorrectas")) {
+                %>
+                <div class="alert alert-danger" role="alert">
+                    ERROR: La fecha límite para comprar entradas debe ser anterior a la fecha del evento.
+                </div>
+                <% 
+                    }
+                %>
                 <div class="mb-3" style="text-align: left">
                     <label for="exampleDropdownFormEmail2" class="form-label">Nombre del evento</label>
                     <input type="text" name="nombre_evento" class="form-control" id="nombre_evento" required>
@@ -42,6 +63,17 @@ and open the template in the editor.
                 </div> 
 
                 <div class="mb-3" style="text-align: left">
+                    <label for="inputMDEx1" class="form-label">Hora del evento</label>
+                    <input type="time" name="hora_evento" id="inputMDEx1" class="form-control" required>
+
+                </div>
+
+                <div class="mb-3" style="text-align: left">
+                    <label for="exampleDropdownFormEmail2" class="form-label">Lugar del evento</label>
+                    <input type="text" name="lugar_evento" class="form-control" required>
+                </div>
+
+                <div class="mb-3" style="text-align: left">
                     <label for="birthday" class="form-label">Fecha límite para comprar entradas</label>
                     <input type="date" class="form-control" id="fecha_limite_entradas" name="fecha_limite_entradas" required>
                 </div> 
@@ -53,7 +85,7 @@ and open the template in the editor.
 
                 <div class="mb-3" style="text-align: left">
                     <label for="exampleDropdownFormEmail2" class="form-label">Número máximo de entradas por persona</label>
-                    <input type="text" name="aforo_evento" class="form-control" id="aforo_evento" required >
+                    <input type="text" name="maximo_entradas" class="form-control" required >
                 </div>
 
                 <div class="mb-3" style="text-align: left">
@@ -64,15 +96,15 @@ and open the template in the editor.
                 <div style="text-align: left">
                     <label>Selecciona las etiquetas del evento</label> <br>
                 </div>
-                
-                <% 
-                    for(Etiqueta etiqueta : listaEtiquetas){
+
+                <%
+                    for (Etiqueta etiqueta : listaEtiquetas) {
                 %>
-                    <div class="form-check" style="text-align: left">
-                    <input class="form-check-input"  type="checkbox" name="etiquetas_evento" value="<%=etiqueta.getId() %>" id="defaultCheck1">
-                    <label class="form-check-label"  for="defaultCheck1"><%=etiqueta.getNombre() %></label>
-                    </div> 
-                <% 
+                <div class="form-check" style="text-align: left">
+                    <input class="form-check-input"  type="checkbox" name="etiquetas_evento" value="<%=etiqueta.getId()%>" id="defaultCheck1">
+                    <label class="form-check-label"  for="defaultCheck1"><%=etiqueta.getNombre()%></label>
+                </div> 
+                <%
                     }
                 %>
 
