@@ -37,6 +37,18 @@ public class EntradaFacade extends AbstractFacade<Entrada> {
         q = em.createQuery("SELECT e.numero FROM Entrada e WHERE e.evento.id = :eventoId");
         q.setParameter("eventoId", evento.getId());
         return q.getResultList();
-    } 
+    }
+    
+    public Integer maxNumeroDeUnEvento (Evento evento){
+        Query q;
+        List<Integer> lista;
+        
+        q = em.createQuery("SELECT MAX(e.numero) FROM Entrada e WHERE e.evento.id = :eventoid");
+        q.setParameter("eventoid", evento.getId());
+        lista = q.getResultList();
+        
+        if (lista != null) return lista.get(0);
+        else return null;
+    }
     
 }

@@ -5,12 +5,11 @@
  */
 package GestorEventos2021.servlet;
 
-import GestorEventos2021.dao.EntradaFacade;
 import GestorEventos2021.dao.EventoFacade;
 import GestorEventos2021.entity.Evento;
-import GestorEventos2021.entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,21 +17,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author yeray
  */
-@WebServlet(name = "ServletReservarTicketEvento", urlPatterns = {"/ServletReservarTicketEvento"})
-public class ServletReservarTicketEvento extends HttpServlet {
-
-    @EJB
-    private EntradaFacade entradaFacade;
+@WebServlet(name = "ServletFiltrarEvento", urlPatterns = {"/ServletFiltrarEvento"})
+public class ServletFiltrarEvento extends HttpServlet {
 
     @EJB
     private EventoFacade eventoFacade;
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,31 +39,14 @@ public class ServletReservarTicketEvento extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String eventoId = request.getParameter("idEvento");
-        String nEntradas = request.getParameter("nEntradas");
-        Evento evento;
-        String strTo = "";
-        HttpSession session = request.getSession();
-        Usuario u = (Usuario) session.getAttribute("usuario");
+        String filtro = request.getParameter("busqueda");
         
-        if (u == null || u.getUsuarioeventos() == null) { //No se ha iniciado sesión como usuario de eventos
-            strTo = "InicioSesion.jsp";
-        } else {                                          //Ha iniciado sesión correctamente
-            evento = this.eventoFacade.find(new Integer(eventoId));
-
-            if (evento.getFilas() == null){         //No se seleccionan asientos
-                strTo = "ComprarTicketEventoSinAsientos.jsp";
-            } else {                                //Selecciona asientos
-                strTo = "ComprarTicketEvento.jsp";
-            }
-            
-            request.setAttribute("listaEntradas", this.entradaFacade.findByEntradasCompradaDeUnEvento(evento));
-            request.setAttribute("evento", evento);
-            request.setAttribute("nEntradas", nEntradas);
-        }
+        List<Evento> listaEventos = this.eventoFacade.filtrarByTituloOrLugar(filtro);
         
-        RequestDispatcher rd = request.getRequestDispatcher(strTo);
-        rd.forward(request, response); 
+        request.setAttribute("listaEventos", listaEventos);
+        request.setAttribute("filtro", filtro);
+        RequestDispatcher rd = request.getRequestDispatcher("BusquedaEventos.jsp");
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

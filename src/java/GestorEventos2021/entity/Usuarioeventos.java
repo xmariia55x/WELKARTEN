@@ -45,20 +45,20 @@ public class Usuarioeventos implements Serializable {
     @Column(name = "ID", nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "APELLIDOS", length = 50, nullable = false)
+    @Column(name = "APELLIDOS", nullable = false, length=50)
     private String apellidos;
     @Basic(optional = false)
-    @Column(name = "DOMICILIO", length = 100, nullable = false)
+    @Column(name = "DOMICILIO", nullable = false, length=100)
     private String domicilio;
     @Basic(optional = false)
-    @Column(name = "CIUDAD", length = 50, nullable = false)
+    @Column(name = "CIUDAD", nullable = false, length=50)
     private String ciudad;
     @Basic(optional = false)
     @Column(name = "FECHA_NACIMIENTO", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
     @Basic(optional = false)
-    @Column(name = "SEXO", length = 50, nullable = false)
+    @Column(name = "SEXO", nullable = false, length=50)
     private String sexo;
     @JoinColumn(name = "ID", referencedColumnName = "ID", insertable = false, updatable = false)
     @OneToOne(optional = false)

@@ -48,16 +48,16 @@ public class Usuario implements Serializable {
     @Column(name = "ID")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "NOMBRE", length = 50, nullable = false)
+    @Column(name = "NOMBRE", nullable = false, length=50)
     private String nombre;
     @Basic(optional = false)
-    @Column(name = "NIF", length = 50, nullable = false)
+    @Column(name = "NIF", nullable = false, length=50)
     private String nif;
     @Basic(optional = false)
-    @Column(name = "CORREO", length = 50, nullable = false)
+    @Column(name = "CORREO", nullable = false, length=50)
     private String correo;
     @Basic(optional = false)
-    @Column(name = "PASSWORD", length = 50, nullable = false)
+    @Column(name = "PASSWORD", nullable = false, length=50)
     private String password;
     @Basic(optional = false)
     @Column(name = "ROL", nullable = false)

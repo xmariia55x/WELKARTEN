@@ -24,6 +24,8 @@
     <%
         Evento evento = (Evento) request.getAttribute("evento");
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");
+        
         String fecha = formato.format(evento.getFechaInicio());
 
         Integer nEntradas = Integer.parseInt((String) request.getAttribute("nEntradas"));
@@ -45,7 +47,9 @@
         </div>
 
         <!-- WIZARD -->        
-        <form id="regForm" action="ServletConfirmarTicket">
+        <form id="regForm" action="ServletGuardarTicket">
+            <input type="hidden" name="idEvento" value="<%=evento.getId()%>" />
+            <input type="hidden" name="nEntradas" value="<%=nEntradas%>" />
             <!-- Circles which indicates the steps of the form: -->
             <div class="pasos">
                 <div class="paso">
@@ -90,7 +94,7 @@
                                                 }  
                                         %>
                                         <li class="seat" style="<%=estilo%>">
-                                            <input type="checkbox" <%=desactivado%> id="<%=id%>" name="asientosSeleccionados" class="seleccion" onclick="checkear(<%=id%>)"/>
+                                            <input type="checkbox" <%=desactivado%> value="<%=id%>" id="<%=id%>" name="asientosSeleccionados" class="seleccion" onclick="checkear(<%=id%>)"/>
                                             <label for="<%=id%>"><%=id%></label>
                                         </li>
                                         <%    estilo = "";
@@ -148,9 +152,9 @@
                 <div class="tab">
                     <div class = "contenido_resumen">
                         <strong>EVENTO: </strong><label><%=evento.getTitulo()%></label></br>
-                        <strong>LUGAR: </strong><label></label></br>
+                        <strong>LUGAR: </strong><label><%=evento.getLugar()%></label></br>
                         <strong>FECHA: </strong><label><%=fecha%></label></br>
-                        <strong>HORA: </strong><label></label></br>
+                        <strong>HORA: </strong><label><%=formatoHora.format(evento.getHora())%></label></br>
                         <strong>NÚMERO DE ENTRADAS: </strong><label><%=nEntradas%></label></br>
                         <strong>ASIENTOS SELECCIONADOS: </strong><label id="asientosSeleccionados"></label></br>
 

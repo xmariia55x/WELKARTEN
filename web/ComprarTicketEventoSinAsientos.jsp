@@ -22,6 +22,7 @@
     <%
         Evento evento = (Evento) request.getAttribute("evento");
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");
         String fecha = formato.format(evento.getFechaInicio());
 
         Integer nEntradas = Integer.parseInt((String) request.getAttribute("nEntradas"));
@@ -39,8 +40,9 @@
             </div>
         </div>
 
-        <form class="contenido2" action="ServletGuardar">
+        <form class="contenido2" action="ServletGuardarTicket">
             <input type="hidden" name="idEvento" value="<%=evento.getId()%>" />
+            <input type="hidden" name="nEntradas" value="<%=nEntradas%>" />
             <div class="credit-card-div2">
                 <div class="panel panel-default" >
                     <div class="panel-heading">
@@ -83,17 +85,17 @@
             <div class = "resumen">
                 <div class = "contenido_resumen">
                     <strong>EVENTO: </strong><label><%=evento.getTitulo()%></label></br>
-                    <strong>LUGAR: </strong><label></label></br>
+                    <strong>LUGAR: </strong><label><%=evento.getLugar()%></label></br>
                     <strong>FECHA: </strong><label><%=fecha%></label></br>
-                    <strong>HORA: </strong><label></label></br>
+                    <strong>HORA: </strong><label><%=formatoHora.format(evento.getHora())%></label></br>
                     <strong>NÚMERO DE ENTRADAS: </strong><label><%=nEntradas%></label></br></br>
 
                     <strong>PRECIO TOTAL (IVA INCLUIDO): </strong><label><%=precioTotal%>€</label>
                 </div>
             </div>
             <div style="float: right; margin-right: 10%">
-                <input type="button" class="btn btn-light btn-lg" value="Cancelar" />
-                <input type="submit" class="btn btn-primary btn-lg" value="Confirmar" onclick=""/>
+                <input type="button" class="btn btn-light btn-lg" value="Cancelar" onclick="location.href='ServletEventoInfo?id=<%=evento.getId()%>'" />
+                <input type="submit" class="btn btn-primary btn-lg" value="Confirmar"/>
             </div>
         </form>
     </body>
