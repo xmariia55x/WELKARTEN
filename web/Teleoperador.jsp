@@ -84,7 +84,7 @@
                         </tbody>
                     </table>
                 
-                <!-- BOTONACO DE PETICIONES -->
+                <!-- GRUPO DE BOTONCITOS -->
                 <div class="d-grid gap-2 d-md-block">
                    
                 <input type="button" class="btn btn-primary btn-lg" id="peticiones_teleoperador" value="Peticiones" name="peticiones_teleoperador"

@@ -43,9 +43,21 @@
             </select>
             <br/>
             <br/>
-            <input type="submit" class="btn btn-primary btn-lg" value="Crear Peticion" name="Crear Peticion" />
+            <div class="d-grid gap-2">
+                <input type="submit" class="btn btn-primary btn-lg" value="Crear Peticion" name="Crear Peticion" />
+            </div>
             <br/>
         </form>
+        
+        
+        <br/>
+                
+        <p class="fw-normal">O bien, puede ver los chats que ya tenga iniciados</p>
+        
+        <form action="ServletListarMisChats">
+            <div class="d-grid gap-2">
+                <input type="submit" class="btn btn-primary btn-lg" value="Ver chats" name="Ver chats" />
+            </div>
         </form>
         
         

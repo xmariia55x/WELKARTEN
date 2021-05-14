@@ -10,6 +10,7 @@ import GestorEventos2021.entity.Conversacion;
 import GestorEventos2021.entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -45,7 +46,13 @@ public class ServletListarMisChats extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Usuario user = (Usuario)session.getAttribute("usuario");
-        List<Conversacion> misChats = this.conversacionFacade.findPeticiones(user);
+        List<Conversacion> misChats = new ArrayList();
+        
+        if(user.getRol() == 5) {
+            misChats = this.conversacionFacade.findPeticionesTeleoperador(user);
+        } else { 
+            misChats = this.conversacionFacade.findPeticionesUsuario(user);
+        }
         
         request.setAttribute("misChats", misChats);
         RequestDispatcher rd = request.getRequestDispatcher("MisChats.jsp");
