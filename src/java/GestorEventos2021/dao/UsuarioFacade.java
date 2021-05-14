@@ -47,7 +47,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         
     }
     
-<<<<<<< Updated upstream
+
     public List<Usuario> findByRol (Integer rol){
         
         Query q;
@@ -58,7 +58,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         return q.getResultList();
     }
     
-=======
+
      public Usuario findByEmail(String email) {
         Query q;
         List<Usuario> lista;
@@ -73,5 +73,5 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         }
         
     }
->>>>>>> Stashed changes
+
 }
