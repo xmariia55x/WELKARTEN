@@ -1,5 +1,5 @@
 <%@page import="GestorEventos2021.entity.Usuario"%>
-<html lang="es">
+
     <head>
 
         <title>Formulario de contacto</title>
@@ -153,8 +153,10 @@
         </style>
         -->
     </head>
-    
-   
+    <%
+       String done = (String)request.getAttribute("done");
+       String strError = (String)request.getAttribute("strErr");
+    %>
     <body>  
 
          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
@@ -167,8 +169,13 @@
         
         
         <%
-            String strError = (String)request.getAttribute("strErr");
-            
+            if(done != null) {
+        %>        
+                <div class="alert alert-success" role="alert">
+                Conversación creada con éxito
+                </div>
+        <%
+            }    
             if(strError != null) {
                 if(strError.equals("v")) {
                     %>
@@ -176,14 +183,14 @@
                     ERROR: Debe iniciar sesión para poder contactarnos
                     </div>
                     <%    
-                    } else if(strError.equals("i")) {
+                } else if(strError.equals("i")) {
                     %>
                     <div class="alert alert-danger" role="alert">
                     ERROR: Recuerde que debe estar registrado como usuario o creador de eventos para poder contactarnos
                     </div>
                     <%
                     }
-            }
+                }   
             %>
         
         <div class="d-grid gap-2 col-6 mx-auto">
@@ -260,5 +267,5 @@
         -->
         
     </body>
-</html>
+
 

@@ -40,6 +40,8 @@
                     <label for="text">Filtrar usuario</label>
                 </div>
                 
+                <br/>
+                
                 <div class="d-grid gap-2 col-6 mx-auto">
                     <input type="submit" class="btn btn-primary btn-lg" id="filtrarTele" value="Filtrar" name="filtrarTele"/>
                 </div>                    
@@ -83,17 +85,15 @@
                     </table>
                 
                 <!-- BOTONACO DE PETICIONES -->
-                <div class="d-grid gap-2 col-6 mx-auto">
+                <div class="d-grid gap-2 d-md-block">
                    
                 <input type="button" class="btn btn-primary btn-lg" id="peticiones_teleoperador" value="Peticiones" name="peticiones_teleoperador"
                                        onclick="location.href = 'ServletCargarPeticiones'" />
-                </div>
-                
-                <div class="d-grid gap-2 col-6 mx-auto">
                    
                 <input type="button" class="btn btn-primary btn-lg" id="chats_teleoperador" value="Ver mis chats" name="chats_teleoperador"
                                        onclick="location.href = 'ServletListarMisChats'" />
                 </div>
                 
+                <br/>
     </body>
 </html>

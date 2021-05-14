@@ -5,11 +5,12 @@
  */
 package GestorEventos2021.servlet;
 
+import GestorEventos2021.dao.ConversacionFacade;
 import GestorEventos2021.dao.UsuarioFacade;
+import GestorEventos2021.entity.Conversacion;
 import GestorEventos2021.entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,8 +24,11 @@ import javax.servlet.http.HttpSession;
  *
  * @author adric
  */
-@WebServlet(name = "ServletCrearConversacion", urlPatterns = {"/ServletCrearConversacion"})
-public class ServletCrearConversacion extends HttpServlet {
+@WebServlet(name = "ServletGuardarConversacion", urlPatterns = {"/ServletGuardarConversacion"})
+public class ServletGuardarConversacion extends HttpServlet {
+
+    @EJB
+    private ConversacionFacade conversacionFacade;
 
     @EJB
     private UsuarioFacade usuarioFacade;
@@ -42,33 +46,22 @@ public class ServletCrearConversacion extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Usuario user = (Usuario)session.getAttribute("usuario");
-        String strTo;
-        String strErr;
-        String done = request.getParameter("done");
+        String teleoperadorId = request.getParameter("teleoperador");
         
-        if(done != null) {
-            strTo = "CrearPeticion.jsp";
-            request.setAttribute("done", done);
-        } else {
-            if(user == null) {
-            strErr = "v";
-            request.setAttribute("strErr", strErr);
-            strTo = "contactanos.jsp";
-        } else if(user.getRol() == 2 || user.getRol() == 4) {
-            //Aqui creamos la lista de teleoperadores que tenemos en la BD para mostrarla
-            List<Usuario> listaTeleoperadores = this.usuarioFacade.findByRol(5);
-            strTo = "CrearPeticion.jsp";
-            request.setAttribute("listaTeleoperadores", listaTeleoperadores);
-        } else {
-            strErr = "i";
-            request.setAttribute("strErr", strErr);
-            strTo = "contactanos.jsp";
-        }
-        }
+        //Busco el teleoperador en la BD
+        Usuario teleoperador = this.usuarioFacade.find(new Integer(teleoperadorId));
         
+        //Creo la conversacion sin lista de mensajes
+        Conversacion conversacion = new Conversacion();
         
+        conversacion.setTeleoperador(teleoperador);
+        conversacion.setUsuario(user);
+        this.conversacionFacade.create(conversacion);
         
-        RequestDispatcher rd = request.getRequestDispatcher(strTo);
+        String done = "Conversación creada con éxito";
+        request.setAttribute("done", done);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("contactanos.jsp");
         rd.forward(request, response);
     }
 
