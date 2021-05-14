@@ -22,8 +22,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <jsp:include page="Navbar.jsp" />
         <br>
-        <br>
-        <br>
+        
         <%
             Usuario administrador = (Usuario) session.getAttribute("usuario");
             List<Usuario> usuarios = (List<Usuario>) request.getAttribute("listaUsuarios");
@@ -49,7 +48,7 @@
                     <div class="d-grid gap-2 col-6 mx-auto">
                     <input type="submit" class="btn btn-primary btn-lg" value="Crear usuario" onclick="location.href = 'CrearUsuarioAdministrador.jsp'"/>
                     </div>
-                
+                <br>
                 <!-- TABLA DE USUARIOS -->
                 <%
                     if (usuarios != null && !usuarios.isEmpty()) {
