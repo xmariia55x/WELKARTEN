@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="GestorEventos2021.entity.Etiquetasevento"%>
@@ -27,6 +28,7 @@ and open the template in the editor.
 
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");
+        DecimalFormat moneyFormat = new DecimalFormat("#.00");
     %>
     <body>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
@@ -123,6 +125,7 @@ and open the template in the editor.
                                         <p class="card-text"><%=e.getLugar()%></p>
                                         <p class="card-text"><%=formatoFecha.format(e.getFechaInicio()) + " " + formatoHora.format(e.getHora())%></p>
                                         <p class="card-text"><%=etiquetas%></p>
+                                        <p class="card-text"><%=moneyFormat.format(e.getCosteEntrada())%>&#8364</p>
                                         <!-- Cambiar id 1 por //evento.getEventoId()// -->
                                         <a href="ServletEventoInfo?id=<%=e.getId()%>" class="btn btn-primary">Ver evento</a>
                                     </div>
@@ -156,6 +159,7 @@ and open the template in the editor.
                                         <p class="card-text"><%=e.getLugar()%></p>
                                         <p class="card-text"><%=formatoFecha.format(e.getFechaInicio()) + " " + formatoHora.format(e.getHora())%></p>
                                         <p class="card-text"><%=etiquetas%></p>
+                                        <p class="card-text"><%=moneyFormat.format(e.getCosteEntrada())%>&#8364</p>
                                         <!-- Cambiar id 1 por //evento.getEventoId()// -->
                                         <a href="ServletEventoInfo?id=<%=e.getId()%>" class="btn btn-primary">Ver evento</a>
                                     </div>
@@ -189,6 +193,7 @@ and open the template in the editor.
                                         <p class="card-text"><%=e.getLugar()%></p>
                                         <p class="card-text"><%=formatoFecha.format(e.getFechaInicio()) + " " + formatoHora.format(e.getHora())%></p>
                                         <p class="card-text"><%=etiquetas%></p>
+                                        <p class="card-text"><%=moneyFormat.format(e.getCosteEntrada())%>&#8364</p>
                                         <!-- Cambiar id 1 por //evento.getEventoId()// -->
                                         <a href="ServletEventoInfo?id=<%=e.getId()%>" class="btn btn-primary">Ver evento</a>
                                     </div>
