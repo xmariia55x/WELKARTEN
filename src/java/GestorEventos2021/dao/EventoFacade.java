@@ -7,9 +7,11 @@ package GestorEventos2021.dao;
 
 import GestorEventos2021.entity.Evento;
 import GestorEventos2021.entity.Usuario;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -35,6 +37,7 @@ public class EventoFacade extends AbstractFacade<Evento> {
         super(Evento.class);
     }
     
+
     public List<Evento> filtrarByTituloOrLugar (String filtro){
         Query q;
         List<Evento> lista;
@@ -137,5 +140,20 @@ public class EventoFacade extends AbstractFacade<Evento> {
         
         
         return q.getResultList();
+    }
+    public Evento findByTitulo(String nombre) {
+        Query q;
+        List<Evento> lista;
+        
+        q = this.em.createNamedQuery("Evento.findByTitulo");
+        q.setParameter("titulo", nombre);
+        lista = q.getResultList();
+        if(lista == null || lista.isEmpty()) {
+            return null;
+        } else {
+            return lista.get(0);
+        }
+        
+
     }
 }
