@@ -171,6 +171,7 @@ public class EventoFacade extends AbstractFacade<Evento> {
         }
         
         return res;
+    }
     public Evento findByTitulo(String nombre) {
         Query q;
         List<Evento> lista;
