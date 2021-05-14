@@ -12,5 +12,10 @@ and open the template in the editor.
     margin-top: 17.5px
 }
 
+.d-grid gap-2 d-md-block {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
 

@@ -10,8 +10,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+        <link href="styles.css" rel="stylesheet">
+        <title>CHAT</title>
     </head>
     <%
         Usuario user = (Usuario)session.getAttribute("usuario");
@@ -19,23 +25,30 @@
     %>    
     
     <body onload="getMessages();">
-        <h1>SHOUT-OUT!</h1>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <jsp:include page="Navbar.jsp" />
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <h3>Conversación de <%= user.getNombre() %></h3>
         <form>
             <table>
-                <tr>
-                    <td>Your name:</td>
-                    <td><input type="text" id="name" name="name" value="<%= user.getNombre() %>"/></td>
+                
+                    <td>Nombre:</td>
+                    <td><input type="text" id="name" name="name" readonly="readonly" value="<%= user.getNombre() %>"/></td>
                 </tr>
                 <tr>
-                    <td>Your shout:</td>
+                    <td>Mensaje:</td>
                     <td><input type="text" id="message" name="message" /></td>
                 </tr>
                 <tr>
-                    <td><input type="button" onclick="postMessage();" value="SHOUT" /></td>
+                    <td><input type="button" class="btn btn-primary" onclick="postMessage();" value="ENVIAR" /></td>
                 </tr>
             </table>
         </form>
-        <h2> Current Shouts </h2>
+        <br/>
+        <h3> Mensajes Actuales </h3>
         <div id="content">
             <% if (application.getAttribute("messages") != null) {%>
             <%= application.getAttribute("messages")%>
