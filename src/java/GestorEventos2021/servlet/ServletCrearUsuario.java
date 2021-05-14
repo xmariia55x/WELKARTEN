@@ -23,6 +23,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -52,7 +53,8 @@ public class ServletCrearUsuario extends HttpServlet {
         String nombre, apellidos, nif, sexo, domicilio, ciudad, correo, contrasena, contrasenaConfirmada, strTo, strError;
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-mm-dd");
         Date fecha_nacimiento;
-
+        HttpSession session = request.getSession();
+        
         nombre = request.getParameter("nombre_usuario");
         apellidos = request.getParameter("apellidos_usuario");
         nif = request.getParameter("nif_usuario");
@@ -85,10 +87,16 @@ public class ServletCrearUsuario extends HttpServlet {
             uEventos.setCiudad(ciudad);
             uEventos.setFechaNacimiento(fecha_nacimiento);
             uEventos.setSexo(sexo);
+            
+            uEventos.setUsuario(usuario);
+            usuario.setUsuarioeventos(uEventos);
 
             this.usuarioeventosFacade.create(uEventos);
 
-            strTo = "UsuarioEventos.jsp";
+            session.setAttribute("usuario",usuario);
+            
+            //strTo = "UsuarioEventos.jsp";
+            strTo = "ServletInicio";
         } else {
             //No ha puesto contrasenias iguales
             strTo = "Registro.jsp";

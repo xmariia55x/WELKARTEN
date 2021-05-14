@@ -56,14 +56,20 @@ public class ServletCrearEditarEvento extends HttpServlet {
         Usuario creador = (Usuario)session.getAttribute("usuario");
         
         String nombre, descripcion, costeEntrada, numMaxEntradas, aforo, lugar, asientos,
-                filasDeAsientos = null, asientosPorFila = null, error;
+                filasDeAsientos = null, asientosPorFila = null, error, idEvento;
         String[] etiquetas;
         List<Etiqueta> etiquetasSeleccionadas = new ArrayList<>();
-        Evento nuevoEvento = new Evento();
+        Evento nuevoEvento;
         Date fechaEvento, fechaLimiteCompraEntradas, hora;
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");
         try {
+            idEvento = request.getParameter("idEvento");
+            if(idEvento == null || idEvento.isEmpty()){
+                nuevoEvento = new Evento(); //crear evento
+            } else {
+                nuevoEvento = this.eventoFacade.find(new Integer(idEvento)); //editar evento
+            }
             nombre = request.getParameter("nombre_evento");
             descripcion = request.getParameter("descripcion_evento");
             fechaEvento = formatoFecha.parse(request.getParameter("fecha_evento"));
@@ -103,7 +109,12 @@ public class ServletCrearEditarEvento extends HttpServlet {
                 nuevoEvento.setEntradaList(new ArrayList<>());
                 nuevoEvento.setEntradasMax(new Integer(numMaxEntradas));
                 
-                this.eventoFacade.create(nuevoEvento);
+                if(idEvento == null || idEvento.isEmpty()){
+                    this.eventoFacade.create(nuevoEvento); //crear evento
+                } else {
+                    this.eventoFacade.edit(nuevoEvento); //editar evento
+                }
+                
                 
                 for (String tag : etiquetas) {
                     etiquetasSeleccionadas.add(this.etiquetaFacade.find(new Integer(tag)));

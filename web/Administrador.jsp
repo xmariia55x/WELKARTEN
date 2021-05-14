@@ -20,10 +20,9 @@
 
     <body>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <jsp:include page="navbarSesionIniciada.jsp" />
+        <jsp:include page="Navbar.jsp" />
         <br>
-        <br>
-        <br>
+        
         <%
             Usuario administrador = (Usuario) session.getAttribute("usuario");
             List<Usuario> usuarios = (List<Usuario>) request.getAttribute("listaUsuarios");
@@ -49,7 +48,7 @@
                     <div class="d-grid gap-2 col-6 mx-auto">
                     <input type="submit" class="btn btn-primary btn-lg" value="Crear usuario" onclick="location.href = 'CrearUsuarioAdministrador.jsp'"/>
                     </div>
-                
+                <br>
                 <!-- TABLA DE USUARIOS -->
                 <%
                     if (usuarios != null && !usuarios.isEmpty()) {
@@ -144,8 +143,8 @@
                             <td><%= fechaLimite%></td>
                             <td><%= event.getCosteEntrada()%></td>
                             <td><%= event.getAforo()%></td>
-                            <td><button class="btn btn-outline-primary" type="submit">Editar</button></td>
-                            <td><button class="btn btn-outline-danger" type="submit">Eliminar</button></td>
+                            <td><input type="submit" class="btn btn-outline-primary" value="Editar" onclick="location.href = 'ServletCargarEventoEditarAdministrador?id=<%= event.getId()%>'"/></td>
+                            <td><input type="submit" class="btn btn-outline-danger" value="Eliminar" onclick="location.href = 'ServletEliminarEventoAdministrador?id=<%= event.getId()%>'"/></td>
                         </tr>
                         <%
                             }
