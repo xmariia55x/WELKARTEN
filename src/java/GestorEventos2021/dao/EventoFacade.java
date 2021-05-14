@@ -7,6 +7,9 @@ package GestorEventos2021.dao;
 
 import GestorEventos2021.entity.Evento;
 import GestorEventos2021.entity.Usuario;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -47,6 +50,46 @@ public class EventoFacade extends AbstractFacade<Evento> {
         return lista;
     }
     
+    public List<Evento> filtrarByEventosNoCaducados (){
+        Query q;
+        List<Evento> lista;
+        
+        q = this.em.createQuery("SELECT e FROM Evento e WHERE e.fechaInicio > :fecha OR (NOT(e.fechaInicio = :fecha) OR e.hora >= :fecha) ORDER BY e.fechaInicio ASC");
+        q.setParameter("fecha", new Date());
+        lista = q.getResultList();
+        
+        return lista;
+    }
+    
+    public List<Evento> filtrarByFechaDeHoy (){
+        Query q;
+        List<Evento> lista;
+        
+        q = this.em.createQuery("SELECT e FROM Evento e WHERE e.fechaInicio = :fecha");
+        q.setParameter("fecha", new Date());
+        lista = q.getResultList();
+        
+        return lista;
+    }
+    
+    public List<Evento> filtrarByFechaDeEstaSemana (){
+        Query q;
+        List<Evento> lista;
+        Date fechaSemana = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechaSemana);
+        c.add(Calendar.DATE, 7);
+        fechaSemana = c.getTime();
+        
+        
+        q = this.em.createQuery("SELECT e FROM Evento e WHERE e.fechaInicio >= :fechaHoy AND e.fechaInicio <= :fechaSemana ORDER BY e.fechaInicio ASC");
+        q.setParameter("fechaSemana", fechaSemana);
+        q.setParameter("fechaHoy", new Date());
+        lista = q.getResultList();
+        
+        return lista;
+    }
+     
     public List<Evento> filtrarByNombrePrecioAforoCreador(String nombre, Integer precio, Integer aforo, Usuario creador){
         Query q;
         

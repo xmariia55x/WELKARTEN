@@ -94,8 +94,11 @@ h1 {
     float:left;
     font-size: 16pt;
     margin: 3% 5%;
-    width: 90%;
-    
+    width: 90%;   
+}
+
+.eventos {
+    margin-top: 20px;
 }
 
 #return-to-top {

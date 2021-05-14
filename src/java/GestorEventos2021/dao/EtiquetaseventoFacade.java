@@ -6,9 +6,11 @@
 package GestorEventos2021.dao;
 
 import GestorEventos2021.entity.Etiquetasevento;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -29,4 +31,10 @@ public class EtiquetaseventoFacade extends AbstractFacade<Etiquetasevento> {
         super(Etiquetasevento.class);
     }
     
+    public List<Etiquetasevento> findByEventoId(Integer id){
+       Query q = this.em.createQuery("SELECT et FROM Etiquetasevento et WHERE et.evento.id = :id");
+       q.setParameter("id", id);
+       
+       return q.getResultList();
+    }
 }

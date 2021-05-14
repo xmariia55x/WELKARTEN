@@ -5,7 +5,9 @@
  */
 package GestorEventos2021.servlet;
 
+import GestorEventos2021.dao.EtiquetaFacade;
 import GestorEventos2021.dao.EventoFacade;
+import GestorEventos2021.entity.Etiqueta;
 import GestorEventos2021.entity.Evento;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,10 +22,13 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author yeray
+ * @author maria
  */
-@WebServlet(name = "ServletInicio", urlPatterns = {"/ServletInicio"})
-public class ServletInicio extends HttpServlet {
+@WebServlet(name = "ServletCargarEventoEditarAdministrador", urlPatterns = {"/ServletCargarEventoEditarAdministrador"})
+public class ServletCargarEventoEditarAdministrador extends HttpServlet {
+
+    @EJB
+    private EtiquetaFacade etiquetaFacade;
 
     @EJB
     private EventoFacade eventoFacade;
@@ -39,16 +44,14 @@ public class ServletInicio extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Evento> listaEventos, listaEventosHoy, listaEventosEstaSemana;
-                
-        listaEventos = this.eventoFacade.filtrarByEventosNoCaducados();
-        listaEventosHoy = this.eventoFacade.filtrarByFechaDeHoy();
-        listaEventosEstaSemana = this.eventoFacade.filtrarByFechaDeEstaSemana();
-        
-        request.setAttribute("listaEventos", listaEventos);
-        request.setAttribute("listaEventosHoy", listaEventosHoy);
-        request.setAttribute("listaEventosEstaSemana", listaEventosEstaSemana);
-        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+        String id = request.getParameter("id");
+        Evento evento = this.eventoFacade.find(new Integer(id));
+        if(evento != null) {
+            request.setAttribute("evento", evento);
+            List<Etiqueta> etiquetas = this.etiquetaFacade.findAll();
+            request.setAttribute("listaEtiquetas", etiquetas);
+        }
+        RequestDispatcher rd = request.getRequestDispatcher("CrearEditarEvento.jsp");
         rd.forward(request, response);
     }
 

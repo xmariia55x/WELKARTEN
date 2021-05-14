@@ -5,13 +5,14 @@
  */
 package GestorEventos2021.servlet;
 
+import GestorEventos2021.dao.EtiquetaseventoFacade;
 import GestorEventos2021.dao.EventoFacade;
+import GestorEventos2021.entity.Etiquetasevento;
 import GestorEventos2021.entity.Evento;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,10 +21,13 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author yeray
+ * @author maria
  */
-@WebServlet(name = "ServletInicio", urlPatterns = {"/ServletInicio"})
-public class ServletInicio extends HttpServlet {
+@WebServlet(name = "ServletEliminarEventoAdministrador", urlPatterns = {"/ServletEliminarEventoAdministrador"})
+public class ServletEliminarEventoAdministrador extends HttpServlet {
+
+    @EJB
+    private EtiquetaseventoFacade etiquetaseventoFacade;
 
     @EJB
     private EventoFacade eventoFacade;
@@ -39,17 +43,20 @@ public class ServletInicio extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Evento> listaEventos, listaEventosHoy, listaEventosEstaSemana;
+        String id = request.getParameter("id");
+        if(id != null && !id.isEmpty()){
+            Evento evento = this.eventoFacade.find(new Integer(id));
+            if(evento.getEtiquetaseventoList() != null){
+                //hay que eliminar las asociaciones entre el evento y las etiquetas
+                List<Etiquetasevento> etiquetas = this.etiquetaseventoFacade.findByEventoId(new Integer(id));
+                for(Etiquetasevento tag : etiquetas){
+                    this.etiquetaseventoFacade.remove(tag);
+                }
                 
-        listaEventos = this.eventoFacade.filtrarByEventosNoCaducados();
-        listaEventosHoy = this.eventoFacade.filtrarByFechaDeHoy();
-        listaEventosEstaSemana = this.eventoFacade.filtrarByFechaDeEstaSemana();
-        
-        request.setAttribute("listaEventos", listaEventos);
-        request.setAttribute("listaEventosHoy", listaEventosHoy);
-        request.setAttribute("listaEventosEstaSemana", listaEventosEstaSemana);
-        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-        rd.forward(request, response);
+            }
+            this.eventoFacade.remove(evento);
+        }
+        response.sendRedirect("ServletListarEventosUsuariosAdministrador");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

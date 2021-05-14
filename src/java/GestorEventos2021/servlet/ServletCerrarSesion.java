@@ -5,28 +5,22 @@
  */
 package GestorEventos2021.servlet;
 
-import GestorEventos2021.dao.EventoFacade;
-import GestorEventos2021.entity.Evento;
+
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author yeray
+ * @author maria
  */
-@WebServlet(name = "ServletInicio", urlPatterns = {"/ServletInicio"})
-public class ServletInicio extends HttpServlet {
-
-    @EJB
-    private EventoFacade eventoFacade;
+@WebServlet(name = "ServletCerrarSesion", urlPatterns = {"/ServletCerrarSesion"})
+public class ServletCerrarSesion extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,17 +33,12 @@ public class ServletInicio extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Evento> listaEventos, listaEventosHoy, listaEventosEstaSemana;
-                
-        listaEventos = this.eventoFacade.filtrarByEventosNoCaducados();
-        listaEventosHoy = this.eventoFacade.filtrarByFechaDeHoy();
-        listaEventosEstaSemana = this.eventoFacade.filtrarByFechaDeEstaSemana();
+        HttpSession session = request.getSession();  
         
-        request.setAttribute("listaEventos", listaEventos);
-        request.setAttribute("listaEventosHoy", listaEventosHoy);
-        request.setAttribute("listaEventosEstaSemana", listaEventosEstaSemana);
-        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-        rd.forward(request, response);
+        //Una vez el usuario haya cerrado sesion, lo mandamos a la pagina de inicio
+        //Si en la pag de inicio se cargan los eventos, cambiar esto por el servlet      
+        session.invalidate();                
+        response.sendRedirect("ServletInicio");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

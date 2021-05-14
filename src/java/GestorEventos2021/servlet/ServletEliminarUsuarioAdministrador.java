@@ -5,13 +5,13 @@
  */
 package GestorEventos2021.servlet;
 
-import GestorEventos2021.dao.EventoFacade;
-import GestorEventos2021.entity.Evento;
+import GestorEventos2021.dao.UsuarioFacade;
+import GestorEventos2021.dao.UsuarioeventosFacade;
+import GestorEventos2021.entity.Usuario;
+import GestorEventos2021.entity.Usuarioeventos;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,13 +20,16 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author yeray
+ * @author maria
  */
-@WebServlet(name = "ServletInicio", urlPatterns = {"/ServletInicio"})
-public class ServletInicio extends HttpServlet {
+@WebServlet(name = "ServletEliminarUsuarioAdministrador", urlPatterns = {"/ServletEliminarUsuarioAdministrador"})
+public class ServletEliminarUsuarioAdministrador extends HttpServlet {
 
     @EJB
-    private EventoFacade eventoFacade;
+    private UsuarioeventosFacade usuarioeventosFacade;
+
+    @EJB
+    private UsuarioFacade usuarioFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,17 +42,18 @@ public class ServletInicio extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Evento> listaEventos, listaEventosHoy, listaEventosEstaSemana;
-                
-        listaEventos = this.eventoFacade.filtrarByEventosNoCaducados();
-        listaEventosHoy = this.eventoFacade.filtrarByFechaDeHoy();
-        listaEventosEstaSemana = this.eventoFacade.filtrarByFechaDeEstaSemana();
+        String id = request.getParameter("id");
+        if(id != null && !id.isEmpty()){
+            Usuario user = this.usuarioFacade.find(new Integer(id));
+            if(user.getUsuarioeventos() != null){
+                //estamos eliminando a un usuario de eventos
+                Usuarioeventos uEventos = this.usuarioeventosFacade.find(new Integer(id));
+                this.usuarioeventosFacade.remove(uEventos);
+            }
+            this.usuarioFacade.remove(user);
+        }
         
-        request.setAttribute("listaEventos", listaEventos);
-        request.setAttribute("listaEventosHoy", listaEventosHoy);
-        request.setAttribute("listaEventosEstaSemana", listaEventosEstaSemana);
-        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-        rd.forward(request, response);
+        response.sendRedirect("ServletListarEventosUsuariosAdministrador");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
