@@ -5,15 +5,13 @@
  */
 package GestorEventos2021.servlet;
 
-import GestorEventos2021.dao.EventoFacade;
+import GestorEventos2021.dao.EstudioFacade;
 import GestorEventos2021.dao.UsuarioFacade;
-import GestorEventos2021.entity.Evento;
+import GestorEventos2021.entity.Estudio;
 import GestorEventos2021.entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,17 +21,16 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Javi
+ * @author david
  */
-@WebServlet(name = "ServletCargarCreadorEventos", urlPatterns = {"/ServletCargarCreadorEventos"})
-public class ServletCargarCreadorEventos extends HttpServlet {
+@WebServlet(name = "ServletGuardarEstudio", urlPatterns = {"/ServletGuardarEstudio"})
+public class ServletGuardarEstudio extends HttpServlet {
 
     @EJB
-    private EventoFacade eventoFacade;
-
+    private EstudioFacade estudioFacade;
+    
     @EJB
     private UsuarioFacade usuarioFacade;
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -45,41 +42,35 @@ public class ServletCargarCreadorEventos extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      
         
-        HttpSession session = request.getSession();  
+        HttpSession session = request.getSession();
+        Estudio e = (Estudio)session.getAttribute("estudio");
         Usuario usuario = (Usuario)session.getAttribute("usuario");
-        
-        List<Evento> eventosFiltrados = (List)request.getAttribute("eventosFiltrados");
-        List<Evento> eventosProximos = this.eventoFacade.filtrarByFechaDeEstaSemana();
-        List<Evento> misEventos = this.eventoFacade.filtrarByNombrePrecioAforoCreador(null, null, null, usuario);
-        
-        if(eventosFiltrados != null && !eventosFiltrados.isEmpty()){
-            request.setAttribute("eventosFiltrados", eventosFiltrados);
+        if(e !=null){ //Modificar estudio
+            String analista = request.getParameter("nombre_analista");
+            String descripcion = request.getParameter("descripcion_estudio");
+            String resultado = request.getParameter("resultado_estudio");
+            
+            if(!analista.equals(e.getAnalista().getCorreo())){
+                e.setAnalista(this.usuarioFacade.findByEmail(analista));
+                this.estudioFacade.edit(e);
+            }
+            if(!descripcion.equals(e.getDescripcion())){
+                e.setDescripcion(descripcion);
+                this.estudioFacade.edit(e);
+            }
+            if(!resultado.equals(e.getResultado())){
+                e.setResultado(resultado);
+                this.estudioFacade.edit(e);
+                      
+            }
+           
+            
+        }else{ //Crear estudio
+            
         }
         
-        if(eventosProximos != null && !eventosProximos.isEmpty()){
-            request.setAttribute("eventosProximos", eventosProximos);
-        }
-        
-        if(misEventos != null && !misEventos.isEmpty()){
-            request.setAttribute("misEventos", misEventos);
-        }
-  
-        String error = request.getParameter("error");
-        if(error != null && !error.isEmpty()) request.setAttribute("error", error);
-        
-        List<Usuario> creadores = this.usuarioFacade.findByRol(2);
-        
-        
-        
-        request.setAttribute("usuario", usuario);
-        request.setAttribute("creadores", creadores);
-        
-               
-        RequestDispatcher rd = request.getRequestDispatcher("CreadorEventos.jsp");
-        rd.forward(request, response);
-        
+         response.sendRedirect("ServletIniciarSesion?email="+usuario.getCorreo()+"&password="+usuario.getPassword());
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

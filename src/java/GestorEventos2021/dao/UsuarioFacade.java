@@ -48,6 +48,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         
     }
     
+
     public List<Usuario> findByRol (Integer rol){
         
         Query q;
@@ -75,4 +76,20 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         q.setParameter("nombre", "%" + nombre + "%");
         return q.getResultList();
     }
+
+     public Usuario findByEmail(String email) {
+        Query q;
+        List<Usuario> lista;
+        
+        q = this.em.createQuery("SELECT u FROM Usuario u WHERE u.correo = :email");
+        q.setParameter("email", email);
+        lista = q.getResultList();
+        if(lista == null || lista.isEmpty()) {
+            return null;
+        } else {
+            return lista.get(0);
+        }
+        
+    }
+
 }

@@ -12,6 +12,7 @@ import GestorEventos2021.entity.Mensaje;
 import GestorEventos2021.entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -83,7 +84,13 @@ public class ShoutServlet extends HttpServlet {
         c.getMensajeList().add(m);
         this.conversacionFacade.edit(c);
         
-        String htmlMessage = "<p><b>" + name + "</b><br/>" + message + "</p>";
+        String hora = new SimpleDateFormat("hh:mm").format(m.getHora());
+        
+        //String htmlMessage = "<p><b>" + name + "</b><br/>" + message + "<br/><i>" + hora +"</i></p>";
+        
+        String htmlMessage = "<div class=\"card text-dark bg-light mb-3\" style=\"max-width: 18rem;\"><div class=\"card-header\">" + hora + "</div> <div class=\"card-body\"> <h5 class=\"card-title\">" + name + "</h5><p class=\"card-text\">" + message + "</p></div></div>";
+        
+        //String htmlMessage = "<div class=\"alert alert-primary\" role=\"alert\">"+ name + "</br>" + message + "</br>" + hora +"</div>";
         
         ServletContext application = request.getServletContext();
         

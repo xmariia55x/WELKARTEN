@@ -5,15 +5,15 @@
  */
 package GestorEventos2021.servlet;
 
+import GestorEventos2021.dao.EstudioFacade;
 import GestorEventos2021.dao.EventoFacade;
 import GestorEventos2021.dao.UsuarioFacade;
+import GestorEventos2021.entity.Estudio;
 import GestorEventos2021.entity.Evento;
 import GestorEventos2021.entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,17 +23,21 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Javi
+ * @author david
  */
-@WebServlet(name = "ServletCargarCreadorEventos", urlPatterns = {"/ServletCargarCreadorEventos"})
-public class ServletCargarCreadorEventos extends HttpServlet {
+@WebServlet(name = "ServletCrearEstudio", urlPatterns = {"/ServletCrearEstudio"})
+public class ServletCrearEstudio extends HttpServlet {
 
+    
     @EJB
-    private EventoFacade eventoFacade;
-
-    @EJB
+    private EstudioFacade estudioFacade;
+    
+    @EJB 
     private UsuarioFacade usuarioFacade;
-
+    
+    @EJB 
+    private EventoFacade eventoFacade;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -45,40 +49,30 @@ public class ServletCargarCreadorEventos extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      
+        HttpSession session = request.getSession();
+        Usuario u = (Usuario)session.getAttribute("usuario");
+        Estudio e = new Estudio();
         
-        HttpSession session = request.getSession();  
-        Usuario usuario = (Usuario)session.getAttribute("usuario");
-        
-        List<Evento> eventosFiltrados = (List)request.getAttribute("eventosFiltrados");
-        List<Evento> eventosProximos = this.eventoFacade.filtrarByFechaDeEstaSemana();
-        List<Evento> misEventos = this.eventoFacade.filtrarByNombrePrecioAforoCreador(null, null, null, usuario);
-        
-        if(eventosFiltrados != null && !eventosFiltrados.isEmpty()){
-            request.setAttribute("eventosFiltrados", eventosFiltrados);
-        }
-        
-        if(eventosProximos != null && !eventosProximos.isEmpty()){
-            request.setAttribute("eventosProximos", eventosProximos);
-        }
-        
-        if(misEventos != null && !misEventos.isEmpty()){
-            request.setAttribute("misEventos", misEventos);
-        }
-  
-        String error = request.getParameter("error");
-        if(error != null && !error.isEmpty()) request.setAttribute("error", error);
-        
-        List<Usuario> creadores = this.usuarioFacade.findByRol(2);
+        String descripcion = request.getParameter("descripcion");
+        String signo = request.getParameter("selectSigno");
+        Integer edad  = new Integer(request.getParameter("edad")) ;
+        String evento = request.getParameter("selectEvento");
+        Evento ev = this.eventoFacade.findByTitulo(evento);
         
         
+        Integer resultado = this.estudioFacade.resultado(signo,edad,ev);
+        e.setAnalista(u);
+        e.setResultado("El número de usuarios que cumple la condición son: "+resultado);
+        e.setDescripcion(descripcion);
         
-        request.setAttribute("usuario", usuario);
-        request.setAttribute("creadores", creadores);
+        this.estudioFacade.create(e);
         
-               
-        RequestDispatcher rd = request.getRequestDispatcher("CreadorEventos.jsp");
-        rd.forward(request, response);
+        u.getEstudioList().add(e);
+        this.usuarioFacade.edit(u);
+        
+        response.sendRedirect("ServletIniciarSesion?email="+u.getCorreo()+"&password="+u.getPassword());
+                
+                
         
     }
 
