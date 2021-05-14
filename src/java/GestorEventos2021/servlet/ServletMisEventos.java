@@ -5,12 +5,12 @@
  */
 package GestorEventos2021.servlet;
 
-import GestorEventos2021.dao.ConversacionFacade;
-import GestorEventos2021.entity.Conversacion;
+import GestorEventos2021.dao.EntradaFacade;
+import GestorEventos2021.dao.EventoFacade;
+import GestorEventos2021.entity.Evento;
 import GestorEventos2021.entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -23,16 +23,14 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author adric
+ * @author yeray
  */
-@WebServlet(name = "ServletListarMisChats", urlPatterns = {"/ServletListarMisChats"})
-public class ServletListarMisChats extends HttpServlet {
+@WebServlet(name = "ServletMisEventos", urlPatterns = {"/ServletMisEventos"})
+public class ServletMisEventos extends HttpServlet {
 
     @EJB
-    private ConversacionFacade conversacionFacade;
-    
-    
-    
+    private EntradaFacade entradaFacade;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,18 +42,17 @@ public class ServletListarMisChats extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         HttpSession session = request.getSession();
-        Usuario user = (Usuario)session.getAttribute("usuario");
-        List<Conversacion> misChats = new ArrayList();
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        List<Evento> listaEventosRecientes, listaEventosFinalizados;
         
-        if(user.getRol() == 5) {
-            misChats = this.conversacionFacade.findPeticionesTeleoperador(user);
-        } else { 
-            misChats = this.conversacionFacade.findPeticionesUsuario(user);
-        }
+        listaEventosRecientes = this.entradaFacade.findByEventosDeUsuarioRecientes(usuario);
+        listaEventosFinalizados = this.entradaFacade.findByEventosDeUsuarioFinalizados(usuario);
         
-        request.setAttribute("misChats", misChats);
-        RequestDispatcher rd = request.getRequestDispatcher("MisChats.jsp");
+        request.setAttribute("listaEventosRecientes", listaEventosRecientes);
+        request.setAttribute("listaEventosFinalizados", listaEventosFinalizados);
+        RequestDispatcher rd = request.getRequestDispatcher("MisEventos.jsp");
         rd.forward(request, response);
     }
 

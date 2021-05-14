@@ -1,4 +1,5 @@
-<html lang="es">
+<%@page import="GestorEventos2021.entity.Usuario"%>
+
     <head>
 
         <title>Formulario de contacto</title>
@@ -10,7 +11,7 @@
         <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/pricing/">
         <link href="/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
-
+        <!--
         <style>
             @import url(https://fonts.googleapis.com/css?family=Noto+Sans);
 
@@ -150,10 +151,12 @@
             }
 
         </style>
-
+        -->
     </head>
-
-
+    <%
+       String done = (String)request.getAttribute("done");
+       String strError = (String)request.getAttribute("strErr");
+    %>
     <body>  
 
          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
@@ -164,7 +167,41 @@
         <br/>
         <br/>
         
-
+        
+        <%
+            if(done != null) {
+        %>        
+                <div class="alert alert-success" role="alert">
+                Conversación creada con éxito
+                </div>
+        <%
+            }    
+            if(strError != null) {
+                if(strError.equals("v")) {
+                    %>
+                    <div class="alert alert-danger" role="alert">
+                    ERROR: Debe iniciar sesión para poder contactarnos
+                    </div>
+                    <%    
+                } else if(strError.equals("i")) {
+                    %>
+                    <div class="alert alert-danger" role="alert">
+                    ERROR: Recuerde que debe estar registrado como usuario o creador de eventos para poder contactarnos
+                    </div>
+                    <%
+                    }
+                }   
+            %>
+        
+        <div class="d-grid gap-2 col-6 mx-auto">
+                   
+        <input type="button" class="btn btn-primary btn-lg" id="btnContacto" value="¿Quiere ponerse en contacto con un teleoperador?" name="btnContacto"
+                                       onclick="location.href = 'ServletCrearConversacion'" />
+        </div>
+        
+        <p class="fw-light">NOTA: Para poder contactarnos, debe estar registrado como usuario o ser un creador de eventos</p>
+        
+        <!--
         <div class="contact_form">
 
             <div class="formulario">    
@@ -227,6 +264,8 @@
 
         </div>
         <br/>
+        -->
+        
     </body>
-</html>
+
 

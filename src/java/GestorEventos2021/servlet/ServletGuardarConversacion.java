@@ -6,12 +6,11 @@
 package GestorEventos2021.servlet;
 
 import GestorEventos2021.dao.ConversacionFacade;
+import GestorEventos2021.dao.UsuarioFacade;
 import GestorEventos2021.entity.Conversacion;
 import GestorEventos2021.entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,14 +24,15 @@ import javax.servlet.http.HttpSession;
  *
  * @author adric
  */
-@WebServlet(name = "ServletListarMisChats", urlPatterns = {"/ServletListarMisChats"})
-public class ServletListarMisChats extends HttpServlet {
+@WebServlet(name = "ServletGuardarConversacion", urlPatterns = {"/ServletGuardarConversacion"})
+public class ServletGuardarConversacion extends HttpServlet {
 
     @EJB
     private ConversacionFacade conversacionFacade;
-    
-    
-    
+
+    @EJB
+    private UsuarioFacade usuarioFacade;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -46,16 +46,22 @@ public class ServletListarMisChats extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Usuario user = (Usuario)session.getAttribute("usuario");
-        List<Conversacion> misChats = new ArrayList();
+        String teleoperadorId = request.getParameter("teleoperador");
         
-        if(user.getRol() == 5) {
-            misChats = this.conversacionFacade.findPeticionesTeleoperador(user);
-        } else { 
-            misChats = this.conversacionFacade.findPeticionesUsuario(user);
-        }
+        //Busco el teleoperador en la BD
+        Usuario teleoperador = this.usuarioFacade.find(new Integer(teleoperadorId));
         
-        request.setAttribute("misChats", misChats);
-        RequestDispatcher rd = request.getRequestDispatcher("MisChats.jsp");
+        //Creo la conversacion sin lista de mensajes
+        Conversacion conversacion = new Conversacion();
+        
+        conversacion.setTeleoperador(teleoperador);
+        conversacion.setUsuario(user);
+        this.conversacionFacade.create(conversacion);
+        
+        String done = "Conversación creada con éxito";
+        request.setAttribute("done", done);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("contactanos.jsp");
         rd.forward(request, response);
     }
 
