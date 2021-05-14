@@ -48,7 +48,7 @@
                     </button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="VerPerfil.jsp">Mi perfil</a></li>
-                        <li><a class="dropdown-item" href="#">Mis eventos</a></li>
+                        <li><a class="dropdown-item" href="ServletMisEventos">Mis eventos</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#">
                                 Salir

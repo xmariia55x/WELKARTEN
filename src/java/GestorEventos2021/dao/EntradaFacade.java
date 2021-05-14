@@ -7,6 +7,8 @@ package GestorEventos2021.dao;
 
 import GestorEventos2021.entity.Entrada;
 import GestorEventos2021.entity.Evento;
+import GestorEventos2021.entity.Usuario;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -49,6 +51,28 @@ public class EntradaFacade extends AbstractFacade<Entrada> {
         
         if (lista != null) return lista.get(0);
         else return null;
+    }
+    
+    public List<Evento> findByEventosDeUsuarioRecientes (Usuario u){
+        Query q;
+        List<Evento> listaEventos;
+        
+        q = em.createQuery("SELECT DISTINCT e.evento FROM Entrada e WHERE e.usuario = :usuario AND :fecha <= e.evento.fechaInicio ORDER BY e.evento.fechaInicio ASC");
+        q.setParameter("usuario", u);
+        q.setParameter("fecha", new Date());
+        listaEventos = q.getResultList();
+        return q.getResultList();
+    }
+    
+    public List<Evento> findByEventosDeUsuarioFinalizados (Usuario u){
+        Query q;
+        List<Evento> listaEventos;
+        
+        q = em.createQuery("SELECT DISTINCT e.evento FROM Entrada e WHERE e.usuario = :usuario AND :fecha > e.evento.fechaInicio ORDER BY e.evento.fechaInicio ASC");
+        q.setParameter("usuario", u);
+        q.setParameter("fecha", new Date());
+        listaEventos = q.getResultList();
+        return q.getResultList();
     }
     
 }

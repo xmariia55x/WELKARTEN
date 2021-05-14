@@ -54,7 +54,7 @@ public class EventoFacade extends AbstractFacade<Evento> {
         Query q;
         List<Evento> lista;
         
-        q = this.em.createQuery("SELECT e FROM Evento e WHERE e.fechaInicio > :fecha OR (NOT(e.fechaInicio = :fecha) OR e.hora >= :fecha) ORDER BY e.fechaInicio ASC");
+        q = this.em.createQuery("SELECT e FROM Evento e WHERE e.fechaInicio > :fecha OR (e.fechaInicio = :fecha AND e.hora >= :fecha) ORDER BY e.fechaInicio ASC");
         q.setParameter("fecha", new Date());
         lista = q.getResultList();
         
@@ -138,6 +138,4 @@ public class EventoFacade extends AbstractFacade<Evento> {
         
         return q.getResultList();
     }
-    
-    
 }
