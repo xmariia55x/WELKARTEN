@@ -81,6 +81,12 @@ and open the template in the editor.
                     ERROR: La fecha límite para comprar entradas debe ser anterior a la fecha del evento.
                 </div>
                 <% 
+                    } else if (error != null && error.equals("seleccionIncorrecta")) {
+                %>
+                <div class="alert alert-danger" role="alert">
+                    ERROR: Introduzca correctamente el numero de asientos y filas.
+                </div>
+                <% 
                     }
                 %>
                 <input type="hidden" name="idEvento" value="<%= idEvento%>"/>
@@ -130,8 +136,9 @@ and open the template in the editor.
                 </div>
 
                 <div style="text-align: left">
-                    <label>Selecciona las etiquetas del evento</label> <br>
+                    <label>Selecciona las etiquetas del evento (mínimo 1, máximo 2)</label> <br>
                 </div>
+
 
                 <%
                     for (Etiqueta etiqueta : listaEtiquetas) {

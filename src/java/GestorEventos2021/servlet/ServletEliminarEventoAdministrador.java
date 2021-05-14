@@ -9,6 +9,7 @@ import GestorEventos2021.dao.EtiquetaseventoFacade;
 import GestorEventos2021.dao.EventoFacade;
 import GestorEventos2021.entity.Etiquetasevento;
 import GestorEventos2021.entity.Evento;
+import GestorEventos2021.entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -18,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -44,6 +46,14 @@ public class ServletEliminarEventoAdministrador extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String id = request.getParameter("id");
+        String strTo = "ServletListarEventosUsuariosAdministrador";
+        HttpSession session = request.getSession();
+        Usuario creador = (Usuario)session.getAttribute("usuario");
+
+        if(creador.getRol() == 2){
+            strTo = "ServletCargarCreadorEventos";
+        }
+        
         if(id != null && !id.isEmpty()){
             Evento evento = this.eventoFacade.find(new Integer(id));
             if(evento.getEtiquetaseventoList() != null){
@@ -56,7 +66,7 @@ public class ServletEliminarEventoAdministrador extends HttpServlet {
             }
             this.eventoFacade.remove(evento);
         }
-        response.sendRedirect("ServletListarEventosUsuariosAdministrador");
+        response.sendRedirect(strTo);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

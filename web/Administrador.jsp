@@ -4,6 +4,7 @@
     Author     : maria
 --%>
 
+<%@page import="GestorEventos2021.entity.Etiqueta"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="GestorEventos2021.entity.Evento"%>
@@ -22,33 +23,57 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <jsp:include page="Navbar.jsp" />
         <br>
-        
+
         <%
             Usuario administrador = (Usuario) session.getAttribute("usuario");
             List<Usuario> usuarios = (List<Usuario>) request.getAttribute("listaUsuarios");
             List<Evento> eventos = (List<Evento>) request.getAttribute("listaEventos");
+            List<Etiqueta> etiquetas = (List<Etiqueta>) request.getAttribute("listaEtiquetas");
         %>
-
+        <h4 class="display-4" style="text-align: center">Panel de control de usuarios y eventos</h4>
+        
         <div class="row">
             <div class="column">
-                <form name="BuscarYFiltrarUsuarios" class="row g-3">
+                <form action="ServletListarEventosUsuariosAdministrador" class="row g-3">
                     <div class="col-auto">
-                        <label for="inputPassword2" class="visually-hidden">Buscar o filtrar</label>
-                        <input type="text" class="form-control" id="buscar_usuario">
+                        <input type="hidden" name="buscarUsuarios" value="S"/>
+                        <input type="text" class="form-control" name="nombreUsuario">
                     </div>
                     <div class="col-auto">
                         <button type="submit" class="btn btn-primary mb-3">Buscar usuarios</button>
                     </div>
-                    <div class="col-auto">
-                        <button type="submit" class="btn btn-primary mb-3">Filtrar usuarios</button>
-                    </div>
                 </form> 
-                <!-- BOTONACO DE CREAR USUARIOS -->
-                
-                    <div class="d-grid gap-2 col-6 mx-auto">
-                    <input type="submit" class="btn btn-primary btn-lg" value="Crear usuario" onclick="location.href = 'CrearUsuarioAdministrador.jsp'"/>
+                <form action="ServletListarEventosUsuariosAdministrador">
+                    <input type="hidden" name="filrarUsuarios" value="S"/>
+                    <div class="row-auto">
+                        <label class="accordion">Filtrar usuarios</label>
+                        <div class="panel">
+                            <div class="card-body p-4">
+                                <div class="col-md-4 mb-3">
+
+                                    Rol del usuario: 
+                                    <br>
+                                    <input type="checkbox" name="rolUsuario" value="1" /> Administrador <br>
+                                    <input type="checkbox" name="rolUsuario" value="2" /> Creador de eventos <br>
+                                    <input type="checkbox" name="rolUsuario" value="3" /> Analista de eventos <br>
+                                    <input type="checkbox" name="rolUsuario" value="4" /> Usuario de eventos <br>
+                                    <input type="checkbox" name="rolUsuario" value="5" /> Teleoperador <br>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Filtrar
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                    </svg>
+                                </button>
+                            </div>
+
+                        </div>
                     </div>
-                <br>
+                </form>
+
+                <!-- BOTONACO DE CREAR USUARIOS -->
+                <div class="row-auto">
+                    <input type="submit" class="btn btn-primary mb-3 btn-lg" value="Crear usuario" onclick="location.href = 'CrearUsuarioAdministrador.jsp'"/>
+                </div>
                 <!-- TABLA DE USUARIOS -->
                 <%
                     if (usuarios != null && !usuarios.isEmpty()) {
@@ -67,12 +92,24 @@
                     <tbody>
                         <%
                             for (Usuario user : usuarios) {
+                                String rol = "";
+                                if (user.getRol() == 1) {
+                                    rol = "Administrador";
+                                } else if (user.getRol() == 2) {
+                                    rol = "Creador de eventos";
+                                } else if (user.getRol() == 3) {
+                                    rol = "Analista de eventos";
+                                } else if (user.getRol() == 4) {
+                                    rol = "Usuario de eventos";
+                                } else if (user.getRol() == 5) {
+                                    rol = "Teleoperador";
+                                }
                         %>
                         <tr>
                             <th scope="row"><%=user.getNombre()%></th>
                             <td><%=user.getNif()%></td>
                             <td><%=user.getCorreo()%></td>
-                            <td><%=user.getRol()%></td>
+                            <td><%=rol%></td>
                             <td><input type="submit" class="btn btn-outline-primary" value="Editar" onclick="location.href = 'ServletCargarUsuarioEditarAdministrador?id=<%= user.getId()%>'"/></td>
                             <td><input type="submit" class="btn btn-outline-danger" value="Eliminar" onclick="location.href = 'ServletEliminarUsuarioAdministrador?id=<%= user.getId()%>'"/></td>
                         </tr>
@@ -95,23 +132,51 @@
 
             </div>
             <div class="column">
+
                 <!-- TABLA DE EVENTOS -->
-                <form name="BuscarYFiltrarEventos" class="row g-3">
+                <form action="ServletListarEventosUsuariosAdministrador" class="row g-3">
+                    <input type="hidden" name="buscarEvento" value="S"/>
                     <div class="col-auto">
-                        <label for="inputPassword2" class="visually-hidden">Buscar o filtrar</label>
-                        <input type="text" class="form-control" id="buscar_evento">
+                        <input type="text" class="form-control" name="nombreEvento">
                     </div>
                     <div class="col-auto">
                         <button type="submit" class="btn btn-primary mb-3">Buscar eventos</button>
                     </div>
-                    <div class="col-auto">
-                        <button type="submit" class="btn btn-primary mb-3">Filtrar eventos</button>
-                    </div>
                 </form> 
+                <form action="ServletListarEventosUsuariosAdministrador">
+                    <div class="row-auto">
+                        <input type="hidden" name="filtrarEvento" value="S"/>
+                        <label class="accordion">Filtrar eventos</label>
+                        <div class="panel">
+                            <div class="card-body p-4">
+                                <div class="col-md-4 mb-3">
+
+                                    Categoría del evento: 
+                                    <br>
+                                    <%
+                                        for (Etiqueta etq : etiquetas) {
+                                    %>
+                                    <input type="checkbox" name="etiquetaEvento" value="<%=etq.getId()%>" /> <%= etq.getNombre()%> <br>
+                                    <%
+                                        }
+                                    %>
+
+                                </div>
+                                <button type="submit" class="btn btn-primary">Filtrar
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                    </svg>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
                 <!-- BOTONACO DE CREAR EVENTOS -->
-                <form action="ServletCargarEtiquetasEventos">
-                    <div class="d-grid gap-2 col-6 mx-auto">
-                    <input type="submit" class="btn btn-primary btn-lg" value="Crear evento" />
+                <form action="ServletCargarEventoEditarAdministrador">
+                    <!--<div class="d-grid gap-2 col-6 mx-auto">-->
+                    <div class="row-auto">
+                        <input type="submit" class="btn btn-primary mb-3 btn-lg" value="Crear evento" />
                     </div>
                 </form>
 
@@ -165,5 +230,21 @@
 
             </div>
         </div>
+        <script>
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+
+            for (i = 0; i < acc.length; i++) {
+                acc[i].addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    var panel = this.nextElementSibling;
+                    if (panel.style.maxHeight) {
+                        panel.style.maxHeight = null;
+                    } else {
+                        panel.style.maxHeight = panel.scrollHeight + "px";
+                    }
+                });
+            }
+        </script>
     </body>
 </html>

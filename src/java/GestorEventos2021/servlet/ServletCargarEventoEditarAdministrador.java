@@ -44,13 +44,17 @@ public class ServletCargarEventoEditarAdministrador extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("id");
-        Evento evento = this.eventoFacade.find(new Integer(id));
-        if(evento != null) {
+       
+        String error = request.getParameter("error");
+        String idEvento = request.getParameter("id");
+        if(error != null && !error.isEmpty()) request.setAttribute("error", error);
+        if(idEvento != null && !idEvento.isEmpty()){
+            Evento evento = this.eventoFacade.find(new Integer(idEvento));
             request.setAttribute("evento", evento);
-            List<Etiqueta> etiquetas = this.etiquetaFacade.findAll();
-            request.setAttribute("listaEtiquetas", etiquetas);
         }
+        List<Etiqueta> etiquetas = this.etiquetaFacade.findAll();
+        request.setAttribute("listaEtiquetas", etiquetas);
+        
         RequestDispatcher rd = request.getRequestDispatcher("CrearEditarEvento.jsp");
         rd.forward(request, response);
     }

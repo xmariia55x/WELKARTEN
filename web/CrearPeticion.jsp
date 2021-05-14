@@ -27,6 +27,7 @@
         <jsp:include page="Navbar.jsp" />
         <br/>
         
+        <div style="text-align: center">
         <form action = "ServletGuardarConversacion">
             Elige un teleoperador: <select name="teleoperador">
                 <%
@@ -48,8 +49,11 @@
         
         
         <br/>
-                
-        <p class="fw-normal">O bien, puede ver los chats que ya tenga iniciados</p>
+        
+        
+            <p class="fw-normal">O bien, puede ver los chats que ya tenga iniciados</p>
+       
+        
         
         <form action="ServletListarMisChats">
             <div class="d-grid gap-2">
@@ -57,7 +61,7 @@
             </div>
         </form>
         
-        
+        </div>
         
     </body>
 </html>

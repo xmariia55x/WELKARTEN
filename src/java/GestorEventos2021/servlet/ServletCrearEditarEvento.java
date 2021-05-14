@@ -80,29 +80,36 @@ public class ServletCrearEditarEvento extends HttpServlet {
             numMaxEntradas = request.getParameter("maximo_entradas");
             aforo = request.getParameter("aforo_evento");
             etiquetas = request.getParameterValues("etiquetas_evento");
-            if (etiquetas.length < 1 || etiquetas.length > 2) {
+            if (etiquetas == null || etiquetas.length < 1 || etiquetas.length > 2) {
                 //error = "etiquetasIncorrectas";
                 //request.setAttribute("error", error);
-                response.sendRedirect("ServletCargarEtiquetasEventos?error=etiquetasIncorrectas");
+                response.sendRedirect("ServletCargarEventoEditarAdministrador?error=etiquetasIncorrectas&id="+idEvento);
             } else if(fechaLimiteCompraEntradas.compareTo(fechaEvento) > 0 ){
                 //Si la fecha limite es posterior a la fecha del evento: ERROOOR!!!
-                response.sendRedirect("ServletCargarEtiquetasEventos?error=fechasIncorrectas");
+                response.sendRedirect("ServletCargarEventoEditarAdministrador?error=fechasIncorrectas&id="+idEvento);
             } else {
-                
+                Integer filas = null;
+                Integer columnas = null;
                 asientos = request.getParameter("seleccion_asientos");
                 if (asientos.equals("S")) {
                     filasDeAsientos = request.getParameter("filas_evento");
                     asientosPorFila = request.getParameter("asientos_fila_evento");
+                    if(!filasDeAsientos.equals("") && !asientosPorFila.equals("")){
+                        filas = new Integer(filasDeAsientos);
+                        columnas = new Integer(asientosPorFila);
+                    } else {
+                        response.sendRedirect("ServletCargarEventoEditarAdministrador?error=seleccionIncorrecta&id="+idEvento);
+                    }
                 }
                 
                 nuevoEvento.setFechaInicio(fechaEvento);
                 nuevoEvento.setFechaReserva(fechaLimiteCompraEntradas);
-                nuevoEvento.setFilas(new Integer(filasDeAsientos));
+                nuevoEvento.setFilas(filas);
                 nuevoEvento.setHora(hora);
                 nuevoEvento.setLugar(lugar);
                 nuevoEvento.setTitulo(nombre);
                 nuevoEvento.setAforo(new Integer(aforo));
-                nuevoEvento.setAsientosFila(new Integer(asientosPorFila));
+                nuevoEvento.setAsientosFila(columnas);
                 nuevoEvento.setCosteEntrada(new Double(costeEntrada));
                 nuevoEvento.setCreador(creador); 
                 nuevoEvento.setDescripcion(descripcion);
@@ -136,6 +143,7 @@ public class ServletCrearEditarEvento extends HttpServlet {
                     response.sendRedirect("ServletListarEventosUsuariosAdministrador");
                 } else if(creador.getRol() == 2){
                     //INSERTAR EL SERVLET DEL CREADOR DE EVENTOS
+                    response.sendRedirect("ServletCargarCreadorEventos");
                 }
             }
 

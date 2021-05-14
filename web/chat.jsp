@@ -20,10 +20,10 @@
         <title>CHAT</title>
     </head>
     <%
-        Usuario user = (Usuario)session.getAttribute("usuario");
-        Conversacion conversacion = (Conversacion)request.getAttribute("conversacion");
+        Usuario user = (Usuario) session.getAttribute("usuario");
+        Conversacion conversacion = (Conversacion) request.getAttribute("conversacion");
     %>    
-    
+
     <body onload="getMessages();">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <jsp:include page="Navbar.jsp" />
@@ -31,12 +31,12 @@
         <br/>
         <br/>
         <br/>
-        <h3>Conversación de <%= user.getNombre() %></h3>
+        <h3>Conversación de <%= user.getNombre()%></h3>
         <form>
             <table>
-                
-                    <td>Nombre:</td>
-                    <td><input type="text" id="name" name="name" readonly="readonly" value="<%= user.getNombre() %>"/></td>
+
+                <td>Nombre:</td>
+                <td><input type="text" id="name" name="name" readonly="readonly" value="<%= user.getNombre()%>"/></td>
                 </tr>
                 <tr>
                     <td>Mensaje:</td>
@@ -49,29 +49,32 @@
         </form>
         <br/>
         <h3> Mensajes Actuales </h3>
+
         <div id="content">
             <% if (application.getAttribute("messages") != null) {%>
             <%= application.getAttribute("messages")%>
             <% }%>
-        </div>
+        </div> 
+
+
         <script>
             function postMessage() {
                 var xmlhttp = new XMLHttpRequest();
                 //xmlhttp.open("POST", "shoutServlet?t="+new Date(), false);
-                xmlhttp.open("POST", "shoutServlet?id=<%=conversacion.getId() %>", false);
+                xmlhttp.open("POST", "shoutServlet?id=<%=conversacion.getId()%>", false);
                 xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 var nameText = escape(document.getElementById("name").value);
                 var messageText = escape(document.getElementById("message").value);
                 document.getElementById("message").value = "";
-                xmlhttp.send("name="+nameText+"&message="+messageText);
+                xmlhttp.send("name=" + nameText + "&message=" + messageText);
             }
             var messagesWaiting = false;
-            function getMessages(){
-                if(!messagesWaiting){
+            function getMessages() {
+                if (!messagesWaiting) {
                     messagesWaiting = true;
                     var xmlhttp = new XMLHttpRequest();
-                    xmlhttp.onreadystatechange=function(){
-                        if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                    xmlhttp.onreadystatechange = function () {
+                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                             messagesWaiting = false;
                             var contentElement = document.getElementById("content");
                             contentElement.innerHTML = xmlhttp.responseText + contentElement.innerHTML;

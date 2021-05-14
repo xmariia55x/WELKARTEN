@@ -86,7 +86,11 @@ public class ShoutServlet extends HttpServlet {
         
         String hora = new SimpleDateFormat("hh:mm").format(m.getHora());
         
-        String htmlMessage = "<p><b>" + name + "</b><br/>" + message + "<br/><i>" + hora +"<i></p>";
+        //String htmlMessage = "<p><b>" + name + "</b><br/>" + message + "<br/><i>" + hora +"</i></p>";
+        
+        String htmlMessage = "<div class=\"card text-dark bg-light mb-3\" style=\"max-width: 18rem;\"><div class=\"card-header\">" + hora + "</div> <div class=\"card-body\"> <h5 class=\"card-title\">" + name + "</h5><p class=\"card-text\">" + message + "</p></div></div>";
+        
+        //String htmlMessage = "<div class=\"alert alert-primary\" role=\"alert\">"+ name + "</br>" + message + "</br>" + hora +"</div>";
         
         ServletContext application = request.getServletContext();
         
