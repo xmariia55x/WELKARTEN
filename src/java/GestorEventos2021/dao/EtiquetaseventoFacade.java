@@ -5,7 +5,9 @@
  */
 package GestorEventos2021.dao;
 
+import GestorEventos2021.entity.Etiqueta;
 import GestorEventos2021.entity.Etiquetasevento;
+import java.util.Arrays;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -37,4 +39,14 @@ public class EtiquetaseventoFacade extends AbstractFacade<Etiquetasevento> {
        
        return q.getResultList();
     }
+    
+    /*public List<Etiquetasevento> findByCategorias (Etiqueta[] categorias){
+        
+        Query q;
+        
+        q = this.em.createQuery("SELECT e FROM Etiquetasevento e WHERE e.etiqueta IN :categorias");
+        q.setParameter("categorias", Arrays.asList(categorias));
+        
+        return q.getResultList();
+    }*/
 }

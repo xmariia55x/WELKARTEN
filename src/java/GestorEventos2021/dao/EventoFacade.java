@@ -5,9 +5,13 @@
  */
 package GestorEventos2021.dao;
 
+
+import GestorEventos2021.entity.Etiqueta;
+import GestorEventos2021.entity.Etiquetasevento;
 import GestorEventos2021.entity.Evento;
 import GestorEventos2021.entity.Usuario;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -139,5 +143,12 @@ public class EventoFacade extends AbstractFacade<Evento> {
         return q.getResultList();
     }
     
-    
+    public List<Evento> findByEtiquetaEvento(Etiqueta[] lista){
+        Query q;
+        
+        q = this.em.createQuery("SELECT e FROM Evento e JOIN e.etiquetaseventoList etqEvento WHERE etqEvento.etiqueta.id IN :etiquetas");
+        q.setParameter("etiquetas", Arrays.asList(lista));
+        
+        return q.getResultList();
+    }
 }

@@ -5,8 +5,12 @@
  */
 package GestorEventos2021.servlet;
 
+import GestorEventos2021.dao.EtiquetaFacade;
+import GestorEventos2021.dao.EtiquetaseventoFacade;
 import GestorEventos2021.dao.EventoFacade;
 import GestorEventos2021.dao.UsuarioFacade;
+import GestorEventos2021.entity.Etiqueta;
+import GestorEventos2021.entity.Etiquetasevento;
 import GestorEventos2021.entity.Evento;
 import GestorEventos2021.entity.Usuario;
 import java.io.IOException;
@@ -29,6 +33,12 @@ import javax.servlet.http.HttpSession;
 public class ServletListarEventosUsuariosAdministrador extends HttpServlet {
 
     @EJB
+    private EtiquetaseventoFacade etiquetaseventoFacade;
+
+    @EJB
+    private EtiquetaFacade etiquetaFacade;
+
+    @EJB
     private EventoFacade eventoFacade;
 
     @EJB
@@ -46,14 +56,42 @@ public class ServletListarEventosUsuariosAdministrador extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Usuario usuario = (Usuario)session.getAttribute("usuario");
-        if(usuario != null) {
-            List<Usuario> usuarios = this.usuarioFacade.findAll();
-            List<Evento> eventos = this.eventoFacade.findAll();
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        String[] roles = request.getParameterValues("rolUsuario");
+        String[] categorias = request.getParameterValues("etiquetaEvento");
+        List<Usuario> usuarios;
+        List<Evento> eventos;
+        if (usuario != null) {
+            if (roles != null && roles.length != 0) { //Hay filtro por roles
+                Integer[] rolesFiltro = new Integer[roles.length];
+                for (int i = 0; i < roles.length; i++) {
+                    rolesFiltro[i] = Integer.parseInt(roles[i]);
+                }
+
+                usuarios = this.usuarioFacade.findByRol(rolesFiltro);
+               
+            } else {
+                usuarios = this.usuarioFacade.findAll();
+            }
+            
+            if (categorias != null && categorias.length != 0){
+                //Hay filtro por categorias
+                Etiqueta[] categoriasFiltro = new Etiqueta[categorias.length];
+                for (int i = 0; i < categorias.length; i++) {
+                    categoriasFiltro[i] = this.etiquetaFacade.find(Integer.parseInt(categorias[i]));
+                }
+                //List<Etiquetasevento> categoriasEtEv = this.etiquetaseventoFacade.findByCategorias(categoriasFiltro);
+                eventos = this.eventoFacade.findByEtiquetaEvento(categoriasFiltro);
+            } else {
+                eventos = this.eventoFacade.findAll();
+            }
+            List<Etiqueta> etiquetas = this.etiquetaFacade.findAll();
+            
             request.setAttribute("listaUsuarios", usuarios);
             request.setAttribute("listaEventos", eventos);
+            request.setAttribute("listaEtiquetas",etiquetas);
         }
-               
+
         RequestDispatcher rd = request.getRequestDispatcher("Administrador.jsp");
         rd.forward(request, response);
     }

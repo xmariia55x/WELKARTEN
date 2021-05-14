@@ -6,6 +6,7 @@
 package GestorEventos2021.dao;
 
 import GestorEventos2021.entity.Usuario;
+import java.util.Arrays;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -57,4 +58,13 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         return q.getResultList();
     }
     
+    public List<Usuario> findByRol (Integer[] rol){
+        
+        Query q;
+        
+        q = this.em.createQuery("SELECT u FROM Usuario u WHERE u.rol IN :roles");
+        q.setParameter("roles", Arrays.asList(rol));
+        
+        return q.getResultList();
+    }
 }
