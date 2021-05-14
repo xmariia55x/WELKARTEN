@@ -42,16 +42,18 @@ and open the template in the editor.fcxddxdnjnjjnjnj
         -->
        
         
-        <jsp:include page="navbarSesionIniciada.jsp" />
+        <jsp:include page="Navbar.jsp" />
             
                 <br>
                 <br>
                 <br>
 
-        <h1>Estudio sobre los asistentes de un evento</h1>
+       
         
         
          <div class="global_nuevo_evento">
+              <h1>Estudio sobre los asistentes de un evento</h1> <br/>
+              
              <form name="CrearEditarUsuarioForm" action="ServletCrearEstudio">
                  
                 <div class="mb-3">
@@ -70,7 +72,7 @@ and open the template in the editor.fcxddxdnjnjjnjnj
                         
                      </div>
                 
-                <div class="mb-3">
+                <div class="mb-3" >
                     
                     
                         
@@ -82,7 +84,7 @@ and open the template in the editor.fcxddxdnjnjjnjnj
                         </select>
                 </div>
 
-                 <div class="mb-3" style="padding: 2% 40%" >
+                 <div class="mb-3"  >
                     <label for="exampleDropdownFormEmail2" class="form-label">Introduce la edad:</label>
                     <input type="text" width="20" name="edad" class="form-control" id="edad"  required>                
                 </div>
