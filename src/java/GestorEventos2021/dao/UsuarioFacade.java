@@ -67,4 +67,12 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         
         return q.getResultList();
     }
+    
+    public List<Usuario> findByNombreSimilar (String nombre){
+        Query q;
+        
+        q = this.em.createQuery("SELECT u FROM Usuario u WHERE u.nombre LIKE :nombre");
+        q.setParameter("nombre", "%" + nombre + "%");
+        return q.getResultList();
+    }
 }

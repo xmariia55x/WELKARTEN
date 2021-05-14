@@ -31,18 +31,20 @@
             List<Etiqueta> etiquetas = (List<Etiqueta>) request.getAttribute("listaEtiquetas");
         %>
         <h4 class="display-4" style="text-align: center">Panel de control de usuarios y eventos</h4>
+        
         <div class="row">
             <div class="column">
-                <form action="ServletBuscarUsuarios" class="row g-3">
+                <form action="ServletListarEventosUsuariosAdministrador" class="row g-3">
                     <div class="col-auto">
-
-                        <input type="text" class="form-control" id="buscar_usuario">
+                        <input type="hidden" name="buscarUsuarios" value="S"/>
+                        <input type="text" class="form-control" name="nombreUsuario">
                     </div>
                     <div class="col-auto">
                         <button type="submit" class="btn btn-primary mb-3">Buscar usuarios</button>
                     </div>
                 </form> 
                 <form action="ServletListarEventosUsuariosAdministrador">
+                    <input type="hidden" name="filrarUsuarios" value="S"/>
                     <div class="row-auto">
                         <label class="accordion">Filtrar usuarios</label>
                         <div class="panel">
@@ -58,20 +60,20 @@
                                     <input type="checkbox" name="rolUsuario" value="5" /> Teleoperador <br>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Filtrar
-                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                                </svg>
-                            </button>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                    </svg>
+                                </button>
                             </div>
-                            
+
                         </div>
                     </div>
                 </form>
 
-                    <!-- BOTONACO DE CREAR USUARIOS -->
-                    <div class="row-auto">
-                        <input type="submit" class="btn btn-primary mb-3 btn-lg" value="Crear usuario" onclick="location.href = 'CrearUsuarioAdministrador.jsp'"/>
-                    </div>
+                <!-- BOTONACO DE CREAR USUARIOS -->
+                <div class="row-auto">
+                    <input type="submit" class="btn btn-primary mb-3 btn-lg" value="Crear usuario" onclick="location.href = 'CrearUsuarioAdministrador.jsp'"/>
+                </div>
                 <!-- TABLA DE USUARIOS -->
                 <%
                     if (usuarios != null && !usuarios.isEmpty()) {
@@ -130,11 +132,12 @@
 
             </div>
             <div class="column">
-                <!-- TABLA DE EVENTOS -->
-                <form action="ServletBuscarEventos" class="row g-3">
-                    <div class="col-auto">
 
-                        <input type="text" class="form-control" id="buscar_usuario">
+                <!-- TABLA DE EVENTOS -->
+                <form action="ServletListarEventosUsuariosAdministrador" class="row g-3">
+                    <input type="hidden" name="buscarEvento" value="S"/>
+                    <div class="col-auto">
+                        <input type="text" class="form-control" name="nombreEvento">
                     </div>
                     <div class="col-auto">
                         <button type="submit" class="btn btn-primary mb-3">Buscar eventos</button>
@@ -142,6 +145,7 @@
                 </form> 
                 <form action="ServletListarEventosUsuariosAdministrador">
                     <div class="row-auto">
+                        <input type="hidden" name="filtrarEvento" value="S"/>
                         <label class="accordion">Filtrar eventos</label>
                         <div class="panel">
                             <div class="card-body p-4">
@@ -149,27 +153,27 @@
 
                                     Categoría del evento: 
                                     <br>
-                                    <% 
-                                        for(Etiqueta etq : etiquetas){
+                                    <%
+                                        for (Etiqueta etq : etiquetas) {
                                     %>
-                                        <input type="checkbox" name="etiquetaEvento" value="<%=etq.getId() %>" /> <%= etq.getNombre()%> <br>
-                                    <% 
+                                    <input type="checkbox" name="etiquetaEvento" value="<%=etq.getId()%>" /> <%= etq.getNombre()%> <br>
+                                    <%
                                         }
                                     %>
-                                   
+
                                 </div>
                                 <button type="submit" class="btn btn-primary">Filtrar
-                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                                </svg>
-                            </button>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                    </svg>
+                                </button>
                             </div>
-                            
+
                         </div>
                     </div>
                 </form>
                 <!-- BOTONACO DE CREAR EVENTOS -->
-                <form action="ServletCargarEtiquetasEventos">
+                <form action="ServletCargarEventoEditarAdministrador">
                     <!--<div class="d-grid gap-2 col-6 mx-auto">-->
                     <div class="row-auto">
                         <input type="submit" class="btn btn-primary mb-3 btn-lg" value="Crear evento" />

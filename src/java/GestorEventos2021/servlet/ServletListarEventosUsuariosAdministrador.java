@@ -57,10 +57,26 @@ public class ServletListarEventosUsuariosAdministrador extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-        String[] roles = request.getParameterValues("rolUsuario");
-        String[] categorias = request.getParameterValues("etiquetaEvento");
+        
         List<Usuario> usuarios;
         List<Evento> eventos;
+        String nombreUsuario = null;
+        String nombreEvento = null;
+        String[] roles = null;
+        String[] categorias = null;
+        if(request.getParameter("buscarUsuarios") != null && request.getParameter("buscarUsuarios").equals("S")){
+            nombreUsuario = request.getParameter("nombreUsuario");
+        } 
+        if(request.getParameter("filtrarUsuarios") != null && request.getParameter("filtrarUsuarios").equals("S")){
+            roles = request.getParameterValues("rolUsuario");
+        }
+        if(request.getParameter("buscarEvento") != null && request.getParameter("buscarEvento").equals("S")){
+            nombreEvento = request.getParameter("nombreEvento");
+        }
+        if(request.getParameter("filtrarEvento") != null && request.getParameter("filtrarEvento").equals("S")){
+            categorias = request.getParameterValues("etiquetaEvento");
+        }
+
         if (usuario != null) {
             if (roles != null && roles.length != 0) { //Hay filtro por roles
                 Integer[] rolesFiltro = new Integer[roles.length];
@@ -70,18 +86,24 @@ public class ServletListarEventosUsuariosAdministrador extends HttpServlet {
 
                 usuarios = this.usuarioFacade.findByRol(rolesFiltro);
                
+            } else if(nombreUsuario != null && !nombreUsuario.isEmpty()){
+                //Filtrar por el nombre del usuario
+                usuarios = this.usuarioFacade.findByNombreSimilar(nombreUsuario);
             } else {
                 usuarios = this.usuarioFacade.findAll();
             }
             
-            if (categorias != null && categorias.length != 0){
+            if (categorias != null && categorias.length > 0){
                 //Hay filtro por categorias
-                Etiqueta[] categoriasFiltro = new Etiqueta[categorias.length];
+                Integer[] categoriasFiltro = new Integer[categorias.length];
                 for (int i = 0; i < categorias.length; i++) {
-                    categoriasFiltro[i] = this.etiquetaFacade.find(Integer.parseInt(categorias[i]));
+                    categoriasFiltro[i] = Integer.parseInt(categorias[i]);
                 }
-                //List<Etiquetasevento> categoriasEtEv = this.etiquetaseventoFacade.findByCategorias(categoriasFiltro);
-                eventos = this.eventoFacade.findByEtiquetaEvento(categoriasFiltro);
+                
+                eventos = this.eventoFacade.findByEtiquetas(categoriasFiltro);
+            } else if(nombreEvento != null && !nombreEvento.isEmpty()){
+                //buscar por el nombre del evento
+                eventos = this.eventoFacade.findByNombreSimilar(nombreEvento);
             } else {
                 eventos = this.eventoFacade.findAll();
             }

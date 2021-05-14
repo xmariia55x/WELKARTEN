@@ -11,10 +11,12 @@ import GestorEventos2021.entity.Etiquetasevento;
 import GestorEventos2021.entity.Evento;
 import GestorEventos2021.entity.Usuario;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,6 +28,9 @@ import javax.persistence.Query;
  */
 @Stateless
 public class EventoFacade extends AbstractFacade<Evento> {
+
+    @EJB
+    private EtiquetaseventoFacade etiquetaseventoFacade;
 
     @PersistenceContext(unitName = "WELKARTENPU")
     private EntityManager em;
@@ -143,12 +148,25 @@ public class EventoFacade extends AbstractFacade<Evento> {
         return q.getResultList();
     }
     
-    public List<Evento> findByEtiquetaEvento(Etiqueta[] lista){
+   
+    
+    public List<Evento> findByNombreSimilar (String nombre){
         Query q;
         
-        q = this.em.createQuery("SELECT e FROM Evento e JOIN e.etiquetaseventoList etqEvento WHERE etqEvento.etiqueta.id IN :etiquetas");
-        q.setParameter("etiquetas", Arrays.asList(lista));
-        
+        q = this.em.createQuery("SELECT e FROM Evento e WHERE e.titulo LIKE :nombre");
+        q.setParameter("nombre", "%" + nombre + "%");
         return q.getResultList();
+    }
+    
+    public List<Evento> findByEtiquetas(Integer[] etiquetas){
+        Query q;
+        List<Evento> res = new ArrayList();
+        for(Integer et : etiquetas){
+            q = this.em.createQuery("SELECT distinct e FROM Evento e JOIN e.etiquetaseventoList et WHERE e.id = et.evento.id and et.etiqueta.id = :tag");
+            q.setParameter("tag", et);
+            res.addAll(q.getResultList());
+        }
+        
+        return res;
     }
 }

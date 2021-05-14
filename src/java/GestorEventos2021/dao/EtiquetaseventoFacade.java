@@ -39,14 +39,4 @@ public class EtiquetaseventoFacade extends AbstractFacade<Etiquetasevento> {
        
        return q.getResultList();
     }
-    
-    /*public List<Etiquetasevento> findByCategorias (Etiqueta[] categorias){
-        
-        Query q;
-        
-        q = this.em.createQuery("SELECT e FROM Etiquetasevento e WHERE e.etiqueta IN :categorias");
-        q.setParameter("categorias", Arrays.asList(categorias));
-        
-        return q.getResultList();
-    }*/
 }
