@@ -31,31 +31,34 @@
         <br/>
         <br/>
         <br/>
-        <h3>Conversación de <%= user.getNombre()%></h3>
-        <form>
-            <table>
+        <div style="padding: 2% 20%">
 
-                <td>Nombre:</td>
-                <td><input type="text" id="name" name="name" readonly="readonly" value="<%= user.getNombre()%>"/></td>
-                </tr>
-                <tr>
-                    <td>Mensaje:</td>
-                    <td><input type="text" id="message" name="message" /></td>
-                </tr>
-                <tr>
-                    <td><input type="button" class="btn btn-primary" onclick="postMessage();" value="ENVIAR" /></td>
-                </tr>
-            </table>
-        </form>
-        <br/>
-        <h3> Mensajes Actuales </h3>
 
-        <div id="content">
-            <% if (application.getAttribute("messages") != null) {%>
-            <%= application.getAttribute("messages")%>
-            <% }%>
-        </div> 
+            <h3>Conversación de <%= user.getNombre()%></h3>
+            <form>
+                <table>
 
+                    <td>Nombre:</td>
+                    <td><input type="text" id="name" name="name" readonly="readonly" value="<%= user.getNombre()%>"/></td>
+                    </tr>
+                    <tr>
+                        <td>Mensaje:</td>
+                        <td><input type="text" id="message" name="message" /></td>
+                    </tr>
+                    <tr>
+                        <td><input type="button" class="btn btn-primary" onclick="postMessage();" value="ENVIAR" /></td>
+                    </tr>
+                </table>
+            </form>
+            <br/>
+            <h3> Mensajes Actuales </h3>
+
+            <div id="content">
+                <% if (application.getAttribute("messages") != null) {%>
+                <%= application.getAttribute("messages")%>
+                <% }%>
+            </div> 
+        </div>
 
         <script>
             function postMessage() {
