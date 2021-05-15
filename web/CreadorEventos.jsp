@@ -102,6 +102,14 @@ and open the template in the editor.
         List<Evento> misEventos = (List) request.getAttribute("misEventos");
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");
+        HttpSession sesion = request.getSession();
+
+        Boolean primeraCarga = (Boolean) sesion.getAttribute("primeraCarga");
+
+        if (primeraCarga == null) {
+            primeraCarga = true;
+        }
+
 
     %>
     <body>
@@ -199,25 +207,63 @@ and open the template in the editor.
 
 
         <div id="divfix">
-           <!-- <button type="button" class="w-100 btn btn-lg btn-primary">Crear nuevo Evento</button> -->
-           <a href="ServletCargarEventoEditarAdministrador" class="btn btn-primary">Crear nuevo Evento</a>
+            <!-- <button type="button" class="w-100 btn btn-lg btn-primary">Crear nuevo Evento</button> -->
+            <a href="ServletCargarEventoEditarAdministrador" class="btn btn-primary">Crear nuevo Evento</a>
         </div>
+
 
         <div class="column">
             <div class="row">
+
+
+                <div class="tab-pane fade show active" id="nav-todos" role="tabpanel" aria-labelledby="nav-todos-tab">
+                    <div class="contenido">
+                        <%
+                            if (!primeraCarga) {
+                        %> <h1 class="display-4">Resultados de la búsqueda</h1><%
+                            if (eventosFiltrados == null || eventosFiltrados.isEmpty()) {
+                        %> <h2> No hay resultados</h2><%
+                                } else {
+                                    for (Evento e : eventosFiltrados) {
+                                        List<Etiquetasevento> listaEtiquetas = e.getEtiquetaseventoList();
+                                        String etiquetas = "";
+                                        for (int i = 0; i < listaEtiquetas.size(); i++) {
+                                            etiquetas += listaEtiquetas.get(i).getEtiqueta().getNombre();
+                                            if (i < listaEtiquetas.size() - 1) {
+                                                etiquetas += ", ";
+                                            }
+                                        }
+                        %>
+                        <div class="carta">
+                            <div class="card" style="width: 18rem;">
+                                <img src="images/ticket.png" class="card-img-top" alt="Evento"/> 
+                                <div class="card-body">
+                                    <h5 class="card-title"><%=e.getTitulo()%></h5>
+                                    <p class="card-text"><%=e.getLugar()%></p>
+                                    <p class="card-text"><%=formatoFecha.format(e.getFechaInicio()) + " " + formatoHora.format(e.getHora())%></p>
+                                    <p class="card-text"><%=etiquetas%></p>
+                                    <!-- Cambiar id 1 por //evento.getEventoId()// -->
+                                    <a href="ServletEventoInfo?id=<%=e.getId()%>" class="btn btn-primary">Ver evento</a>
+                                </div>
+                            </div>
+                        </div>
+                        <%      }
+                                }
+                            }
+                            sesion.setAttribute("primeraCarga", false);
+                        %>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <br/>
+            <br/>
+
+
+
+
+            <div class="row">
                 <h1 class="display-4">Mis Eventos</h1>
-
-
-                <%
-                    if (eventosFiltrados != null && !eventosFiltrados.isEmpty()) {
-                        for (Evento e : eventosFiltrados) {
-                %>
-                <%= e.getTitulo()%><br/>
-                <%
-                        }
-                    }
-                %>
-
 
                 <div class="tab-pane fade show active" id="nav-todos" role="tabpanel" aria-labelledby="nav-todos-tab">
                     <div class="contenido">
@@ -243,6 +289,7 @@ and open the template in the editor.
                                     <p class="card-text"><%=formatoFecha.format(e.getFechaInicio()) + " " + formatoHora.format(e.getHora())%></p>
                                     <p class="card-text"><%=etiquetas%></p>
                                     <!-- Cambiar id 1 por //evento.getEventoId()// -->
+                                    <a href="ServletEventoInfo?id=<%=e.getId()%>" class="btn btn-primary">Ver evento</a>
                                     <a href="ServletCargarEventoEditarAdministrador?id=<%=e.getId()%>" class="btn btn-primary">Editar</a>
                                     <a href="ServletEliminarEventoAdministrador?id=<%=e.getId()%>" class="btn btn-primary">Borrar</a>
                                 </div>
@@ -265,7 +312,7 @@ and open the template in the editor.
                 <h1 class="display-4">Eventos Próximos</h1>
 
 
-                
+
                 <div class="tab-pane fade show active" id="nav-todos" role="tabpanel" aria-labelledby="nav-todos-tab">
                     <div class="contenido">
                         <% if (eventosProximos == null || eventosProximos.isEmpty()) { %>

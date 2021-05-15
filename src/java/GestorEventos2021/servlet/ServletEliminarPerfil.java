@@ -60,7 +60,7 @@ public class ServletEliminarPerfil extends HttpServlet {
         //Una vez el usuario haya sido eliminado, lo mandamos a la pagina de inicio
         //Si en la pag de inicio se cargan los eventos, cambiar esto por el servlet      
         session.invalidate();                
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("ServletInicio");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -77,8 +77,8 @@ public class ServletBusquedaAvanzadaEventos extends HttpServlet {
         
         request.setAttribute("eventosFiltrados", eventosFiltrados);
         
-        RequestDispatcher rd = request.getRequestDispatcher("ServletCargarCreadorEventos");
-        rd.forward(request, response);
+        response.sendRedirect("ServletCargarCreadorEventos");
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

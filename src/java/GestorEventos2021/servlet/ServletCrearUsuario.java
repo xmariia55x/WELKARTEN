@@ -97,17 +97,19 @@ public class ServletCrearUsuario extends HttpServlet {
             
             //strTo = "UsuarioEventos.jsp";
             strTo = "ServletInicio";
+            response.sendRedirect(strTo);
         } else {
             //No ha puesto contrasenias iguales
             strTo = "Registro.jsp";
             strError = "contraseniaNoCoincide";
             request.setAttribute("error", strError);
+            RequestDispatcher rd = request.getRequestDispatcher(strTo);
+            rd.forward(request, response);
         }
 
         //System.out.println(usuario.getId());
         //request.setAttribute("registrado", 1);
-        RequestDispatcher rd = request.getRequestDispatcher(strTo);
-        rd.forward(request, response);
+       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
