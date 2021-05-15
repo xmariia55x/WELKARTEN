@@ -77,8 +77,7 @@ public class ServletIniciarSesion extends HttpServlet {
                 }
             }
             
-            RequestDispatcher rd = request.getRequestDispatcher(strTo);
-            rd.forward(request, response);
+            response.sendRedirect(strTo);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

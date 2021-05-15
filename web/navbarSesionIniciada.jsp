@@ -58,9 +58,5 @@
         </header>
         <h1> Naaaaa amigo cambiate la navbar</h1> 
         
-<<<<<<< Updated upstream
-   
-=======
->>>>>>> Stashed changes
 </body>
 </html>

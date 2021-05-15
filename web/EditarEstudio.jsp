@@ -43,7 +43,7 @@
             
                 <br>
                 <br>
-                
+                <br>
        <!--- FORMULARIO PARA EDITAR UN ESTUDIO --->
        
        <div class="global_editar_estudio">

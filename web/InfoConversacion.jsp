@@ -29,7 +29,9 @@
     <body>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <jsp:include page="Navbar.jsp" />
-        
+        <br>
+        <br>
+        <br>
         
         <div class="card mb-3" style="max-width: 1400px;">
   <div class="row g-0">
