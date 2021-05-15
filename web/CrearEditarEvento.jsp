@@ -32,7 +32,8 @@ and open the template in the editor.
         filasAsiento = "", asientosPorFila = "", fechaEvento = "", fechaLimite = "", hora = "", asientoS="", 
                 asientoN="",textoBtn = "Crear", idEvento = "";
         List<Etiquetasevento> etiquetasEvento = new ArrayList();
-        if(evento != null){
+        Boolean edicion = true;
+        if(evento != null){ // edicion
             idEvento = evento.getId().toString();
             textoBtn = "Editar";
             nombre = evento.getTitulo();
@@ -54,6 +55,8 @@ and open the template in the editor.
             fechaLimite = formatter.format(evento.getFechaReserva());
             hora = formatoHora.format(evento.getHora());
             etiquetasEvento = evento.getEtiquetaseventoList();
+        }else{ // creación
+            edicion = false;
         }
     %>
     <body>
@@ -160,22 +163,25 @@ and open the template in the editor.
                     }
                 %>
 
+                
                 <br>
                 <div class="mb-3" style="text-align: left">
-                    <label for="exampleDropdownFormEmail2" class="form-label">Asientos</label> <br/>
-                    <input class="form-check-input" type="radio" name="seleccion_asientos" value="S" <%= asientoS%>/>Sí<br>
-                    <input class="form-check-input" type="radio" name="seleccion_asientos" value="N" <%= asientoN%>/>No<br>
+                    <label for="exampleDropdownFormEmail2" class="form-label" <% if(edicion){ %> readonly <%}%> >Asientos</label> <br/>
+                    <input class="form-check-input" type="radio" name="seleccion_asientos" value="S" <%= asientoS%> <% if(edicion && asientoN.equals("checked")){ %> disabled <%}%> />Sí<br>
+                    <input class="form-check-input" type="radio" name="seleccion_asientos" value="N" <%= asientoN%> <% if(edicion && asientoS.equals("checked")){ %> disabled <%}%> />No<br>
                 </div>
 
                 <div class="mb-3" style="text-align: left">
-                    <label for="exampleDropdownFormEmail2" class="form-label">Número de filas de asientos</label>
-                    <input type="text" name="filas_evento" class="form-control" value="<%= filasAsiento%>">
+                    <label for="exampleDropdownFormEmail2" class="form-label" <% if(edicion){ %> readonly <%}%> >Número de filas de asientos</label>
+                    <input type="text" name="filas_evento" class="form-control" value="<%= filasAsiento%>" <% if(edicion){ %> readonly <%}%>>
                 </div> 
 
                 <div class="mb-3" style="text-align: left">
-                    <label for="exampleDropdownFormEmail2" class="form-label">Número de asientos por fila del evento</label>
-                    <input type="text" name="asientos_fila_evento" class="form-control" value="<%= asientosPorFila%>">
+                    <label for="exampleDropdownFormEmail2" class="form-label" <% if(edicion){ %> readonly <%}%> >Número de asientos por fila del evento</label>
+                    <input type="text" name="asientos_fila_evento" class="form-control" value="<%= asientosPorFila%>" <% if(edicion){ %> readonly <%}%>>
                 </div> 
+                
+                
 
                 <div class="d-grid gap-2 col-6 mx-auto">
                     <button type="submit" class="btn btn-primary btn-lg"><%= textoBtn%></button>
