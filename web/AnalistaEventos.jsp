@@ -43,10 +43,10 @@ and open the template in the editor.fcxddxdnjnjjnjnj
             
                 <br>
                 <br>
-        
+
         <form>
             
-            <div style="padding: 0% 10%;" class ="analistaGlobal">
+            <div style="padding: 0% 10%;" class="analistaGlobal">
                 <!-- TABLA DE CONVERSACIONES -->
                 <table  class="table">
                         <thead class = "table-primary">

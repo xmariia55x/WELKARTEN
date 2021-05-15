@@ -46,7 +46,7 @@
                 <br>
        <!--- FORMULARIO PARA EDITAR UN ESTUDIO --->
        
-       <div class="global_editar_estudio">
+       <div class="global_editar_estudio" style="padding: 2% 15%">
            <form name="CrearEditarEventoForm" action="ServletGuardarEstudio">
                 <div class="mb-3">
                     <label for="exampleDropdownFormEmail2" class="form-label">Correo del analista</label>

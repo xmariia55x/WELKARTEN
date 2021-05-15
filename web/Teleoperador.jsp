@@ -48,6 +48,7 @@
             
             
                 <!-- TABLA DE CONVERSACIONES -->
+                <div style="padding: 2% 15%">
                     <table class="table">
                         <thead class = "table-primary">
                             <tr>
@@ -82,7 +83,7 @@
                             
                         </tbody>
                     </table>
-                
+                </div>
                 <!-- GRUPO DE BOTONCITOS -->
                 <div class="d-grid gap-2 col-6 mx-auto">
                 

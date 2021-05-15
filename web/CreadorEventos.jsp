@@ -78,9 +78,9 @@ and open the template in the editor.
                 border-bottom: 3px solid #39c0ed;
             }
 
-            .form-control {
+            /*.form-control {
                 border-color: transparent;
-            }
+            }*/
 
             .input-group>.form-control:focus {
                 border-color: transparent;
@@ -148,12 +148,12 @@ and open the template in the editor.
                                                 <h6 class="text-muted text-uppercase mt-3 mb-4"></h6>
                                                 <div class="row">
                                                     <div class="col-md-4 mb-3">                                     
-                                                        Precio Máximo : <input type="text" name="precio" class="form-control form-control-lg rounded"  value=""                                                       
+                                                        Precio Máximo : <input type="text" name="precio" class="form-control"  value=""                                                       
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 mb-3">
 
-                                                    Aforo Máximo : <input type="text" name="aforo" class="form-control form-control-lg rounded" value=""                          
+                                                    Aforo Máximo : <input type="text" name="aforo" class="form-control" value=""                         
 
                                                 </div>
                                             </div>
@@ -176,7 +176,7 @@ and open the template in the editor.
                                         </div>
 
                                         <button type="submit" class="btn btn-primary" onclick="ServletBusquedaAvanzadaEventos">Buscar</button>
-                                        </form>
+
                                     </div>
                                 </div>
 

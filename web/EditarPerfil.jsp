@@ -145,7 +145,7 @@
                     <button type="submit" class="btn btn-primary btn-lg">Guardar cambios</button>
                 </div>
             </form>
-
+                <br>
             <form action="ServletEliminarPerfil">
                 <!--<input type="hidden" name="idUsuario" value="<%= usuario.getId()%>" />-->
                 <div class="d-grid gap-2 col-6 mx-auto">

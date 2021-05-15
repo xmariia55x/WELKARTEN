@@ -20,8 +20,13 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <jsp:include page="Navbar.jsp" />
             
-            
+        <br>
+        
+        
             <!-- TABLA DE PETICIONES -->
+            <div style="padding: 2% 15%">
+                
+            
                     <table class="table">
                         <thead class = "table-primary">
                             <tr>
@@ -49,7 +54,7 @@
                             
                         </tbody>
                     </table>
-                
+            </div>    
                 
     </body>
 </html>
