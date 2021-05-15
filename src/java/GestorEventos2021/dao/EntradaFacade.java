@@ -75,4 +75,14 @@ public class EntradaFacade extends AbstractFacade<Entrada> {
         return q.getResultList();
     }
     
+    public List<Entrada> findByEntradasDeUnUsuarioDeUnEvento (Usuario u, Evento e){
+        Query q;
+        List<Entrada> listaEntradas;
+        
+        q = em.createQuery("SELECT DISTINCT e FROM Entrada e WHERE e.usuario = :usuario AND e.evento = :evento ORDER BY e.numero ASC");
+        q.setParameter("usuario", u);
+        q.setParameter("evento", e);
+        listaEntradas = q.getResultList();
+        return q.getResultList();
+    }
 }

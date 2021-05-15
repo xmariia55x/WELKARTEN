@@ -54,6 +54,8 @@ and open the template in the editor.
             <img src="images/ticket.png" width="200" height="200">
 
             <form method = "POST" action="ServletIniciarSesion">
+                <input type="hidden" name="ruta" value="" />
+                <input type="hidden" name="evento" value="" />
                 <div class="mb-3">
                     <label for="exampleDropdownFormEmail2" class="form-label">Correo electrónico</label>
                     <input type="email" name="email" class="form-control" id="email_usuario" placeholder="email@example.com">

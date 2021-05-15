@@ -38,73 +38,70 @@
 
         <div class="eventosProximos">
             <h2 class="pb-2 border-bottom">Mis eventos próximos</h2>
-
-            <div class="contenido">
+            <div class="">
                 <% if (listaEventosRecientes == null || listaEventosRecientes.isEmpty()) { %>
                 <h4>No hay resultados</h4>
-                <% } else {
-                    for (Evento e : listaEventosRecientes) {
-                        List<Etiquetasevento> listaEtiquetas = e.getEtiquetaseventoList();
-                        String etiquetas = "";
-                        for (int i = 0; i < listaEtiquetas.size(); i++) {
-                            etiquetas += listaEtiquetas.get(i).getEtiqueta().getNombre();
-                            if (i < listaEtiquetas.size() - 1) {
-                                etiquetas += ", ";
+                <% } else {%>
+                <table class="table">
+                    <thead>
+                        <tr class="table-primary">
+                            <th scope="col">Titulo</th>
+                            <th scope="col">Lugar</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Hora</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (Evento e : listaEventosRecientes) { %>
+                            <tr>
+                                <td><%=e.getTitulo()%></td>
+                                <td><%=e.getLugar()%></td>
+                                <td><%=formatoFecha.format(e.getFechaInicio())%></td>
+                                <td><%=formatoHora.format(e.getHora())%></td>
+                                <td><input type="button" class="btn btn-outline-primary" onclick="location.href = 'ServletMisEntradas?eventoid=<%=e.getId()%>'" value="Ver mis entradas" /></td>
+                            </tr>
+                <% 
                             }
-                        }
-                %>
-                <div class="carta">
-                    <div class="card" style="width: 18rem;">
-                        <img src="images/ticket.png" class="card-img-top" alt="Evento"/> 
-                        <div class="card-body">
-                            <h5 class="card-title"><%=e.getTitulo()%></h5>
-                            <p class="card-text"><%=e.getLugar()%></p>
-                            <p class="card-text"><%=formatoFecha.format(e.getFechaInicio()) + " " + formatoHora.format(e.getHora())%></p>
-                            <p class="card-text"><%=etiquetas%></p>
-                            <!-- Cambiar id 1 por //evento.getEventoId()// -->
-                            <a href="ServletEventoInfo?id=<%=e.getId()%>" class="btn btn-primary">Mis entradas</a>
-                        </div>
-                    </div>
-                </div>
-                <%      }
                     }
                 %>
+                    </tbody>
+                </table>
             </div>
         </div>
 
         <div class="eventosFinalizados">
             <h2 class="pb-2 border-bottom">Mis eventos finalizados</h2>
 
-            <div class="contenido">
+            <div class="">
                 <% if (listaEventosFinalizados == null || listaEventosFinalizados.isEmpty()) { %>
                 <h4>No hay resultados</h4>
-                <% } else {
-                    for (Evento e : listaEventosFinalizados) {
-                        List<Etiquetasevento> listaEtiquetas = e.getEtiquetaseventoList();
-                        String etiquetas = "";
-                        for (int i = 0; i < listaEtiquetas.size(); i++) {
-                            etiquetas += listaEtiquetas.get(i).getEtiqueta().getNombre();
-                            if (i < listaEtiquetas.size() - 1) {
-                                etiquetas += ", ";
+                <% } else {%>
+                <table class="table">
+                    <thead>
+                        <tr class="table-primary">
+                            <th scope="col">Titulo</th>
+                            <th scope="col">Lugar</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Hora</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (Evento e : listaEventosFinalizados) { %>
+                            <tr>
+                                <td><%=e.getTitulo()%></td>
+                                <td><%=e.getLugar()%></td>
+                                <td><%=formatoFecha.format(e.getFechaInicio())%></td>
+                                <td><%=formatoHora.format(e.getHora())%></td>
+                                <td><input type="button" class="btn btn-outline-primary" onclick="location.href = 'ServletMisEntradas?eventoid=<%=e.getId()%>'" value="Ver mis entradas" /></td>
+                            </tr>
+                <% 
                             }
-                        }
-                %>
-                <div class="carta">
-                    <div class="card" style="width: 18rem;">
-                        <img src="images/ticket.png" class="card-img-top" alt="Evento"/> 
-                        <div class="card-body">
-                            <h5 class="card-title"><%=e.getTitulo()%></h5>
-                            <p class="card-text"><%=e.getLugar()%></p>
-                            <p class="card-text"><%=formatoFecha.format(e.getFechaInicio()) + " " + formatoHora.format(e.getHora())%></p>
-                            <p class="card-text"><%=etiquetas%></p>
-                            <!-- Cambiar id 1 por //evento.getEventoId()// -->
-                            <a href="ServletEventoInfo?id=<%=e.getId()%>" class="btn btn-primary">Mis entradas</a>
-                        </div>
-                    </div>
-                </div>
-                <%      }
                     }
                 %>
+                    </tbody>
+                </table>
             </div>
         </div>
     </body>

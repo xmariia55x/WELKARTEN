@@ -4,6 +4,8 @@
     Author     : yeray
 --%>
 
+<%@page import="GestorEventos2021.entity.Evento"%>
+<%@page import="java.util.List"%>
 <%@page import="GestorEventos2021.entity.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
