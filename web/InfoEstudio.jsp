@@ -102,26 +102,28 @@
         <br>
         <br>
 
-        
-        <div class="card mb-3" style="max-width: 1400px;">
-  <div class="row g-0">
-    <div class="col-md-4">
-        <img src="images/stats.png" alt="..." style="max-width: 400px;">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body" style="text-align: justify">
-        <h5 class="card-title">Información del estudio <%= e.getId() %></h5>
-        <p class="card-text">Usuario: <%= e.getAnalista().getNombre()  %></p>
-        <p class="card-text"><small class="text-muted">Correo: <%= e.getAnalista().getCorreo() %></small></p> 
-        <p class="card-text"><small class="text-muted">NIF: <%= e.getAnalista().getNif() %></small></p> 
-        <p class="card-text">Estudio: </p>
-        <p class="card-text"><small class="text-muted">Descripción: <%= e.getDescripcion() %></small></p> 
-        <p class="card-text"><small class="text-muted">Resultado: <%= e.getResultado() %></small></p> 
-      </div>
-    </div>
-  </div>
-</div>
-    
-      
+        <div style="padding: 2% 15%;">
+
+
+            <div class="card mb-3"  max-width: 1400px;">
+                 <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="images/stats.png"  style="max-width: 400px;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body" style="padding: 2% 20%;text-align: left;">
+                            <h5 class="card-title">Información del estudio <%= e.getId()%></h5>
+                            <p class="card-text">Usuario: <%= e.getAnalista().getNombre()%></p>
+                            <p class="card-text"><small class="text-muted">Correo: <%= e.getAnalista().getCorreo()%></small></p> 
+                            <p class="card-text"><small class="text-muted">NIF: <%= e.getAnalista().getNif()%></small></p> 
+                            <p class="card-text">Estudio: </p>
+                            <p class="card-text"><small class="text-muted">Descripción: <%= e.getDescripcion()%></small></p> 
+                            <p class="card-text"><small class="text-muted">Resultado: <%= e.getResultado()%></small></p> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </body>
 </html>
