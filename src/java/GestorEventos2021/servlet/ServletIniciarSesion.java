@@ -48,11 +48,13 @@ public class ServletIniciarSesion extends HttpServlet {
             String strError;
             String strTo = "";
             HttpSession session = request.getSession();
-            
+            RequestDispatcher rd;
             if(strUsuario == null || strClave == null || strUsuario.isEmpty() || strClave.isEmpty()) {
                 strTo = "InicioSesion.jsp";
                 strError = "v";
                 request.setAttribute("error", strError);
+                rd = request.getRequestDispatcher(strTo);
+                rd.forward(request, response);
             } else {
                 usuario = this.usuarioFacade.findByEmailAndPassword(strUsuario, strClave);
                 
@@ -60,6 +62,8 @@ public class ServletIniciarSesion extends HttpServlet {
                     strError = "n";
                     request.setAttribute("error", strError);
                     strTo = "InicioSesion.jsp";
+                    rd = request.getRequestDispatcher(strTo);
+                    rd.forward(request, response);
                 } else {
                     if(usuario.getRol() == 1) {
                         strTo = "ServletListarEventosUsuariosAdministrador";
@@ -74,10 +78,11 @@ public class ServletIniciarSesion extends HttpServlet {
                         strTo = "ServletListarConversaciones";
                     }
                     session.setAttribute("usuario",usuario);
+                    response.sendRedirect(strTo);
                 }
             }
             
-            response.sendRedirect(strTo);
+            
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

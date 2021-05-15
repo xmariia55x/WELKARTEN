@@ -60,8 +60,8 @@ and open the template in the editor.
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <jsp:include page="Navbar.jsp" />
         <br>
-        <br>
-        <br>
+
+
         <!-- FORMULARIO PARA CREAR O EDITAR UN NUEVO EVENTO -->
         <div class="global_nuevo_evento">
 
@@ -90,6 +90,9 @@ and open the template in the editor.
                     }
                 %>
                 <input type="hidden" name="idEvento" value="<%= idEvento%>"/>
+                <div style="padding: 2% 15%">
+                    
+                
                 <div class="mb-3" style="text-align: left">
                     <label for="exampleDropdownFormEmail2" class="form-label">Nombre del evento</label>
                     <input type="text" name="nombre_evento" class="form-control" value="<%= nombre%>" required>
@@ -177,7 +180,7 @@ and open the template in the editor.
                 <div class="d-grid gap-2 col-6 mx-auto">
                     <button type="submit" class="btn btn-primary btn-lg"><%= textoBtn%></button>
                 </div>
-                
+                </div>
                 
             </form>
         </div>
