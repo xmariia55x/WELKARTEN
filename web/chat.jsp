@@ -33,6 +33,7 @@
         <br/>
         <h3>Conversación de <%= user.getNombre()%></h3>
         <form>
+            <div style="padding: 2%">
             <table>
 
                 <td>Nombre:</td>
@@ -46,6 +47,7 @@
                     <td><input type="button" class="btn btn-primary" onclick="postMessage();" value="ENVIAR" /></td>
                 </tr>
             </table>
+            </div>
         </form>
         <br/>
         <h3> Mensajes Actuales </h3>
