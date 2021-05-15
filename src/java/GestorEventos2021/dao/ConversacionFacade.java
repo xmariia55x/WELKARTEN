@@ -53,10 +53,19 @@ public class ConversacionFacade extends AbstractFacade<Conversacion> {
         return res;
     }
 
-    public List<Conversacion> findPeticiones(Usuario usuario) {
+    public List<Conversacion> findPeticionesTeleoperador(Usuario usuario) {
         Query q;
         List<Conversacion> res;
         q = this.em.createQuery("select c from Conversacion c where c.teleoperador.nombre = :nombre");
+        q.setParameter("nombre", usuario.getNombre());
+        res = q.getResultList();
+        return res;
+    }
+    
+    public List<Conversacion> findPeticionesUsuario(Usuario usuario) {
+        Query q;
+        List<Conversacion> res;
+        q = this.em.createQuery("select c from Conversacion c where c.usuario.nombre = :nombre");
         q.setParameter("nombre", usuario.getNombre());
         res = q.getResultList();
         return res;

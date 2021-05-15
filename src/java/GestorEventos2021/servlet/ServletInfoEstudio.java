@@ -5,13 +5,10 @@
  */
 package GestorEventos2021.servlet;
 
-import GestorEventos2021.dao.EtiquetaFacade;
-import GestorEventos2021.dao.EventoFacade;
-import GestorEventos2021.entity.Etiqueta;
-import GestorEventos2021.entity.Evento;
+import GestorEventos2021.dao.EstudioFacade;
+import GestorEventos2021.entity.Estudio;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,20 +16,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author maria
+ * @author david
  */
-@WebServlet(name = "ServletCargarEventoEditarAdministrador", urlPatterns = {"/ServletCargarEventoEditarAdministrador"})
-public class ServletCargarEventoEditarAdministrador extends HttpServlet {
-
-    @EJB
-    private EtiquetaFacade etiquetaFacade;
-
-    @EJB
-    private EventoFacade eventoFacade;
-
+@WebServlet(name = "ServletInfoEstudio", urlPatterns = {"/ServletInfoEstudio"})
+public class ServletInfoEstudio extends HttpServlet {
+ @EJB
+    private EstudioFacade estudioFacade;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,18 +37,15 @@ public class ServletCargarEventoEditarAdministrador extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
-        String error = request.getParameter("error");
-        String idEvento = request.getParameter("id");
-        if(error != null && !error.isEmpty()) request.setAttribute("error", error);
-        if(idEvento != null && !idEvento.isEmpty()){
-            Evento evento = this.eventoFacade.find(new Integer(idEvento));
-            request.setAttribute("evento", evento);
-        }
-        List<Etiqueta> etiquetas = this.etiquetaFacade.findAll();
-        request.setAttribute("listaEtiquetas", etiquetas);
+        String id = request.getParameter("id");
+        Integer i = new Integer(id);
+        Estudio e = this.estudioFacade.find(i);
         
-        RequestDispatcher rd = request.getRequestDispatcher("CrearEditarEvento.jsp");
+        //request.setAttribute("estudio", e);
+        HttpSession session = request.getSession();
+        session.setAttribute("estudio", e);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("InfoEstudio.jsp");
         rd.forward(request, response);
     }
 

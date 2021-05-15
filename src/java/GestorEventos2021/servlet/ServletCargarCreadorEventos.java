@@ -5,6 +5,7 @@
  */
 package GestorEventos2021.servlet;
 
+import GestorEventos2021.dao.EventoFacade;
 import GestorEventos2021.dao.UsuarioFacade;
 import GestorEventos2021.entity.Evento;
 import GestorEventos2021.entity.Usuario;
@@ -28,6 +29,9 @@ import javax.servlet.http.HttpSession;
 public class ServletCargarCreadorEventos extends HttpServlet {
 
     @EJB
+    private EventoFacade eventoFacade;
+
+    @EJB
     private UsuarioFacade usuarioFacade;
 
     /**
@@ -47,9 +51,19 @@ public class ServletCargarCreadorEventos extends HttpServlet {
         Usuario usuario = (Usuario)session.getAttribute("usuario");
         
         List<Evento> eventosFiltrados = (List)request.getAttribute("eventosFiltrados");
+        List<Evento> eventosProximos = this.eventoFacade.filtrarByFechaDeEstaSemana();
+        List<Evento> misEventos = this.eventoFacade.filtrarByNombrePrecioAforoCreador(null, null, null, usuario);
         
         if(eventosFiltrados != null && !eventosFiltrados.isEmpty()){
             request.setAttribute("eventosFiltrados", eventosFiltrados);
+        }
+        
+        if(eventosProximos != null && !eventosProximos.isEmpty()){
+            request.setAttribute("eventosProximos", eventosProximos);
+        }
+        
+        if(misEventos != null && !misEventos.isEmpty()){
+            request.setAttribute("misEventos", misEventos);
         }
   
         String error = request.getParameter("error");
@@ -61,6 +75,7 @@ public class ServletCargarCreadorEventos extends HttpServlet {
         
         request.setAttribute("usuario", usuario);
         request.setAttribute("creadores", creadores);
+        
                
         RequestDispatcher rd = request.getRequestDispatcher("CreadorEventos.jsp");
         rd.forward(request, response);

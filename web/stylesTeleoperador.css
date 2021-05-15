@@ -12,5 +12,11 @@ and open the template in the editor.
     margin-top: 17.5px
 }
 
+.botonsito {
+    display: table-cell;
+    vertical-align: bottom;
+}
 
-
+.filtros {
+    padding: 2% 25%
+}

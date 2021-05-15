@@ -39,51 +39,16 @@ and open the template in the editor.fcxddxdnjnjjnjnj
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
         -->
         
-        <jsp:include page="navbarSesionIniciada.jsp" />
-            <!-- BARRA DE NAVEGACION
-            <header>
-                <nav class="navbar navbar-expand-lg navbar-light bg-light" >
-                    <div class="container-fluid">
-                        <a class="navbar-brand" href="#">
-                            <img src="images/logo_pequeno.png" alt="" width="200" height="50">
-                        </a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="#">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="#">Conócenos</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="#">Contáctanos</a>
-                                </li>
-                            </ul>
-                            <form class="d-flex" style="margin-right: 2em">
-                                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                                    <button class="btn btn-outline-primary" type="submit">Buscar</button>
-                                </form>
-                                <br/>
-                                <input type="button" class="btn btn-primary btn-lg" id="inicio_sesion_principal_button" value="Iniciar sesión" name="inicio_sesion_principal_button"
-                                       onclick="location.href = 'InicioSesion.html'" /> 
-                            </div>
-                        </div>
-                    </nav>
-                </header>
-                FIN BARRA DE NAVEGACION -->
+        <jsp:include page="Navbar.jsp" />
+            
                 <br>
                 <br>
-                <br>
-        
-        
+
         <form>
             
-            <div class ="analistaGlobal">
+            <div style="padding: 0% 10%;" class="analistaGlobal">
                 <!-- TABLA DE CONVERSACIONES -->
-                    <table class="table">
+                <table  class="table">
                         <thead class = "table-primary">
                             <tr>
                                 <th scope="col">#</th>
@@ -95,41 +60,17 @@ and open the template in the editor.fcxddxdnjnjjnjnj
                             </tr>
                         </thead>
                         <tbody>
-                            <!---
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Conversación 1</td>
-                                <td><button class="btn btn-outline-primary copia" type="submit">Hacer copias</button></td>
-                                <td><button class="btn btn-outline-primary modificar" type="submit">  Modifica</button></td>
-                                <td><button class="btn btn-outline-primary info" type="submit">Info</button></td>
-                                <td><button class="btn btn-outline-danger eliminar" type="submit">Eliminar</button></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Conversación 2</td>
-                                <td><button class="btn btn-outline-primary copia" type="submit">  Hacer copia</button></td>
-                                <td><button class="btn btn-outline-primary modificar" type="submit">  Modificar</button></td>
-                                <td><button class="btn btn-outline-primary info" type="submit">Info</button></td>
-                                <td><button class="btn btn-outline-danger eliminar" type="submit">Eliminar</button></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Conversación 3</td>
-                                <td><button class="btn btn-outline-primary copia" type="submit">  Hacer copia</button></td>
-                                <td><button class="btn btn-outline-primary modificar" type="submit">  Modificar</button></td>
-                                <td><button class="btn btn-outline-primary info" type="submit">Info</button></td>
-                                <td><button class="btn btn-outline-danger eliminar" type="submit">Eliminar</button></td>>
-                            </tr>
-                            --->
+                            
                             <%
                                 for(Estudio e: estudios) {
                                 %>
                                 <tr>
+                                    <td> <%= e.getId() %> </td>                                    
                                     <td> <%= e.getDescripcion()%> </td>
-                                    <td><button class="btn btn-outline-primary copia" type="submit">  Hacer copia</button></td>
-                                    <td><button class="btn btn-outline-primary modificar" type="submit">  Modificar</button></td>
-                                    <td><button class="btn btn-outline-primary info" type="submit">Info</button></td>
-                                    <td><button class="btn btn-outline-danger eliminar" type="submit">Eliminar</button></td>>
+                                    <td><button class="btn btn-outline-primary copia" type="button" onclick="location.href = 'ServletCopiarEstudio?id=<%=e.getId()%>'">  Hacer copia</button></td>
+                                    <td><button class="btn btn-outline-primary modificar" type="button" onclick="location.href = 'ServletModificarEstudio?id=<%=e.getId()%>'">  Modificar</button></td>
+                                    <td><button class="btn btn-outline-primary info" type="button" onclick="location.href = 'ServletInfoEstudio?id=<%=e.getId()%>'">Info</button></td>
+                                    <td><button class="btn btn-outline-danger eliminar" type="button" onclick="location.href = 'ServletEliminarEstudio?id=<%=e.getId()%>'">Eliminar</button></td>>
                                 </tr>
                                 <%}
                                     %>
@@ -137,7 +78,7 @@ and open the template in the editor.fcxddxdnjnjjnjnj
                     </table>
 
                 <div class="d-grid gap-2 col-6 mx-auto">
-                    <button type="submit" class="btn btn-primary btn-lg">Crear estudio</button>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="location.href = 'ServletLinkCrearEstudio'">Crear estudio</button>
                 </div>
             </div>
         </form>

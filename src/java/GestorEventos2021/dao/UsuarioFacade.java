@@ -6,6 +6,7 @@
 package GestorEventos2021.dao;
 
 import GestorEventos2021.entity.Usuario;
+import java.util.Arrays;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -47,6 +48,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         
     }
     
+
     public List<Usuario> findByRol (Integer rol){
         
         Query q;
@@ -57,4 +59,37 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         return q.getResultList();
     }
     
+    public List<Usuario> findByRol (Integer[] rol){
+        
+        Query q;
+        
+        q = this.em.createQuery("SELECT u FROM Usuario u WHERE u.rol IN :roles");
+        q.setParameter("roles", Arrays.asList(rol));
+        
+        return q.getResultList();
+    }
+    
+    public List<Usuario> findByNombreSimilar (String nombre){
+        Query q;
+        
+        q = this.em.createQuery("SELECT u FROM Usuario u WHERE u.nombre LIKE :nombre");
+        q.setParameter("nombre", "%" + nombre + "%");
+        return q.getResultList();
+    }
+
+     public Usuario findByEmail(String email) {
+        Query q;
+        List<Usuario> lista;
+        
+        q = this.em.createQuery("SELECT u FROM Usuario u WHERE u.correo = :email");
+        q.setParameter("email", email);
+        lista = q.getResultList();
+        if(lista == null || lista.isEmpty()) {
+            return null;
+        } else {
+            return lista.get(0);
+        }
+        
+    }
+
 }

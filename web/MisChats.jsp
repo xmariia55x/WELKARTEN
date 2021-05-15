@@ -20,11 +20,11 @@
     %>
     <body>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-            <jsp:include page="navbarSesionIniciada.jsp" />
-            <br/>
-            <br/>
-            <br/>
-            <br/>
+            <jsp:include page="Navbar.jsp" />
+            <br>
+            <div style="padding: 2% 15%">
+                
+          
         <!-- TABLA DE PETICIONES -->
                     <table class="table">
                         <thead class = "table-primary">
@@ -53,5 +53,6 @@
                             
                         </tbody>
                     </table>
+                              </div>
     </body>
 </html>

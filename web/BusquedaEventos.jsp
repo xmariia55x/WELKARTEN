@@ -31,7 +31,7 @@
         <br>
         <br>
         <br>
-        <br>
+
         <h1>Resultados para la búsqueda: <%=filtro%></h1>
         
         <% if (listaEventos == null || listaEventos.isEmpty()){ %>

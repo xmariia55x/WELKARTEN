@@ -44,7 +44,7 @@ public class ServletCargarPeticiones extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Usuario usuario = (Usuario)session.getAttribute("usuario");
-        List<Conversacion> peticiones = this.conversacionFacade.findPeticiones(usuario);
+        List<Conversacion> peticiones = this.conversacionFacade.findPeticionesTeleoperador(usuario);
         request.setAttribute("listaPeticiones", peticiones);
         RequestDispatcher rd = request.getRequestDispatcher("PeticionesTeleoperador.jsp");
         rd.forward(request, response);

@@ -5,29 +5,30 @@
  */
 package GestorEventos2021.servlet;
 
-import GestorEventos2021.dao.EtiquetaFacade;
-import GestorEventos2021.entity.Etiqueta;
+import GestorEventos2021.dao.EstudioFacade;
+import GestorEventos2021.entity.Estudio;
+import GestorEventos2021.entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+//import org.jboss.weld.module.web.servlet.SessionHolder;
 
 /**
  *
- * @author maria
+ * @author david
  */
-@WebServlet(name = "ServletCargarEtiquetasEventos", urlPatterns = {"/ServletCargarEtiquetasEventos"})
-public class ServletCargarEtiquetasEventos extends HttpServlet {
+@WebServlet(name = "ServletCopiarEstudio", urlPatterns = {"/ServletCopiarEstudio"})
+public class ServletCopiarEstudio extends HttpServlet {
 
-    @EJB
-    private EtiquetaFacade etiquetaFacade;
-
+    
+     @EJB
+    private EstudioFacade estudioFacade;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,13 +40,23 @@ public class ServletCargarEtiquetasEventos extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String error = request.getParameter("error");
-        if(error != null && !error.isEmpty()) request.setAttribute("error", error);
-        List<Etiqueta> etiquetas = this.etiquetaFacade.findAll();
-        request.setAttribute("listaEtiquetas", etiquetas);
+        String id = request.getParameter("id");
+        Integer i = new Integer(id);
+        Estudio e = this.estudioFacade.find(i);
+        HttpSession session = request.getSession();
+        Usuario usuario = (Usuario)session.getAttribute("usuario");
+
         
-        RequestDispatcher rd = request.getRequestDispatcher("CrearEditarEvento.jsp");
-        rd.forward(request, response);
+        Estudio copia = new Estudio();
+        copia.setDescripcion(e.getDescripcion()+"(Copia)");
+        copia.setAnalista(e.getAnalista());
+        copia.setResultado(e.getResultado());
+        
+        this.estudioFacade.create(copia);
+       
+        
+        response.sendRedirect("ServletIniciarSesion?email="+usuario.getCorreo()+"&password="+usuario.getPassword());
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

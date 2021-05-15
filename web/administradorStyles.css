@@ -9,24 +9,39 @@ and open the template in the editor.
 */
 
 table {
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: 100%;
-  border: 1px solid #ddd;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
 }
 
 th, td {
-  text-align: left;
-  padding: 16px;
+    text-align: left;
+    padding: 16px;
 }
 
 .row {
-  display: flex;
-  margin-left:-5px;
-  margin-right:-5px;
+    display: flex;
+    margin-left:-5px;
+    margin-right:-5px;
 }
 
 .column {
-  flex: 50%;
-  padding: 5px;
+    flex: 50%;
+    padding: 5px;
+}
+
+.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
 }

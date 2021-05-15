@@ -5,9 +5,12 @@
  */
 package GestorEventos2021.servlet;
 
+import GestorEventos2021.dao.UsuarioFacade;
 import GestorEventos2021.entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,6 +25,9 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ServletCrearConversacion", urlPatterns = {"/ServletCrearConversacion"})
 public class ServletCrearConversacion extends HttpServlet {
+
+    @EJB
+    private UsuarioFacade usuarioFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,19 +44,29 @@ public class ServletCrearConversacion extends HttpServlet {
         Usuario user = (Usuario)session.getAttribute("usuario");
         String strTo;
         String strErr;
+        String done = request.getParameter("done");
         
-        if(user == null) {
+        if(done != null) {
+            strTo = "CrearPeticion.jsp";
+            request.setAttribute("done", done);
+        } else {
+            if(user == null) {
             strErr = "v";
             request.setAttribute("strErr", strErr);
             strTo = "contactanos.jsp";
         } else if(user.getRol() == 2 || user.getRol() == 4) {
             //Aqui creamos la lista de teleoperadores que tenemos en la BD para mostrarla
-            strTo = "crearPeticion.jsp";
+            List<Usuario> listaTeleoperadores = this.usuarioFacade.findByRol(5);
+            strTo = "CrearPeticion.jsp";
+            request.setAttribute("listaTeleoperadores", listaTeleoperadores);
         } else {
             strErr = "i";
             request.setAttribute("strErr", strErr);
             strTo = "contactanos.jsp";
         }
+        }
+        
+        
         
         RequestDispatcher rd = request.getRequestDispatcher(strTo);
         rd.forward(request, response);

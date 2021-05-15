@@ -5,13 +5,12 @@
  */
 package GestorEventos2021.servlet;
 
-import GestorEventos2021.dao.EtiquetaFacade;
-import GestorEventos2021.dao.EventoFacade;
-import GestorEventos2021.entity.Etiqueta;
-import GestorEventos2021.entity.Evento;
+import GestorEventos2021.dao.ConversacionFacade;
+import GestorEventos2021.dao.UsuarioFacade;
+import GestorEventos2021.entity.Conversacion;
+import GestorEventos2021.entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,19 +18,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author maria
+ * @author adric
  */
-@WebServlet(name = "ServletCargarEventoEditarAdministrador", urlPatterns = {"/ServletCargarEventoEditarAdministrador"})
-public class ServletCargarEventoEditarAdministrador extends HttpServlet {
+@WebServlet(name = "ServletGuardarConversacion", urlPatterns = {"/ServletGuardarConversacion"})
+public class ServletGuardarConversacion extends HttpServlet {
 
     @EJB
-    private EtiquetaFacade etiquetaFacade;
+    private ConversacionFacade conversacionFacade;
 
     @EJB
-    private EventoFacade eventoFacade;
+    private UsuarioFacade usuarioFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,18 +44,24 @@ public class ServletCargarEventoEditarAdministrador extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
-        String error = request.getParameter("error");
-        String idEvento = request.getParameter("id");
-        if(error != null && !error.isEmpty()) request.setAttribute("error", error);
-        if(idEvento != null && !idEvento.isEmpty()){
-            Evento evento = this.eventoFacade.find(new Integer(idEvento));
-            request.setAttribute("evento", evento);
-        }
-        List<Etiqueta> etiquetas = this.etiquetaFacade.findAll();
-        request.setAttribute("listaEtiquetas", etiquetas);
+        HttpSession session = request.getSession();
+        Usuario user = (Usuario)session.getAttribute("usuario");
+        String teleoperadorId = request.getParameter("teleoperador");
         
-        RequestDispatcher rd = request.getRequestDispatcher("CrearEditarEvento.jsp");
+        //Busco el teleoperador en la BD
+        Usuario teleoperador = this.usuarioFacade.find(new Integer(teleoperadorId));
+        
+        //Creo la conversacion sin lista de mensajes
+        Conversacion conversacion = new Conversacion();
+        
+        conversacion.setTeleoperador(teleoperador);
+        conversacion.setUsuario(user);
+        this.conversacionFacade.create(conversacion);
+        
+        String done = "Conversación creada con éxito";
+        request.setAttribute("done", done);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("contactanos.jsp");
         rd.forward(request, response);
     }
 

@@ -5,34 +5,39 @@
  */
 package GestorEventos2021.servlet;
 
-import GestorEventos2021.dao.EtiquetaFacade;
+import GestorEventos2021.dao.EstudioFacade;
 import GestorEventos2021.dao.EventoFacade;
-import GestorEventos2021.entity.Etiqueta;
+import GestorEventos2021.dao.UsuarioFacade;
+import GestorEventos2021.entity.Estudio;
 import GestorEventos2021.entity.Evento;
+import GestorEventos2021.entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author maria
+ * @author david
  */
-@WebServlet(name = "ServletCargarEventoEditarAdministrador", urlPatterns = {"/ServletCargarEventoEditarAdministrador"})
-public class ServletCargarEventoEditarAdministrador extends HttpServlet {
+@WebServlet(name = "ServletCrearEstudio", urlPatterns = {"/ServletCrearEstudio"})
+public class ServletCrearEstudio extends HttpServlet {
 
+    
     @EJB
-    private EtiquetaFacade etiquetaFacade;
-
-    @EJB
+    private EstudioFacade estudioFacade;
+    
+    @EJB 
+    private UsuarioFacade usuarioFacade;
+    
+    @EJB 
     private EventoFacade eventoFacade;
-
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,19 +49,31 @@ public class ServletCargarEventoEditarAdministrador extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
-        String error = request.getParameter("error");
-        String idEvento = request.getParameter("id");
-        if(error != null && !error.isEmpty()) request.setAttribute("error", error);
-        if(idEvento != null && !idEvento.isEmpty()){
-            Evento evento = this.eventoFacade.find(new Integer(idEvento));
-            request.setAttribute("evento", evento);
-        }
-        List<Etiqueta> etiquetas = this.etiquetaFacade.findAll();
-        request.setAttribute("listaEtiquetas", etiquetas);
+        HttpSession session = request.getSession();
+        Usuario u = (Usuario)session.getAttribute("usuario");
+        Estudio e = new Estudio();
         
-        RequestDispatcher rd = request.getRequestDispatcher("CrearEditarEvento.jsp");
-        rd.forward(request, response);
+        String descripcion = request.getParameter("descripcion");
+        String signo = request.getParameter("selectSigno");
+        Integer edad  = new Integer(request.getParameter("edad")) ;
+        String evento = request.getParameter("selectEvento");
+        Evento ev = this.eventoFacade.findByTitulo(evento);
+        
+        
+        Integer resultado = this.estudioFacade.resultado(signo,edad,ev);
+        e.setAnalista(u);
+        e.setResultado("El número de usuarios que cumple la condición son: "+resultado);
+        e.setDescripcion(descripcion);
+        
+        this.estudioFacade.create(e);
+        
+        u.getEstudioList().add(e);
+        this.usuarioFacade.edit(u);
+        
+        response.sendRedirect("ServletIniciarSesion?email="+u.getCorreo()+"&password="+u.getPassword());
+                
+                
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

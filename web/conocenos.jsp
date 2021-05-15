@@ -40,7 +40,7 @@
     </head>
     <body>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <jsp:include page="navbarSinSesionIniciada.jsp" />
+        <jsp:include page="Navbar.jsp" />
 
         <br/>
         <br/>
@@ -127,7 +127,14 @@
                     <div class="column-text mt-1"><h4 class="h5 mb-1">David Gerena Comino</h4>
                         <p>Estudiante de ingeniería de software en la UMA </p>
 
-                        Comenzó a dar por culo en el 2000
+
+                        Aficionado a las series <br/>
+                        Apasionado de los videojuegos y el deporte <br/>
+                        
+                        Inciandose en el tenis <br/>
+                        <br/>
+                        <h5> Email: davidgerecomi@gmail.com </h5>
+
 
                     </div>
                 </div>
