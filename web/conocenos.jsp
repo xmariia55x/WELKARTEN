@@ -18,7 +18,7 @@
         <link href="/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
         <style>
-            img {
+            .imagenes {
                 border-radius: 50%;
             }
 
@@ -71,7 +71,7 @@
         <div class="row">
             <div class="column">
                 <div class="card-body" style="opacity: 1;">
-                    <img src="images/FotoPerfilJavi.jpg" alt="Javi" width="300" height="300">
+                    <img class="imagenes" src="images/FotoPerfilJavi.jpg" alt="Javi" width="300" height="300">
                     <div class="column-text mt-1"><h4 class="h5 mb-1">Javier Blanco Navarro</h4>
                         <p>Estudiante de ingeniería de software en la UMA </p>
 
@@ -88,7 +88,7 @@
 
             <div class="column">
                 <div class="card-body" style="opacity: 1;">
-                    <img src="images/FotoPerfilMaria.jpg" alt="Maria" width="300" height="300">
+                    <img class="imagenes" src="images/FotoPerfilMaria.jpg" alt="Maria" width="300" height="300">
                     <div class="column-text mt-1"><h4 class="h5 mb-1">María Gálvez Manceras</h4>
                         <p>Estudiante de ingeniería de software en la UMA </p>
 
@@ -104,7 +104,7 @@
 
             <div class="column">
                 <div class="card-body" style="opacity: 1;">
-                    <img src="images/FotoPerfilAdri.jpg" alt="Adri" width="300" height="300">
+                    <img class="imagenes" src="images/FotoPerfilAdri.jpg" alt="Adri" width="300" height="300">
                     <div class="column-text mt-1"><h4 class="h5 mb-1">Adrián Corrales Moreno</h4>
                         <p>Estudiante de ingeniería de software en la UMA </p>
 
@@ -123,7 +123,7 @@
         <div class="row">
             <div class="column">
                 <div class="card-body" style="opacity: 1;">
-                    <img src="images/FotoPerfilDavid.jpg" alt="David" width="300" height="300">
+                    <img  class="imagenes" src="images/FotoPerfilDavid.jpg" alt="David" width="300" height="300">
                     <div class="column-text mt-1"><h4 class="h5 mb-1">David Gerena Comino</h4>
                         <p>Estudiante de ingeniería de software en la UMA </p>
 
@@ -131,7 +131,7 @@
                         Aficionado a las series <br/>
                         Apasionado de los videojuegos y el deporte <br/>
                         
-                        Inciandose en el tenis <br/>
+                        Iniciándose en el tenis <br/>
                         <br/>
                         <h5> Email: davidgerecomi@gmail.com </h5>
 
@@ -141,12 +141,15 @@
             </div>
             <div class="column">
                 <div class="card-body" style="opacity: 1;">
-                    <img src="images/FotoPerfilYeray.jpg" alt="Yeray" width="300" height="300">
+                    <img class="imagenes" src="images/FotoPerfilYeray.jpg" alt="Yeray" width="300" height="300">
                     <div class="column-text mt-1"><h4 class="h5 mb-1">Yeray Ruiz Suárez</h4>
                         <p>Estudiante de ingeniería de software en la UMA </p>
 
-                        Comenzó a dar por culo en el 2000
-
+                        Entrenador de fútbol <br/>
+                        Aficionado al desarrollo de aplicaciones web <br>
+                        Apasionado del diseño de páginas web <br>
+                        <br/>
+                        <h5> Email: yeray.r7@uma.es </h5>
                     </div>
                 </div>
             </div>
